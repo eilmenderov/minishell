@@ -41,7 +41,7 @@ SHALLOW = \033[0m
 
 # END COLORS
 
-.PHONY: all clean fclean re bonus norm libft readline
+.PHONY: all clean fclean re bonus norm libft readline pull push
 
 all:		${NAME}
 
@@ -66,6 +66,16 @@ norm:
 #			@norminette ./srcs_bonus/
 			@echo "${GREEN}|-----Chek ended!-----|${SHALLOW}"
 
+clean:		
+			@${RM} ${OBJS} ${BONUS_OBJS}
+			@make clean -C ./libft/
+			@echo "${BLUE}clean done!${SHALLOW}"
+
+fclean:		
+			@${RM} ${OBJS} ${BONUS_OBJS} ${NAME} ${B_NAME}
+			@make fclean -C ./libft/
+			@echo "${YELO}fclean done!${SHALLOW}"
+
 pull:		fclean
 			@git pull
 
@@ -78,15 +88,5 @@ push:		pull
 # 			@make -C ./libft/
 # 			@${CC} ${CFLAGC} -o ${B_NAME} ${BONUS_OBJS} ${OBJS} ${LIBS_MAC} ${INCLUDE} 
 # 			@echo "${NEW}${B_NAME} compile!${SHALLOW}"
-
-clean:		
-			@${RM} ${OBJS} ${BONUS_OBJS}
-			@make clean -C ./libft/
-			@echo "${BLUE}clean done!${SHALLOW}"
-
-fclean:		
-			@${RM} ${OBJS} ${BONUS_OBJS} ${NAME} ${B_NAME}
-			@make fclean -C ./libft/
-			@echo "${YELO}fclean done!${SHALLOW}"
 
 re:			fclean all
