@@ -1,6 +1,6 @@
-SRCS	= minishell.c
+SRCS	=	minishell.c v_minishell_utils.c
 
-BONUS	=		
+BONUS	=	
 
 SRCS_DIR = ./srcs/
 

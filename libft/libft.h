@@ -6,7 +6,7 @@
 /*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 13:47:04 by vleida            #+#    #+#             */
-/*   Updated: 2021/08/16 15:20:18 by vleida           ###   ########.fr       */
+/*   Updated: 2021/08/17 11:26:24 by vleida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int		ft_isprint(int c);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
 char	*ft_strdup(const char *src);
+char	*ft_strndup(const char *src, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strtrim(char const *s1, char const *set);

@@ -6,7 +6,7 @@
 /*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 12:08:49 by vleida            #+#    #+#             */
-/*   Updated: 2021/08/16 16:12:26 by vleida           ###   ########.fr       */
+/*   Updated: 2021/08/17 14:01:48 by vleida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,24 @@
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+
+typedef struct s_env
+{
+	char			*key;
+	char			*val;
+	struct s_env	*next;
+}				t_env;
+
+typedef struct s_data
+{
+	int			error;
+	t_env		*beg_env;
+}				t_data;
+
+/* v_minishell_utils.c */
+void	v_pr_error(char *str, int error_code);
+void	v_pool_env(t_data *data, char **env);
+void	v_init_data(t_data *data, char **env);
+void	v_print_data(t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 15:28:55 by vleida            #+#    #+#             */
-/*   Updated: 2021/04/22 13:11:42 by vleida           ###   ########.fr       */
+/*   Updated: 2021/08/17 13:09:31 by vleida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strdup(const char *src)
 	size_t	kol;
 	size_t	i;
 
+	if (!src)
+		return (NULL);
 	kol = ft_strlen(src) + 1;
 	temp = malloc(sizeof(char) * kol);
 	if (!temp)

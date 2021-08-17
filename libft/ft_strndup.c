@@ -1,22 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/04 12:08:56 by vleida            #+#    #+#             */
-/*   Updated: 2021/08/17 14:00:33 by vleida           ###   ########.fr       */
+/*   Created: 2021/08/17 11:25:01 by vleida            #+#    #+#             */
+/*   Updated: 2021/08/17 13:09:17 by vleida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "head_minishell.h"
+#include "libft.h"
 
-int	main(int ac, char **av, char **env)
+char	*ft_strndup(const char *src, size_t n)
 {
-	t_data	data;
+	char	*temp;
+	size_t	kol;
+	size_t	i;
 
-	v_init_data(&data, env);
-	v_print_data(&data);
-	return (0);
+	if (!src)
+		return (NULL);
+	kol = ft_strlen(src) + 1;
+	if (kol > n)
+		temp = malloc(sizeof(char) * kol);
+	else
+		temp = malloc(sizeof(char) * (n + 1));
+	if (!temp)
+		return (NULL);
+	i = 0;
+	while (src[i] && i < n)
+		temp[i] = src[i], i++;
+	temp[i] = 0;
+	return (temp);
 }
