@@ -78,14 +78,14 @@ fclean:
 
 pull:		fclean
 			@git pull
-			@echo "${GREEN}|-----Pull done!-----|${SHALLOW}"
+			@echo "${GREEN}---Pull done!---${SHALLOW}"
 
 push:		fclean
 			@git pull
 			@git add .
 			@git commit -m "${LOGDATE}"
 			@git push
-			@echo "${GREEN}|-----Push done!-----|${SHALLOW}"
+			@echo "${GREEN}---Push done!---${SHALLOW}"
 
 # bonus:		${BONUS_OBJS} ${HEADER}
 # 			@make -C ./libft/
