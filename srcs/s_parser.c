@@ -1,7 +1,5 @@
 #include "head_minishell.h"
 
-/* */
-
 static char 	*ft_dollar(t_data *data, char *str, int *i)
 {
 	char	*rez;

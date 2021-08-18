@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   head_minishell.h                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/04 12:08:49 by vleida            #+#    #+#             */
-/*   Updated: 2021/08/17 14:01:48 by vleida           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef HEAD_MINISHELL_H
 # define HEAD_MINISHELL_H
 
@@ -42,6 +30,8 @@ typedef struct s_data
 	char 		*str_cmd;
 	t_env		*beg_env;
 }				t_data;
+
+
 
 /* v_minishell_utils.c */
 void	v_pr_error(char *str, int error_code);
