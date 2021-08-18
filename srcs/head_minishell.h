@@ -39,6 +39,7 @@ typedef struct s_env
 typedef struct s_data
 {
 	int			error;
+	char 		*str_cmd;
 	t_env		*beg_env;
 }				t_data;
 
@@ -48,5 +49,8 @@ void	v_pool_env(t_data *data, char **env, int i);
 void	v_init_data(t_data *data, char **env);
 void	v_free_data(t_data *data);
 void	v_print_data(t_data *data);
+
+/* s_parser.c */
+int		ft_parsing(t_data *data, char *str);
 
 #endif

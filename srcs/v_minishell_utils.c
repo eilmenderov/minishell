@@ -71,6 +71,8 @@ void	v_free_data(t_data *data)
 		tmp = tmp->next;
 		free(buf);
 	}
+	if (data->str_cmd)
+		free(data->str_cmd);
 }
 
 void	v_print_data(t_data *data)

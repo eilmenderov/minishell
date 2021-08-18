@@ -1,4 +1,4 @@
-SRCS	=	minishell.c v_minishell_utils.c
+SRCS	=	minishell.c v_minishell_utils.c s_parser.c
 
 BONUS	=	
 
@@ -12,7 +12,7 @@ BONUS_OBJS = ${addprefix ${SRCS_BONUS_DIR}, ${BONUS:.c=.o}}
 
 NAME = minishell
 
-USER = vleida
+USER = saltmer
 
 B_NAME = minishell_b
 
