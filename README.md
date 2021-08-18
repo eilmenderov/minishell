@@ -209,3 +209,19 @@ librairies или функции, которые запрещены в осно�
 
 instal brew:
 curl -fsSL https://rawgit.com/kube/42homebrew/master/install.sh | zsh
+
+HOME macOS:
+-L /usr/local/opt/readline/lib
+-I /usr/local/opt/readline/include
+
+school21 macOS:
+-L /Users/${USER}/.brew/opt/readline/lib
+-I /Users/${USER}/.brew/opt/readline/include
+
+.gitignore
+/msh
+minishell_*
+.DS_Store
+
+EXIT CODE:
+-1 - malloc error

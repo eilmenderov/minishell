@@ -21,13 +21,15 @@ BONUS =	ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c
 		ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c ft_strndup.c lib_utils.c	\
 		get_next_line.c
 
-OBJS = ${SRCS:.c=.o}
+SRCS_DIR = srcs/
 
-BONUS_OBJS = ${BONUS:.c=.o}
+OBJS = ${addprefix ${SRCS_DIR}, ${SRCS:.c=.o}}
+
+BONUS_OBJS = ${addprefix ${SRCS_DIR}, ${BONUS:.c=.o}}
 
 NAME = libft.a
 
-HEADER = libft.h
+HEADER = ${addprefix ${SRCS_DIR}, libft.h}
 
 CC = gcc
 RM = rm -f

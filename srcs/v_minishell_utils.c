@@ -18,15 +18,12 @@ void	v_pr_error(char *str, int error_code)
 	exit(error_code);
 }
 
-void	v_pool_env(t_data *data, char **env)
+void	v_pool_env(t_data *data, char **env, int i)
 {
-	int		i;
 	size_t	len;
 	t_env	*tmp;
 	t_env	*buf;
 
-	buf = data->beg_env;
-	i = 0;
 	while (env && env[i])
 	{
 		len = ft_strlen_m(env[i], '=');
@@ -35,15 +32,45 @@ void	v_pool_env(t_data *data, char **env)
 			v_pr_error("Error : malloc error\n", -1);
 		tmp->key = ft_strndup(env[i], len);
 		tmp->val = ft_strdup(&env[i][len + 1]);
-		tmp->next = NULL;
-		i++;
+		tmp->next = NULL, i++;
+		if (!data->beg_env)
+		{
+			data->beg_env = tmp;
+			buf = data->beg_env;
+		}
+		else
+		{
+			buf->next = tmp;
+			buf = buf->next;
+		}
 	}
 }
 
 void	v_init_data(t_data *data, char **env)
 {
+	t_env	*tmp;
+
 	data->error = 0;
-	v_pool_env(data, env);
+	v_pool_env(data, env, 0);
+}
+
+void	v_free_data(t_data *data)
+{
+	t_env	*tmp;
+	t_env	*buf;
+
+	tmp = data->beg_env;
+	data->beg_env = NULL;
+	while (tmp)
+	{
+		if (tmp->key)
+			free(tmp->key), tmp->key = NULL;
+		if (tmp->val)
+			free(tmp->val), tmp->val = NULL;
+		buf = tmp;
+		tmp = tmp->next;
+		free(buf);
+	}
 }
 
 void	v_print_data(t_data *data)
@@ -54,7 +81,7 @@ void	v_print_data(t_data *data)
 	tmp = data->beg_env;
 	while (tmp)
 	{
-		printf("%s\t\t\t\t\t\t%s\n", tmp->key, tmp->val);
+		printf("%-30s%s\n", tmp->key, tmp->val);
 		tmp = tmp->next;
 	}
 }

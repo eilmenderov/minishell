@@ -19,7 +19,7 @@ B_NAME = minishell_b
 HEADER = ./srcs/head_minishell.h
 
 
-LIBS_MAC	=  ./libft/libft.a -L /Users/${USER}/.brew/opt/readline/lib
+LIBS_MAC	=  ./libft/libft.a -lreadline -L /Users/${USER}/.brew/opt/readline/lib
 
 INCLUDE		=  -I /Users/${USER}/.brew/opt/readline/include
 
@@ -62,7 +62,7 @@ readline:
 norm:
 			@echo "${GREEN}|-----Chek NORMs!-----|${NEW}"
 			@norminette ./srcs/
-			@norminette ./libft/
+			@norminette ./libft/srcs/
 #			@norminette ./srcs_bonus/
 			@echo "${GREEN}|-----Chek ended!-----|${SHALLOW}"
 
