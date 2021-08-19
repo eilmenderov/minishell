@@ -8,7 +8,7 @@ int	main(int ac, char **av, char **env)
 
 	v_init_data(&data, env);
 	i = 0;
-	while (i < 1)
+	while (i < 5)
 	{
 		str = readline(SHELL_FW);
 		add_history(str);
@@ -16,6 +16,7 @@ int	main(int ac, char **av, char **env)
 			printf("|%s|\n", data.str_cmd);
 		// 	ft_run_cmd(&data);
 		// ft_free_cmd_str(&data, str);
+		free(str), str = NULL;
 		i++;
 	}
 //	v_print_data(&data);
