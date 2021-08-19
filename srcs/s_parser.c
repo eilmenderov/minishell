@@ -24,6 +24,13 @@ static char 	*ft_merge_q1(char *str, int *i, char *rez)
 	return (tmp);
 }
 
+static int ifkey(char c)
+{
+	if (c == '_' || ft_isalnum(c))
+		return (1);
+	return (0);
+}
+
 static char 	*ft_dollar(t_data *data, char *str, int *i, char *rez)
 {
 	char	*dol;
@@ -33,6 +40,12 @@ static char 	*ft_dollar(t_data *data, char *str, int *i, char *rez)
 	j = *i;
 	if (!rez)
 		rez = ft_strndup(str, *i);
+	while (str[++j])
+		if (!ifkey(str[j]))
+			break ;
+	if (j == *i + 1)
+		return (str);
+	j = *i + 1;
 	while (str[j] && str[j] != '\"' && str[j] != ' ')
 		j++;
 	dol = ft_strndup(&str[*i + 1], j - *i - 1);
