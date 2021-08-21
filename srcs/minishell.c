@@ -7,18 +7,19 @@ int	main(int ac, char **av, char **env)
 	int		i;
 
 	v_init_data(&data, env);
-	i = 0;
-	while (i < 5)
+	while (TRUE)
 	{
 		str = readline(SHELL_FW);
+		if (!str || !ft_strncmp(str, "exit", 5))
+			break ;
 		add_history(str);
 		if (!ft_parsing(&data, str))
 			printf("|%s|\n", data.str_cmd);
 		// 	ft_run_cmd(&data);
-		// ft_free_cmd_str(&data, str);
-		free(str), str = NULL;
-		i++;
+		free(data.str_cmd), free(str), str = NULL;
 	}
+	if (str)
+		free(str), str = NULL;
 //	v_print_data(&data);
 	v_free_data(&data);
 	// sleep (20);

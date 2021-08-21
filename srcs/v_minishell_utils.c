@@ -3,6 +3,7 @@
 void	v_pr_error(char *str, int error_code)
 {
 	write(2, str, ft_strlen_m(str, 0));
+	write(2, "\n", 1);
 	exit(error_code);
 }
 
@@ -17,7 +18,7 @@ void	v_pool_env(t_data *data, char **env, int i)
 		len = ft_strlen_m(env[i], '=');
 		tmp = malloc(sizeof(t_env));
 		if (!tmp)
-			v_pr_error("Error : malloc error\n", -1);
+			v_pr_error(ERR_MALC, -1);
 		tmp->key = ft_strndup(env[i], len);
 		tmp->val = ft_strdup(&env[i][len + 1]);
 		tmp->next = NULL, i++;
@@ -59,8 +60,6 @@ void	v_free_data(t_data *data)
 		tmp = tmp->next;
 		free(buf);
 	}
-	if (data->str_cmd)
-		free(data->str_cmd);
 }
 
 void	v_print_data(t_data *data)

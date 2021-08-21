@@ -2,28 +2,26 @@
 
 static char 	*ft_merge_q1(char *str, int *i, char *rez)
 {
+	char	*tmp;
 	int		j;
 
-	if (!rez)
-		rez = ft_strndup(str, *i);
 	j = *i + 1;
-	while (str[j] && str[j] != '\'')
+	while (str[j] != '\'')
+	{
+		if (!str[j])
+			return (NULL);
 		j++;
-	rez = ft_strjoin_m(rez, ft_strndup(&str[*i + 1], j - *i - 1), 3);
-	j++, *i = j;
+	}
+	if (!rez)
+		tmp = ft_strndup(str, *i);
+	tmp = ft_strjoin_m(tmp, ft_strndup(&str[*i + 1], j - *i - 1), 3);
+	j++;
+	*i = j;
 	while (str[j] && str[j] != '\'' && str[j] != '\"' && str[j] != '$')
 		j++;
-	rez = ft_strjoin_m(rez, ft_strndup(&str[*i], j - *i), 3);
-	*i = j;
-	// printf("rez = |%s|\n", rez);
-	return (rez);
-}
-
-static int ifkey(char c)
-{
-	if (c == '_' || ft_isalnum(c))
-		return (1);
-	return (0);
+	tmp = ft_strjoin_m(tmp, ft_strndup(&str[*i], j - *i), 3);
+	*i = j - 1;
+	return (tmp);
 }
 
 static char 	*ft_dollar(t_data *data, char *str, int *i, char *rez)
@@ -35,12 +33,6 @@ static char 	*ft_dollar(t_data *data, char *str, int *i, char *rez)
 	j = *i;
 	if (!rez)
 		rez = ft_strndup(str, *i);
-	while (str[++j])
-		if (!ifkey(str[j]))
-			break ;
-	if (j == *i + 1)
-		return (str);
-	j = *i + 1;
 	while (str[j] && str[j] != '\"' && str[j] != ' ')
 		j++;
 	dol = ft_strndup(&str[*i + 1], j - *i - 1);
@@ -57,7 +49,7 @@ static char 	*ft_dollar(t_data *data, char *str, int *i, char *rez)
 	while (str[j] && str[j] != '\'' && str[j] != '\"' && str[j] != '$')
 		j++;
 	rez = ft_strjoin_m(rez, ft_strndup(&str[*i], j - *i), 3);
-	*i = j;
+	*i = j - 1;
 	return (rez);
 }
 
@@ -74,25 +66,23 @@ static char 	*ft_merge_q2(t_data *data, char *str, int *i, char *rez)
 		{
 			rez = ft_strjoin_m(rez, ft_strndup(&str[*i + 1], j - *i - 1), 3);
 			rez = ft_dollar(data, str, &j, rez);
-			*i = j, j--;
+			*i = j;
 		}
 		j++;
 	}
-	if (*i != j)
-		rez = ft_strjoin_m(rez, ft_strndup(&str[*i + 1], j - *i - 1), 3);
-	j++; *i = j;
+	rez = ft_strjoin_m(rez, ft_strndup(&str[*i + 1], j - *i - 1), 3);
+	j++, *i = j;
 	while (str[j] && str[j] != '\'' && str[j] != '\"' && str[j] != '$')
 		j++;
 	rez = ft_strjoin_m(rez, ft_strndup(&str[*i], j - *i), 3);
-	*i = j;
+	*i = j - 1;
 	return (rez);
 }
 
-// static char	*ft_slash(char	*str, int *i, char *rez)
-// {
-// 	*i = *i + 1;
-// 	rez = ft_strjoin_m(rez, ft_strndup(&str[*i], 1), 3);
-// }
+/*
+**		@brief		Parses commands string
+**		@return	int		0 if string correct, else error status
+*/
 
 int ft_parsing(t_data *data, char *str)
 {
@@ -100,22 +90,17 @@ int ft_parsing(t_data *data, char *str)
 	char	*rez;
 
 	i = 0;
-	while (str && str[i])
-	{
-		if (str[i] == '\'')
-			rez = ft_merge_q1(str, &i, rez);
-		else if (str[i] == '$')
-			rez = ft_dollar(data, str, &i, rez);
-		else if (str[i] == '\"')
-			rez = ft_merge_q2(data, str, &i, rez);
-		else
-			i++;
-		// printf("i = %d str[i] = |%s| rez = |%s|\n", i, &str[i], rez);
-		// if (str[i] == '\\')
-		// 	rez = ft_slash(str, &i, rez);
-		// printf("rez[%d] = |%s|\n", i, rez);
-		
-	}
+	// while (str && str[i])
+	// {
+	// 	if (str[i] == '\'')
+	// 		rez = ft_merge_q1(str, &i, rez);
+	// 	if (str[i] == '$')
+	// 		rez = ft_dollar(data, str, &i, rez);
+	// 	if (str[i] == '\"')
+	// 		rez = ft_merge_q2(data, str, &i, rez);
+	// 	i++;
+	// }
+	rez = ft_strdup(str);
 	if (!rez)
 		return (1);
 	data->str_cmd = rez;

@@ -17,6 +17,20 @@
 
 # define SHELL_FW "\033[32mminishell$ \033[0m"
 
+# define STDIN		0
+# define STDOUT		1
+# define FALSE		0
+# define TRUE		1
+
+# define ERR_MALC		"Error : malloc error"		//exit_code -1
+# define ERR_RDL		"Error : readline error"	//exit_code -2
+# define ERR_FORK		"Error : fork error"		//exit_code -3
+# define ERR_PIPE		"Error : pipe error"		//exit_code -4
+# define ERR_DUP		"Error : dup2 error"		//exit_code -5
+# define ERR_SH_PIP		"minishell: syntax error near unexpected token '|'"
+# define ERR_SH_NEWL	"minishell: syntax error near newline"
+# define ERR_SH_TKN		"minishell: syntax error near unexpected token: "
+
 typedef struct s_env
 {
 	char			*key;
@@ -24,14 +38,24 @@ typedef struct s_env
 	struct s_env	*next;
 }				t_env;
 
+typedef struct s_cmd
+{
+	char			*coomand;
+	char			**args;
+	int				fd_in;
+	int				fd_out;
+	pid_t			pid;
+	unsigned char	is_fork;
+	struct s_cmd	*next;
+}				t_cmd;
+
 typedef struct s_data
 {
-	int			error;
-	char 		*str_cmd;
-	t_env		*beg_env;
+	unsigned char	error;
+	char 			*str_cmd;
+	t_env			*beg_env;
+	t_cmd			*cmd_start;
 }				t_data;
-
-
 
 /* v_minishell_utils.c */
 void	v_pr_error(char *str, int error_code);

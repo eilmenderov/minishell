@@ -72,3 +72,14 @@ int	ft_gnl_cheker(char *ost)
 		return (0);
 	return (1);
 }
+
+int	ft_ch_for_coinc(char c, char *str)
+{
+	while(*str)
+	{
+		if (*str == c)
+			return(1);
+		str++;
+	}
+	return (0);
+}

@@ -88,5 +88,6 @@ int		get_next_line(int fd, char **line);
 size_t	ft_strlen_m(const char *str, int c);
 char	*ft_strjoin_m(char const *ost, char const *buf, int c);
 int		ft_gnl_cheker(char *ost);
+int		ft_ch_for_coinc(char c, char *str);
 
 #endif
