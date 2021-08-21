@@ -1,27 +1,24 @@
 #include "head_minishell.h"
 
+
 static char 	*ft_merge_q1(char *str, int *i, char *rez)
 {
-	char	*tmp;
-	int		j;
+	int j;
 
-	j = *i + 1;
-	while (str[j] != '\'')
-	{
-		if (!str[j])
-			return (NULL);
-		j++;
-	}
-	if (!rez)
-		tmp = ft_strndup(str, *i);
-	tmp = ft_strjoin_m(tmp, ft_strndup(&str[*i + 1], j - *i - 1), 3);
-	j++;
-	*i = j;
-	while (str[j] && str[j] != '\'' && str[j] != '\"' && str[j] != '$')
-		j++;
-	tmp = ft_strjoin_m(tmp, ft_strndup(&str[*i], j - *i), 3);
-	*i = j - 1;
-	return (tmp);
+	j = *i;//начало встречи ордин кавычки
+	while (str[++(*i)])
+		if (str[*i] == '\'')
+			break ;
+	rez = ft_substr(str, j + 1, *i - j - 1);
+	(*i)++;
+	return (rez);
+}
+
+static int ifkey(char c)
+{
+	if (c == '_' || ft_isalnum(c))
+		return (1);
+	return (0);
 }
 
 static char 	*ft_dollar(t_data *data, char *str, int *i, char *rez)
@@ -31,11 +28,25 @@ static char 	*ft_dollar(t_data *data, char *str, int *i, char *rez)
 	t_env 	*buf;
 
 	j = *i;
-	if (!rez)
-		rez = ft_strndup(str, *i);
-	while (str[j] && str[j] != '\"' && str[j] != ' ')
-		j++;
-	dol = ft_strndup(&str[*i + 1], j - *i - 1);
+//	printf("%s\n", rez);
+//	if (!rez) ///почему-то не видит что он пустой???
+//	{
+//		printf("la\n");
+//		rez = ft_strdup("");
+//	}
+	while (str[++j])
+		if (!ifkey(str[j]))
+			break ;
+//	if (j == *i + 1)
+//		return ("$\n");
+	j = *i;
+	(*i)++;
+	while (str[*i] && str[*i] != '\"' && str[*i] != ' ' && str[*i] != '\'' &&
+	str[*i] != '|' && str[*i] != '&')
+		(*i)++;
+
+	dol = ft_substr(str, j + 1, *i - j - 1);
+//	printf("dol: %s\n", dol);
 	buf = data->beg_env;
 	while (buf)
 	{
@@ -44,45 +55,35 @@ static char 	*ft_dollar(t_data *data, char *str, int *i, char *rez)
 		buf = buf->next;
 	}
 	if (buf)
-		rez = ft_strjoin_m(rez, buf->val, 1);
-	free(dol), *i = j;
-	while (str[j] && str[j] != '\'' && str[j] != '\"' && str[j] != '$')
-		j++;
-	rez = ft_strjoin_m(rez, ft_strndup(&str[*i], j - *i), 3);
-	*i = j - 1;
+		rez = buf->val;
+	else
+		rez = ft_strdup("");
+	free(dol);
+	free(buf);
 	return (rez);
 }
 
 static char 	*ft_merge_q2(t_data *data, char *str, int *i, char *rez)
 {
 	int		j;
+	char	*rez_dol;
 
-	if (!rez)
-		rez = ft_strndup(str, *i);
-	j = *i + 1;
-	while (str[j] && str[j] != '\"')
+	j = *i;
+//	if (!rez)
+//		rez = ft_strndup(str, *i);
+	(*i)++;
+	while (str[*i] && str[*i] != '\"')
 	{
-		if (str[j] == '$')
+		if (str[*i] == '$')
 		{
-			rez = ft_strjoin_m(rez, ft_strndup(&str[*i + 1], j - *i - 1), 3);
-			rez = ft_dollar(data, str, &j, rez);
-			*i = j;
+			rez = ft_substr(str, j + 1, *i - j - 1);// before $
+			rez_dol = ft_dollar(data, str, i, rez_dol); //$
 		}
-		j++;
+		(*i)++;
 	}
-	rez = ft_strjoin_m(rez, ft_strndup(&str[*i + 1], j - *i - 1), 3);
-	j++, *i = j;
-	while (str[j] && str[j] != '\'' && str[j] != '\"' && str[j] != '$')
-		j++;
-	rez = ft_strjoin_m(rez, ft_strndup(&str[*i], j - *i), 3);
-	*i = j - 1;
+	rez = ft_strjoin_m(rez, rez_dol, 3);
 	return (rez);
 }
-
-/*
-**		@brief		Parses commands string
-**		@return	int		0 if string correct, else error status
-*/
 
 char *ft_redir(t_data *data, char *str, int *i, char *rez)
 {
@@ -94,8 +95,7 @@ char *ft_redir(t_data *data, char *str, int *i, char *rez)
 
 char *ft_normal(char *str, int *i, char *rez)
 {
-	(void)str;
-	(void)i;
+
 	return (rez);
 }
 
@@ -104,21 +104,28 @@ int ft_parsing(t_data *data, char *str)
 	int		i;
 	char	*rez;
 
-//	i = 0;
-//	 while (str && str[i])
-//	 {
-//	 	if (str[i] == '\'')
-//	 		rez = ft_merge_q1(str, &i, rez);
-//	 	else if (str[i] == '$')
-//	 		rez = ft_dollar(data, str, &i, rez);
-//	 	else if (str[i] == '\"')
-//	 		rez = ft_merge_q2(data, str, &i, rez);
-//	 	else if (ft_ch_for_coinc(str[i], "><|&\\;"))
-//	 		rez = ft_redir(data, str, &i, rez);
-//	 	else
-//	 		rez = ft_normal(str, &i, rez);
+	i = 0;
+	while (str && str[i])
+	{
+		printf("%d %c\n", i, str[i]);
+		if (str[i] == '\'')
+			rez = ft_merge_q1(str, &i, rez);
+		else if (str[i] == '$')
+			rez = ft_dollar(data, str, &i, rez);
+		else if (str[i] == '\"')
+			rez = ft_merge_q2(data, str, &i, rez);
+//		else if (ft_ch_for_coinc(str[i], "><|&\\;"))
+//			rez = ft_redir(data, str, &i, rez);
+		else
+			rez = ft_normal(str, &i, rez);
 //	 }
-	rez = ft_strdup(str);
+//		printf("%s\n", rez);
+//		exit(1);
+		printf("%d %c\n", i, str[i]);
+//		i++;
+//		exit(1);
+//		sleep(1);
+	}
 	if (!rez)
 		return (1);
 	data->str_cmd = rez;
