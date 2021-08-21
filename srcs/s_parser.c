@@ -85,46 +85,25 @@ static char 	*ft_merge_q2(t_data *data, char *str, int *i, char *rez)
 	return (rez);
 }
 
-char *ft_redir(t_data *data, char *str, int *i, char *rez)
-{
-	(void)str;
-	(void)i;
-	(void)data;
-	return (rez);
-}
-
-char *ft_normal(char *str, int *i, char *rez)
-{
-
-	return (rez);
-}
-
 int ft_parsing(t_data *data, char *str)
 {
 	int		i;
 	char	*rez;
 
+	rez = NULL;
 	i = 0;
 	while (str && str[i])
 	{
-		printf("%d %c\n", i, str[i]);
-		if (str[i] == '\'')
-			rez = ft_merge_q1(str, &i, rez);
-		else if (str[i] == '$')
-			rez = ft_dollar(data, str, &i, rez);
-		else if (str[i] == '\"')
-			rez = ft_merge_q2(data, str, &i, rez);
-//		else if (ft_ch_for_coinc(str[i], "><|&\\;"))
-//			rez = ft_redir(data, str, &i, rez);
-		else
-			rez = ft_normal(str, &i, rez);
-//	 }
-//		printf("%s\n", rez);
-//		exit(1);
-		printf("%d %c\n", i, str[i]);
-//		i++;
-//		exit(1);
-//		sleep(1);
+	 	// if (str[i] == '\'')
+	 	// 	rez = ft_merge_q1(str, &i, rez);
+	 	// else if (str[i] == '$')
+	 	// 	rez = ft_dollar(data, str, &i, rez);
+	 	// else if (str[i] == '\"')
+	 	// 	rez = ft_merge_q2(data, str, &i, rez);
+	 	// else if (ft_ch_for_coinc(str[i], "><|&\\;"))
+	 	// 	rez = ft_redir(data, str, &i, rez);
+	 	 else
+	 		rez = ft_normal(str, &i, rez);
 	}
 	if (!rez)
 		return (1);

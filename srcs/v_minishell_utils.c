@@ -7,9 +7,8 @@ void	v_pr_error(char *str, int error_code)
 	exit(error_code);
 }
 
-void	v_pool_env(t_data *data, char **env, int i)
+void	v_pool_env(t_data *data, char **env, int i, size_t len)
 {
-	size_t	len;
 	t_env	*tmp;
 	t_env	*buf;
 
@@ -21,6 +20,8 @@ void	v_pool_env(t_data *data, char **env, int i)
 			v_pr_error(ERR_MALC, -1);
 		tmp->key = ft_strndup(env[i], len);
 		tmp->val = ft_strdup(&env[i][len + 1]);
+		if (!tmp->val || !tmp->key)
+			v_pr_error(ERR_MALC, -1);
 		tmp->next = NULL, i++;
 		if (!data->beg_env)
 		{
@@ -40,7 +41,18 @@ void	v_init_data(t_data *data, char **env)
 	t_env	*tmp;
 
 	data->error = 0;
-	v_pool_env(data, env, 0);
+	v_pool_env(data, env, 0, 0);
+	tmp = data->beg_env;
+	while (tmp)
+	{
+		if (!ft_strncmp(tmp->key, "SHELL", 6))
+		{
+			data->shlvl = ft_atoi(tmp->val) + 1;
+			free(tmp->val), tmp->val = ft_itoa(data->shlvl);
+			break ;
+		}
+		tmp = tmp->next;
+	}
 }
 
 void	v_free_data(t_data *data)

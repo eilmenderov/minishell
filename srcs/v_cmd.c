@@ -1,10 +1,5 @@
 #include "head_minishell.h"
 
-static void	v_pool_cmd(t_data *data, char *str)
-{
-	
-}
-
 static void	v_check_cmd(t_data *data)
 {
 	char	**split;
