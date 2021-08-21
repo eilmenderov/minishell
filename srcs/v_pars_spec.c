@@ -9,14 +9,14 @@ char	*ft_redir(t_data *data, char *str, int *i, char *rez)
 	return (rez);
 }
 
-char	*ft_normal(char *str, int *i, char *rez)
+char	*ft_normal(char *str, int *i, char *rez, char *stop)
 {
 	int	j;
 
 	j = *i;
 	while (str[j])
 	{
-		if (ft_ch_for_coinc(str[j], "><|&\\;\'\"$"))
+		if (ft_ch_for_coinc(str[j], stop))
 			break;
 		j++;
 	}

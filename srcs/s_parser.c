@@ -4,12 +4,16 @@
 static char 	*ft_merge_q1(char *str, int *i, char *rez)
 {
 	int j;
+	char *sub;
 
 	j = *i;//начало встречи ордин кавычки
 	while (str[++(*i)])
+	{
 		if (str[*i] == '\'')
 			break ;
-	rez = ft_substr(str, j + 1, *i - j - 1);
+	}
+	sub = ft_substr(str, j + 1, *i - j - 1);
+	rez = ft_strjoin_m(rez, sub, 3);
 	(*i)++;
 	return (rez);
 }
@@ -28,25 +32,17 @@ static char 	*ft_dollar(t_data *data, char *str, int *i, char *rez)
 	t_env 	*buf;
 
 	j = *i;
-//	printf("%s\n", rez);
-//	if (!rez) ///почему-то не видит что он пустой???
-//	{
-//		printf("la\n");
-//		rez = ft_strdup("");
-//	}
 	while (str[++j])
 		if (!ifkey(str[j]))
 			break ;
-//	if (j == *i + 1)
-//		return ("$\n");
+//	if (j == *i + 1) //todo
+//		return (rez);
 	j = *i;
 	(*i)++;
-	while (str[*i] && str[*i] != '\"' && str[*i] != ' ' && str[*i] != '\'' &&
-	str[*i] != '|' && str[*i] != '&')
+	while (str[*i] && !ft_ch_for_coinc(str[*i], " '\"|&"))
 		(*i)++;
-
 	dol = ft_substr(str, j + 1, *i - j - 1);
-//	printf("dol: %s\n", dol);
+	printf("dol = %s\n", dol);
 	buf = data->beg_env;
 	while (buf)
 	{
@@ -55,33 +51,34 @@ static char 	*ft_dollar(t_data *data, char *str, int *i, char *rez)
 		buf = buf->next;
 	}
 	if (buf)
-		rez = buf->val;
+		rez = ft_strjoin_m(rez, buf->val, 1);
 	else
-		rez = ft_strdup("");
+		rez = ft_strjoin_m(rez, ft_strdup(""), 3);
 	free(dol);
-	free(buf);
 	return (rez);
 }
 
 static char 	*ft_merge_q2(t_data *data, char *str, int *i, char *rez)
 {
-	int		j;
-	char	*rez_dol;
+	int j;
+	char *sub;
 
-	j = *i;
-//	if (!rez)
-//		rez = ft_strndup(str, *i);
-	(*i)++;
-	while (str[*i] && str[*i] != '\"')
+	j = *i + 1;
+	while (str[++(*i)])
 	{
-		if (str[*i] == '$')
+		if (str[*i] == '\"')
+			break ;
+		else if (str[*i] == '$')
 		{
-			rez = ft_substr(str, j + 1, *i - j - 1);// before $
-			rez_dol = ft_dollar(data, str, i, rez_dol); //$
+			rez = ft_strjoin_m(rez, ft_strndup(&str[j], *i - j), 3);// before $
+			rez = ft_dollar(data, str, i, rez); //$
+			j = *i;
 		}
-		(*i)++;
 	}
-	rez = ft_strjoin_m(rez, rez_dol, 3);
+	if (j != *i)
+		sub = ft_strndup(&str[j], *i - j);
+	rez = ft_strjoin_m(rez, sub, 3);
+	(*i)++;
 	return (rez);
 }
 
@@ -94,16 +91,16 @@ int ft_parsing(t_data *data, char *str)
 	i = 0;
 	while (str && str[i])
 	{
-	 	// if (str[i] == '\'')
-	 	// 	rez = ft_merge_q1(str, &i, rez);
-	 	// else if (str[i] == '$')
-	 	// 	rez = ft_dollar(data, str, &i, rez);
-	 	// else if (str[i] == '\"')
-	 	// 	rez = ft_merge_q2(data, str, &i, rez);
+	 	 if (str[i] == '\'')
+	 	 	rez = ft_merge_q1(str, &i, rez);
+	 	 else if (str[i] == '$')
+	 	 	rez = ft_dollar(data, str, &i, rez);
+	 	 else if (str[i] == '\"')
+	 	 	rez = ft_merge_q2(data, str, &i, rez);
 	 	// else if (ft_ch_for_coinc(str[i], "><|&\\;"))
 	 	// 	rez = ft_redir(data, str, &i, rez);
 	 	 else
-	 		rez = ft_normal(str, &i, rez);
+	 	 	rez = ft_normal(str, &i, rez, "><|&\\;\'\"$");
 	}
 	if (!rez)
 		return (1);

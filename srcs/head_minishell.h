@@ -71,6 +71,6 @@ int		ft_parsing(t_data *data, char *str);
 
 /* v_pars_cpec.c */
 char	*ft_redir(t_data *data, char *str, int *i, char *rez);
-char	*ft_normal(char *str, int *i, char *rez);
+char	*ft_normal(char *str, int *i, char *rez, char *stop);
 
 #endif
