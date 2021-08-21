@@ -43,8 +43,6 @@ typedef struct s_cmd
 {
 	char			*coomand;
 	char			**args;
-	int				fd_in;
-	int				fd_out;
 	pid_t			pid;
 	unsigned char	is_fork;
 	struct s_cmd	*next;
@@ -53,6 +51,9 @@ typedef struct s_cmd
 typedef struct s_data
 {
 	unsigned char	error;
+	int				fd_in;
+	int				fd_out;
+	unsigned int	shlvl;
 	char 			*str_cmd;
 	t_env			*beg_env;
 	t_cmd			*cmd_start;
@@ -60,12 +61,16 @@ typedef struct s_data
 
 /* v_minishell_utils.c */
 void	v_pr_error(char *str, int error_code);
-void	v_pool_env(t_data *data, char **env, int i);
+void	v_pool_env(t_data *data, char **env, int i, size_t len);
 void	v_init_data(t_data *data, char **env);
 void	v_free_data(t_data *data);
 void	v_print_data(t_data *data);
 
 /* s_parser.c */
 int		ft_parsing(t_data *data, char *str);
+
+/* v_pars_cpec.c */
+char	*ft_redir(t_data *data, char *str, int *i, char *rez);
+char	*ft_normal(char *str, int *i, char *rez);
 
 #endif
