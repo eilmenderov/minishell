@@ -20,7 +20,7 @@ int	main(int ac, char **av, char **env)
 	}
 	if (str)
 		free(str), str = NULL;
-	// v_print_data(&data);
+	v_print_data(&data);
 	v_free_data(&data);
 	// sleep (20);
 	return (0);

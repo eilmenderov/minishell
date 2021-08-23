@@ -27,9 +27,9 @@
 # define ERR_FORK		"Error : fork error"		//exit_code -3
 # define ERR_PIPE		"Error : pipe error"		//exit_code -4
 # define ERR_DUP		"Error : dup2 error"		//exit_code -5
-# define ERR_SH_PIP		"minishell: syntax error near unexpected token '|'"
-# define ERR_SH_NEWL	"minishell: syntax error near newline"
-# define ERR_SH_TKN		"minishell: syntax error near unexpected token: "
+# define PID_EXEP		"[Sorry, we're not allowed to use func getpid]"
+# define ERR_SH_NEWL	"minishell: syntax error near unexpected token 'newln'"
+# define ERR_SH_TKN		"minishell: syntax error near unexpected token "
 
 typedef struct s_env
 {
@@ -60,7 +60,7 @@ typedef struct s_data
 }				t_data;
 
 /* v_minishell_utils.c */
-void	v_pr_error(char *str, int error_code);
+void	v_pr_error(char *str, int error_code, char c, int fl);
 void	v_pool_env(t_data *data, char **env, int i, size_t len);
 void	v_init_data(t_data *data, char **env);
 void	v_free_data(t_data *data);
@@ -68,11 +68,11 @@ void	v_print_data(t_data *data);
 
 /* s_parser.c */
 int		ft_parsing(t_data *data, char *str);
-char	*ft_dollar(t_data *data, char *str, int *i, char *rez);
+char	*ft_slash(char *str, int *i, char *rez);
 
-/* v_pars_utils.c */
-char	*ft_dol_helper(char *key, t_env *env, char *rez);
+/* v_pars_dollar.c */
 char	*ft_normal(char *str, int *i, char *rez, char *stop);
+char	*ft_dollar(t_data *data, char *str, int *i, char *rez);
 
 /* v_pars_cpec.c */
 char	*ft_redir(t_data *data, char *str, int *i, char *rez);

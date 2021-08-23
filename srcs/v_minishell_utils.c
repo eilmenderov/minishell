@@ -1,10 +1,21 @@
 #include "head_minishell.h"
 
-void	v_pr_error(char *str, int error_code)
+void	v_pr_error(char *str, int error_code, char c, int fl)
 {
-	write(2, str, ft_strlen_m(str, 0));
-	write(2, "\n", 1);
-	exit(error_code);
+	if (!fl)
+	{
+		write(2, str, ft_strlen_m(str, 0));
+		write(2, "\n", 1);
+		exit(error_code);
+	}
+	if (fl == 1)
+	{
+		write(2, str, ft_strlen(str));
+		write(2, "'", 1);
+		write(2, &c, 1);
+		write(2, "'", 1);
+		write(2, "\n", 1);
+	}
 }
 
 void	v_pool_env(t_data *data, char **env, int i, size_t len)
@@ -17,11 +28,11 @@ void	v_pool_env(t_data *data, char **env, int i, size_t len)
 		len = ft_strlen_m(env[i], '=');
 		tmp = malloc(sizeof(t_env));
 		if (!tmp)
-			v_pr_error(ERR_MALC, -1);
+			v_pr_error(ERR_MALC, -1, 0, 0);
 		tmp->key = ft_strndup(env[i], len);
 		tmp->val = ft_strdup(&env[i][len + 1]);
 		if (!tmp->val || !tmp->key)
-			v_pr_error(ERR_MALC, -1);
+			v_pr_error(ERR_MALC, -1, 0, 0);
 		tmp->next = NULL, i++;
 		if (!data->beg_env)
 		{
@@ -48,7 +59,7 @@ void	v_init_data(t_data *data, char **env)
 	tmp = data->beg_env;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->key, "SHELL", 6))
+		if (!ft_strncmp(tmp->key, "SHLVL", 6))
 		{
 			data->shlvl = ft_atoi(tmp->val) + 1;
 			free(tmp->val), tmp->val = ft_itoa(data->shlvl);
