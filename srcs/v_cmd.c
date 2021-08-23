@@ -30,5 +30,4 @@ int	main(void)
 	v_check_cmd(&data);
 }
 
-
 // gcc v_cmd.c ../libft/libft.a  && ./a.out

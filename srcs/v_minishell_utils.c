@@ -41,6 +41,9 @@ void	v_init_data(t_data *data, char **env)
 	t_env	*tmp;
 
 	data->error = 0;
+	data->fd_in = -1;
+	data->fd_out = -1;
+	data->str_cmd = NULL;
 	v_pool_env(data, env, 0, 0);
 	tmp = data->beg_env;
 	while (tmp)

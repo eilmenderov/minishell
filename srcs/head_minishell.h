@@ -35,7 +35,7 @@ typedef struct s_env
 {
 	char			*key;
 	char			*val;
-	unsigned char 	visible;
+	unsigned char	visible;
 	struct s_env	*next;
 }				t_env;
 
@@ -54,7 +54,7 @@ typedef struct s_data
 	int				fd_in;
 	int				fd_out;
 	unsigned int	shlvl;
-	char 			*str_cmd;
+	char			*str_cmd;
 	t_env			*beg_env;
 	t_cmd			*cmd_start;
 }				t_data;
@@ -68,9 +68,13 @@ void	v_print_data(t_data *data);
 
 /* s_parser.c */
 int		ft_parsing(t_data *data, char *str);
+char	*ft_dollar(t_data *data, char *str, int *i, char *rez);
+
+/* v_pars_utils.c */
+char	*ft_dol_helper(char *key, t_env *env, char *rez);
+char	*ft_normal(char *str, int *i, char *rez, char *stop);
 
 /* v_pars_cpec.c */
 char	*ft_redir(t_data *data, char *str, int *i, char *rez);
-char	*ft_normal(char *str, int *i, char *rez, char *stop);
 
 #endif
