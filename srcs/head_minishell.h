@@ -68,7 +68,8 @@ void	v_print_data(t_data *data);
 
 /* s_parser.c */
 int		ft_parsing(t_data *data, char *str);
-char	*ft_slash(char *str, int *i, char *rez);
+char	*ft_almost_all(t_data *data, char *str, int *i, char *rez);
+char	*ft_proc_open(t_data *data, char *str, int *i, char *rez);
 
 /* v_pars_dollar.c */
 char	*ft_normal(char *str, int *i, char *rez, char *stop);
