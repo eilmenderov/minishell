@@ -8,12 +8,17 @@ void	v_pr_error(char *str, int error_code, char c, int fl)
 		write(2, "\n", 1);
 		exit(error_code);
 	}
-	if (fl == 1)
+	else if (fl == 1)
 	{
 		write(2, str, ft_strlen(str));
 		write(2, "'", 1);
 		write(2, &c, 1);
 		write(2, "'", 1);
+		write(2, "\n", 1);
+	}
+	else if (fl == 3)
+	{
+		write(2, str, ft_strlen_m(str, 0));
 		write(2, "\n", 1);
 	}
 }

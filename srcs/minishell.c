@@ -14,9 +14,12 @@ int	main(int ac, char **av, char **env)
 			break ;
 		add_history(str);
 		if (!ft_parsing(&data, str))
+		{
 			printf("|%s|\n", data.str_cmd);
 		// 	ft_run_cmd(&data);
-		free(data.str_cmd), free(str), str = NULL;
+			free(data.str_cmd), data.str_cmd = NULL;
+		}
+		free(str), str = NULL;
 	}
 	if (str)
 		free(str), str = NULL;
