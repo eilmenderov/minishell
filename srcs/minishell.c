@@ -12,6 +12,7 @@ int	main(int ac, char **av, char **env)
 		str = readline(SHELL_FW);
 		if (!str || !ft_strncmp(str, "exit", 5))
 			break ;
+
 		add_history(str);
 		if (!ft_parsing(&data, str))
 			printf("|%s|\n", data.str_cmd);
