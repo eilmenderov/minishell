@@ -1,4 +1,5 @@
-SRCS	=	minishell.c v_minishell_utils.c s_parser.c v_pars_dollar.c
+SRCS	=	minishell.c v_minishell_utils.c s_parser.c v_pars_dollar.c v_pars_spec.c \
+			s_find_command.c
 
 BONUS	=	
 

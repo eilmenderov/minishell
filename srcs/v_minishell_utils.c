@@ -28,6 +28,7 @@ void	v_pool_env(t_data *data, char **env, int i, size_t len)
 	t_env	*tmp;
 	t_env	*buf;
 
+	data->envp = env;
 	while (env && env[i])
 	{
 		len = ft_strlen_m(env[i], '=');

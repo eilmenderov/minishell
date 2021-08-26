@@ -123,7 +123,7 @@ char	*ft_redir(t_data *data, char *str, int *i, char *rez)
 	}
 	else if (str[*i] == '|')
 		rez = ft_pool_cmd(data, str, i, rez);
-	else if (str[*i] == ';' || (str[*i] == '&' && str[*i + 1] == '&'))
-		rez = ft_pool_cmd_st(data, str, i, rez);
+//	else if (str[*i] == ';' || (str[*i] == '&' && str[*i + 1] == '&'))
+//		rez = ft_pool_cmd_st(data, str, i, rez);
 	return (rez);
 }

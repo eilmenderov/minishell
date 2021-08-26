@@ -6,6 +6,7 @@
 # include <signal.h>
 # include <dirent.h>
 # include <sys/ioctl.h>
+# include <sys/stat.h>
 # include <termios.h>
 # include <curses.h> 
 # include <term.h>
@@ -30,6 +31,7 @@
 # define PID_EXEP		"[Sorry, we're not allowed to use func getpid]"
 # define ERR_SH_NEWL	"minishell: syntax error near unexpected token 'newln'"
 # define ERR_SH_TKN		"minishell: syntax error near unexpected token "
+# define ERR_COMM		"command not found: "
 
 typedef struct s_env
 {
@@ -41,8 +43,8 @@ typedef struct s_env
 
 typedef struct s_cmd
 {
-	char			*coomand;
-	char			**args;
+	char			*cmd;
+	char			**arg;
 	pid_t			pid;
 	unsigned char	is_fork;
 	struct s_cmd	*next;
@@ -55,6 +57,7 @@ typedef struct s_data
 	int				fd_out;
 	unsigned int	shlvl;
 	char			*str_cmd;
+	char 			**envp;
 	t_env			*beg_env;
 	t_cmd			*cmd_start;
 }				t_data;
@@ -77,5 +80,8 @@ char	*ft_dollar(t_data *data, char *str, int *i, char *rez);
 
 /* v_pars_cpec.c */
 char	*ft_redir(t_data *data, char *str, int *i, char *rez);
+
+/* s_find_command.c*/
+void ft_find_command(t_data *data, char *rez);
 
 #endif
