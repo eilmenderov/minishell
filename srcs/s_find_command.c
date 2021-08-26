@@ -44,24 +44,28 @@ int	ft_arr_len(char **arr_path)
 	return (j);
 }
 
-void ft_find_command(t_data *data, char *rez)
+char *ft_find_env(t_env *start, char *key)
 {
-	int		i;
-	char 	**arr_path;
-	t_env 	*tmp;
-	char 	*str_path;
-	struct stat buf;
+	t_env	*tmp;
 
-	data->cmd_start->arg = ft_split(rez, ' ');
-	tmp = data->beg_env;
+	tmp = start;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->key, "PATH", 5))
+		if (!ft_strncmp(tmp->key, key, ft_strlen(tmp->key)))
 			break;
 		tmp = tmp->next;
 	}
-	arr_path = ft_split(tmp->val, ':');
-	i = 0;
+	return (tmp->val);
+}
+
+void ft_find_command(t_data *data, char *rez, int i)
+{
+	char		**arr_path;
+	char		*str_path;
+	struct stat	buf;
+
+	data->cmd_start->arg = ft_split(rez, ' ');
+	arr_path = ft_split(ft_find_env(data->beg_env, "PATH"), ':');
 	while (arr_path[i]) // находим путь с коммандой в PATH
 	{
 		str_path = ft_strjoin(arr_path[i], "/");

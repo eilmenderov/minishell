@@ -82,6 +82,6 @@ char	*ft_dollar(t_data *data, char *str, int *i, char *rez);
 char	*ft_redir(t_data *data, char *str, int *i, char *rez);
 
 /* s_find_command.c*/
-void ft_find_command(t_data *data, char *rez);
+void ft_find_command(t_data *data, char *rez, int i);
 
 #endif

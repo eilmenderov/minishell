@@ -99,10 +99,7 @@ int	ft_parsing(t_data *data, char *str)
 		if (!rez)
 				return (1);
 	}
-	// rez = ft_strjoin_m(rez, "\n", 1);
-//	execve
-//	 write (data->fd_out, rez, ft_strlen(rez));
-	ft_find_command(data, rez);
+	ft_find_command(data, rez, 0);
 	data->str_cmd = rez;
 	// close (data->fd_out);
 	// if (!rez)
