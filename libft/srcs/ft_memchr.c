@@ -1,17 +1,13 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/17 15:58:27 by vleida            #+#    #+#             */
-/*   Updated: 2021/04/21 10:26:42 by vleida           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
+/*
+**	@brief	locates the first occurrence of c in the string, search max n bytes
+**	
+**	@param	s		pointer to string
+**	@param	c		character
+**	@param	n		max distation search in bytes
+**	@return	void*	pointer to location c, or NULL if c not found
+*/
 void	*ft_memchr(const void *s, int c, size_t n)
 {
 	size_t	i;

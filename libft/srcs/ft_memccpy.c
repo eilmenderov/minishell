@@ -1,17 +1,15 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_memccpy.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/17 11:35:39 by vleida            #+#    #+#             */
-/*   Updated: 2021/04/21 10:26:38 by vleida           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
+/*
+**	@brief	copies n bytes from src to dst. or less, if c occurs in src
+**	
+**	@param	dst		pointer to destination string
+**	@param	src		pointer to source string
+**	@param	c		character for stop copy
+**	@param	n		max count bytes for copy
+**	@return	void*	NULL if copied all n bytes, 
+**					else pointer after character 'c' in the string dst
+*/
 void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
 	size_t	i;

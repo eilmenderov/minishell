@@ -1,17 +1,13 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_strndup.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/17 11:25:01 by vleida            #+#    #+#             */
-/*   Updated: 2021/08/17 13:09:17 by vleida           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
+/*
+**	@brief	allocates memory (n bytes) and copy first n
+**			chars string to this memory
+**	
+**	@param	src		pointer to string
+**	@param	n		bytes for copy
+**	@return	char*	pointer to new string or NULL
+*/
 char	*ft_strndup(const char *src, size_t n)
 {
 	char	*temp;
@@ -21,8 +17,11 @@ char	*ft_strndup(const char *src, size_t n)
 	if (!src)
 		return (NULL);
 	kol = ft_strlen(src) + 1;
-	if (kol > n)
+	if (kol < n)
+	{
 		temp = malloc(sizeof(char) * kol);
+		n = kol;
+	}
 	else
 		temp = malloc(sizeof(char) * (n + 1));
 	if (!temp)

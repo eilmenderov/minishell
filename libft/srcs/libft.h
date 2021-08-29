@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/13 13:47:04 by vleida            #+#    #+#             */
-/*   Updated: 2021/08/17 11:26:24 by vleida           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef LIBFT_H
 # define LIBFT_H
 
@@ -47,6 +35,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strnstr(const char *has, const char *ned, size_t len);
+int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t len);
 int		ft_atoi(const char *str);
 int		ft_isalpha(int c);
@@ -89,5 +78,6 @@ size_t	ft_strlen_m(const char *str, int c);
 char	*ft_strjoin_m(char const *ost, char const *buf, int c);
 int		ft_gnl_cheker(char *ost);
 int		ft_ch_for_coinc(char c, char *str);
+void	ft_free_split(char **rez);
 
 #endif

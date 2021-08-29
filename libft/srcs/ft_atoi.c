@@ -1,17 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/08 13:11:50 by vleida            #+#    #+#             */
-/*   Updated: 2021/08/16 15:10:41 by vleida           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
+/*
+**	@brief	converts initial portion of string digits  to int representation
+**	
+**	@param	str		pointer to string with digits
+**	@return	int		integer,  zero if integer not found or found zero!
+*/
 int	ft_atoi(const char *str)
 {
 	int					neg;

@@ -1,17 +1,13 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_memcmp.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/18 12:31:17 by vleida            #+#    #+#             */
-/*   Updated: 2021/04/21 10:26:45 by vleida           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
+/*
+**	@brief	compares two strings. compare maximum n bytes
+**	
+**	@param	s1		pointer to string
+**	@param	s2		pointer to string
+**	@param	n		maximum lenght of compare
+**	@return	int	zero if strings are equal, else difference between different bytes
+*/
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
 	size_t	i;

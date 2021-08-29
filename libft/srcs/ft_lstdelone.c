@@ -1,17 +1,10 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/21 16:43:18 by vleida            #+#    #+#             */
-/*   Updated: 2021/04/22 16:17:29 by vleida           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
+/*
+**	@brief	deletes and free one element of the list
+**	
+**	@param	lst		pointer to element of the list
+*/
 void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
 	if (lst && del)

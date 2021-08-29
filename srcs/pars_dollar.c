@@ -24,18 +24,16 @@ static char	*ft_dol_exeption(t_data *data, char *str, int *i, char *rez)
 	else if (str[*i + 1] == '$')
 	{
 		*i = *i + 2;
-		return(ft_strjoin_m(rez, PID_EXEP, 1));
+		return (ft_strjoin_m(rez, PID_EXEP, 1));
 	}
 	*i = *i + 2;
-	// while (ft_isalnum(str[*i]))
-	// 	*i = *i + 1;
 	return (ft_strjoin_m(rez, "0", 1));
-
 }
 
 static int	ft_dollar_chek(char *str, int *i, char **rez)
 {
-	if (str[*i + 1] != '_' && !ft_isalpha(str[*i + 1]) && !ft_isdigit(str[*i + 1]))
+	if (str[*i + 1] != '_' && !ft_isalpha(str[*i + 1])
+		&& !ft_isdigit(str[*i + 1]))
 	{
 		*rez = ft_strjoin_m(*rez, "$", 1);
 		*i = *i + 1;
@@ -49,6 +47,10 @@ static int	ft_dollar_chek(char *str, int *i, char **rez)
 	return (0);
 }
 
+/*
+**	@brief	Handles $ substitutes the value from env if it exist
+**	@return	*char 	string rez with value
+*/
 char	*ft_dollar(t_data *data, char *str, int *i, char *rez)
 {
 	int		j;

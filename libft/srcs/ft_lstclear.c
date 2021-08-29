@@ -1,17 +1,10 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/21 17:32:19 by vleida            #+#    #+#             */
-/*   Updated: 2021/04/21 17:57:31 by vleida           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
+/*
+**	@brief	deletes and frees the given element and every successor of that element
+**	
+**	@param	lst		the addres of a pointer to the list
+*/
 void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
 	t_list	*buf;

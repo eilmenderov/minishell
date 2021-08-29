@@ -75,6 +75,14 @@ static int	ft_helper_dop(char *buf, char **ost, char ***line, int *fl)
 	return (0);
 }
 
+/*
+**	@brief	Creates array of strings using the character ’\n’ as a delimiter,
+**			read string from fd.
+**	
+**	@param	fd		pointer to string
+**	@param	line	delimiter character
+**	@return	int		counts substrings
+*/
 int	get_next_line(int fd, char **line)
 {
 	char		*buf;

@@ -1,17 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_toupper.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/19 15:12:54 by vleida            #+#    #+#             */
-/*   Updated: 2021/08/16 15:12:46 by vleida           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
+/*
+**	@brief		convert char to uppercase if it's lowercase
+**	
+**	@param	c		character
+**	@return	int		character
+*/
 int	ft_toupper(int c)
 {
 	if (c > 96 && c < 123)

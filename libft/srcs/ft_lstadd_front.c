@@ -1,17 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/21 14:42:50 by vleida            #+#    #+#             */
-/*   Updated: 2021/04/21 16:42:09 by vleida           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
+/*
+**	@brief	adds the element ’new’ at the beginning of the list
+**	
+**	@param	lst		pointer to list
+**	@param	new		pointer to new element
+*/
 void	ft_lstadd_front(t_list **lst, t_list *new)
 {
 	if (lst)

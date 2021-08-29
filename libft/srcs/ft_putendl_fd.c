@@ -1,17 +1,12 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/21 13:56:41 by vleida            #+#    #+#             */
-/*   Updated: 2021/04/21 13:59:09 by vleida           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
+/*
+**	@brief	Outputs the string ’s’ to the given file descriptor, 
+**			followed by a newline.
+**	
+**	@param	s		pointer to string
+**	@param	fd		file descriptor
+*/
 void	ft_putendl_fd(char *s, int fd)
 {
 	ft_putstr_fd(s, fd);

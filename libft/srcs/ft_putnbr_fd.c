@@ -1,17 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/21 14:04:56 by vleida            #+#    #+#             */
-/*   Updated: 2021/04/21 14:12:35 by vleida           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
+/*
+**	@brief	write integer to file descriptor
+**	
+**	@param	n		integer
+**	@param	fd		file descriptor
+*/
 void	ft_putnbr_fd(int n, int fd)
 {
 	if (n == -2147483648)

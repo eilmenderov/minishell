@@ -1,6 +1,6 @@
 #include "head_minishell.h"
 
-static char	*ft_merge_q1(char *str, int *i, char *rez)
+static char	*ft_quotes(char *str, int *i, char *rez)
 {
 	int		j;
 	char	*sub;
@@ -15,14 +15,13 @@ static char	*ft_merge_q1(char *str, int *i, char *rez)
 	return (rez);
 }
 
-static char	*ft_merge_q2(t_data *data, char *str, int *i, char *rez)
+static char	*ft_double_quotes(t_data *data, char *str, int *i, char *rez)
 {
 	int		j;
-	char	*sub;
 
-	sub = NULL;
-	j = *i + 1;
-	while (str[++(*i)])
+	*i = *i + 1;
+	j = *i;
+	while (str[*i])
 	{
 		if (str[*i] == '\"')
 			break ;
@@ -33,33 +32,32 @@ static char	*ft_merge_q2(t_data *data, char *str, int *i, char *rez)
 			j = *i;
 			*i = *i - 1;
 		}
+		*i = *i + 1;
 	}
 	if (j != *i)
-		sub = ft_strndup(&str[j], *i - j);
-	rez = ft_strjoin_m(rez, sub, 3);
-	(*i)++;
+		rez = ft_strjoin_m(rez, ft_strndup(&str[j], *i - j), 3);
+	*i = *i + 1;
 	return (rez);
 }
 
-char	*ft_almost_all(t_data *data, char *str, int *i, char *rez)
+void	ft_hadle_str(t_data *data, char *str, int *i)
 {
-	while (str[*i] && !ft_ch_for_coinc(str[*i], "><|&;"))
+	while (str[*i] && !ft_ch_for_coinc(str[*i], "> <|&;"))
 	{
 		if (str[*i] == '\'')
-			rez = ft_merge_q1(str, i, rez);
+			data->rez = ft_quotes(str, i, data->rez);
 		else if (str[*i] == '$')
-			rez = ft_dollar(data, str, i, rez);
+			data->rez = ft_dollar(data, str, i, data->rez);
 		else if (str[*i] == '\"')
-			rez = ft_merge_q2(data, str, i, rez);
+			data->rez = ft_double_quotes(data, str, i, data->rez);
 		else if (str[*i] == '\\')
 		{
-			rez = ft_strjoin_m(rez, ft_strndup(&str[*i + 1], 1), 3);
+			data->rez = ft_strjoin_m(data->rez, ft_strndup(&str[*i + 1], 1), 3);
 			*i = *i + 2;
 		}
 		else
-			rez = ft_normal(str, i, rez, "><|&\\;'\"$");
+			data->rez = ft_normal(str, i, data->rez, "> <|&\\;'\"$");
 	}
-	return (rez);
 }
 
 char	*ft_proc_open(t_data *data, char *str, int *i, char *rez)
@@ -67,11 +65,11 @@ char	*ft_proc_open(t_data *data, char *str, int *i, char *rez)
 	while (str[*i] && !ft_ch_for_coinc(str[*i], "> <|&;"))
 	{
 		if (str[*i] == '\'')
-			rez = ft_merge_q1(str, i, rez);
+			rez = ft_quotes(str, i, rez);
 		else if (str[*i] == '$')
 			rez = ft_dollar(data, str, i, rez);
 		else if (str[*i] == '\"')
-			rez = ft_merge_q2(data, str, i, rez);
+			rez = ft_double_quotes(data, str, i, rez);
 		else if (str[*i] == '\\')
 		{
 			rez = ft_strjoin_m(rez, ft_strndup(&str[*i + 1], 1), 3);
@@ -85,24 +83,24 @@ char	*ft_proc_open(t_data *data, char *str, int *i, char *rez)
 
 int	ft_parsing(t_data *data, char *str)
 {
-	int		i;
-	char	*rez;
+	int	i;
 
-	rez = NULL;
 	i = 0;
 	while (str[i])
 	{
 		if (ft_ch_for_coinc(str[i], "><|&;"))
-			rez = ft_redir(data, str, &i, rez);
-		else
-			rez = ft_almost_all(data, str, &i, rez);
-		if (!rez)
+		{
+			if (ft_redir(data, str, &i))
 				return (1);
+		}
+		else if (str[i] == ' ')
+		{
+			data->rez = ft_strjoin_m(data->rez, " ", 1);
+			while (str[i] && str[i] == ' ')
+				i++;
+		}
+		else
+			ft_hadle_str(data, str, &i);
 	}
-	ft_find_command(data, rez, 0);
-	data->str_cmd = rez;
-	// close (data->fd_out);
-	// if (!rez)
-	// 	return (1);
 	return (0);
 }

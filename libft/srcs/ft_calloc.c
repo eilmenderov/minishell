@@ -1,17 +1,13 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/19 15:38:49 by vleida            #+#    #+#             */
-/*   Updated: 2021/05/14 14:13:11 by vleida           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
+/*
+**	@brief	allocations memory like malloc, but uses count object multiply by 
+**			size objects and then fills space zeros
+**	
+**	@param	count		count objects
+**	@param	size		size one object in bytes
+**	@return	void*	pointer to allocation memory or NULL if allocation fail
+*/
 void	*ft_calloc(size_t count, size_t size)
 {
 	void	*rez;

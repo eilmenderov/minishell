@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/21 11:50:59 by vleida            #+#    #+#             */
-/*   Updated: 2021/04/21 13:24:18 by vleida           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
 static int	ft_razm(int c)
@@ -47,6 +35,12 @@ static void	ft_str_nbr(int nb, int razm, char *rez)
 	}
 }
 
+/*
+**	@brief	allocates memory  for string and fills it represantation number
+**	
+**	@param	n		number
+**	@return	char*	pointer to new string or NULL if allocation fail
+*/
 char	*ft_itoa(int n)
 {
 	int		razm;

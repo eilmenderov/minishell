@@ -1,17 +1,12 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/20 13:18:15 by vleida            #+#    #+#             */
-/*   Updated: 2021/08/16 15:19:55 by vleida           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
+/*
+**	@brief	counts the number of substrings in a string
+**	
+**	@param	s		pointer to string
+**	@param	c		delimiter character
+**	@return	int		counts substrings
+*/
 int	ft_count_words(char const *s, char c)
 {
 	size_t	i;
@@ -99,6 +94,14 @@ static int	ft_add_newwr(char const *s, char c, int i, char **rez)
 	return (1);
 }
 
+/*
+**	@brief	creates array of strings obtained by splitting ’s’ 
+**			using the character ’c’ as a delimiter.
+**	
+**	@param	s		pointer to string
+**	@param	c		delimiter character
+**	@return	char**	pointer to new array of strings, terminated by a NULL
+*/
 char	**ft_split(char const *s, char c)
 {
 	int		wrd;

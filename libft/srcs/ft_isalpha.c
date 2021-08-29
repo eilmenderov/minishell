@@ -1,22 +1,14 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/19 13:36:18 by vleida            #+#    #+#             */
-/*   Updated: 2021/08/16 15:11:33 by vleida           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
+/*
+**	@brief	checks a character for alphabeticality
+**	
+**	@param	c		character
+**	@return	int		0 if test false, else 1
+*/
 int	ft_isalpha(int c)
 {
-	if (c < 65 || c > 122)
-		return (0);
-	else if (c > 90 && c < 97)
-		return (0);
-	return (1);
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+		return (1);
+	return (0);
 }

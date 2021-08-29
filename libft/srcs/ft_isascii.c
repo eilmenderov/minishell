@@ -1,17 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_isascii.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/19 14:47:51 by vleida            #+#    #+#             */
-/*   Updated: 2021/08/16 15:11:37 by vleida           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
+/*
+**	@brief	checks a character is betwen 0 and 127
+**	
+**	@param	c		character
+**	@return	int		0 if test false, else 1
+*/
 int	ft_isascii(int c)
 {
 	if (c < 0 || c > 127)

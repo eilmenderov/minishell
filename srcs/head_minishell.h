@@ -3,10 +3,10 @@
 
 # include "../libft/srcs/libft.h"
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <signal.h>
 # include <dirent.h>
 # include <sys/ioctl.h>
-# include <sys/stat.h>
 # include <termios.h>
 # include <curses.h> 
 # include <term.h>
@@ -23,15 +23,16 @@
 # define FALSE		0
 # define TRUE		1
 
-# define ERR_MALC		"Error : malloc error"		//exit_code -1
-# define ERR_RDL		"Error : readline error"	//exit_code -2
-# define ERR_FORK		"Error : fork error"		//exit_code -3
-# define ERR_PIPE		"Error : pipe error"		//exit_code -4
-# define ERR_DUP		"Error : dup2 error"		//exit_code -5
+# define ERR_MALC		"Error : malloc error"
+# define ERR_RDL		"Error : readline error"
+# define ERR_GNL		"Error : get_next_line error"
+# define ERR_FORK		"Error : fork error"
+# define ERR_PIPE		"Error : pipe error"
+# define ERR_DUP		"Error : dup2 error"
 # define PID_EXEP		"[Sorry, we're not allowed to use func getpid]"
 # define ERR_SH_NEWL	"minishell: syntax error near unexpected token 'newln'"
 # define ERR_SH_TKN		"minishell: syntax error near unexpected token "
-# define ERR_COMM		"command not found: "
+# define ERR_CMD		"minishell: command not found: "
 
 typedef struct s_env
 {
@@ -56,32 +57,39 @@ typedef struct s_data
 	int				fd_in;
 	int				fd_out;
 	unsigned int	shlvl;
-	char			*str_cmd;
-	char 			**envp;
+	char			**env_path;
+	char			**env;
+	char			*rez;
 	t_env			*beg_env;
 	t_cmd			*cmd_start;
 }				t_data;
 
-/* v_minishell_utils.c */
-void	v_pr_error(char *str, int error_code, char c, int fl);
-void	v_pool_env(t_data *data, char **env, int i, size_t len);
-void	v_init_data(t_data *data, char **env);
-void	v_free_data(t_data *data);
-void	v_print_data(t_data *data);
+/* minishell_utils.c */
+int		ft_pr_error(char *str, int error_code, char c, int fl);
+void	ft_pool_env(t_data *data, char **env, int i, size_t len);
+void	ft_init_data(t_data *data, char **env);
+void	ft_free_data(t_data *data);
+void	ft_proc_envp(char **envp, t_data *data);
 
-/* s_parser.c */
+/* parser.c */
 int		ft_parsing(t_data *data, char *str);
-char	*ft_almost_all(t_data *data, char *str, int *i, char *rez);
+void	ft_hadle_str(t_data *data, char *str, int *i);
 char	*ft_proc_open(t_data *data, char *str, int *i, char *rez);
 
-/* v_pars_dollar.c */
+/* pars_dollar.c */
 char	*ft_normal(char *str, int *i, char *rez, char *stop);
 char	*ft_dollar(t_data *data, char *str, int *i, char *rez);
 
-/* v_pars_cpec.c */
-char	*ft_redir(t_data *data, char *str, int *i, char *rez);
+/* proc_redirects.c */
+int		ft_redir(t_data *data, char *str, int *i);
 
-/* s_find_command.c*/
-void ft_find_command(t_data *data, char *rez, int i);
+/* here_doc.c */
+int		ft_here_doc(t_data *data, char *str, int *i);
+
+/* cmd.c */
+char	*ft_find_cmd(t_data *data, char *cmd);
+void	ft_start_cmd(t_data *data);
+int		ft_pool_cmd(t_data *data, char *str, int *i);
+int		ft_pool_cmd_st(t_data *data, char *str, int *i);
 
 #endif

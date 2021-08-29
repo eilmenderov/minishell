@@ -1,17 +1,12 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/19 17:08:56 by vleida            #+#    #+#             */
-/*   Updated: 2021/04/21 10:27:09 by vleida           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
+/*
+**	@brief	allocates memory and contactination two strings
+**	
+**	@param	s1		pointer to string
+**	@param	s2		pointer to string
+**	@return	char*	pointer to new result string or NULL
+*/
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t	len;

@@ -1,17 +1,14 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_memmove.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/17 15:18:48 by vleida            #+#    #+#             */
-/*   Updated: 2021/04/22 13:04:53 by vleida           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
+/*
+**	@brief	copies n bytes from memory area src to memory area dst.
+**			The two strings may overlap.
+**	
+**	@param	dst		pointer to dist
+**	@param	src		pointer to source
+**	@param	len		count bytes for copy
+**	@return	void*	original pointer to dist
+*/
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	size_t	i;

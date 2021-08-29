@@ -1,31 +1,49 @@
 #include "head_minishell.h"
 
+/*
+**	@brief	Print struct data
+*/
+static void	ft_print_data(t_data *data)
+{
+	t_env	*tmp;
+
+	printf("err_fl = %d\n", data->error);
+	tmp = data->beg_env;
+	while (tmp)
+	{
+		printf("%-30s%s\n", tmp->key, tmp->val);
+		tmp = tmp->next;
+	}
+}
+
+/*
+**	@brief	minishell start here
+*/
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
 	char	*str;
 	int		i;
 
-	v_init_data(&data, env);
+	ft_init_data(&data, env);
 	while (TRUE)
 	{
 		str = readline(SHELL_FW);
-		if (!str || !ft_strncmp(str, "exit", 5))
+		if (!str || !ft_strcmp(str, "exit"))
 			break ;
-
 		add_history(str);
 		if (!ft_parsing(&data, str))
 		{
-			printf("|%s|\n", data.str_cmd);
-		// 	ft_run_cmd(&data);
-			free(data.str_cmd), data.str_cmd = NULL;
+			printf("%s\n", data.rez);
+			ft_start_cmd(&data);
+			free(data.rez), data.rez = NULL;
 		}
 		free(str), str = NULL;
 	}
 	if (str)
 		free(str), str = NULL;
-	v_print_data(&data);
-	v_free_data(&data);
-	// sleep (20);
+	ft_print_data(&data);
+	ft_free_data(&data);
+	sleep (20);
 	return (0);
 }

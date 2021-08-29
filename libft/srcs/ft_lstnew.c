@@ -1,17 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/21 14:34:35 by vleida            #+#    #+#             */
-/*   Updated: 2021/04/21 14:47:46 by vleida           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
+/*
+**	@brief	create new list element
+**	
+**	@param	val		element content
+**	@return	t_list*	pointer to new element or NULL
+*/
 t_list	*ft_lstnew(void *content)
 {
 	t_list	*newlist;

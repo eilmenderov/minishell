@@ -1,17 +1,13 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_strmapi.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/21 13:25:13 by vleida            #+#    #+#             */
-/*   Updated: 2021/04/22 13:13:10 by vleida           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
+/*
+**	@brief	create copy of string,
+**			and apply function f to each element new string
+**	
+**	@param	s		pointer to string
+**	@param	f		function, return char
+**	@return	char*	new string
+*/
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
 	size_t	num;

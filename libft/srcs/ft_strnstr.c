@@ -1,17 +1,14 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/18 18:18:53 by vleida            #+#    #+#             */
-/*   Updated: 2021/04/22 13:17:28 by vleida           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
+/*
+**	@brief	locates the first occurrence string 'needle' in string 'haystack'.
+**			searches in a substring 'haystack' of length at most 'len'
+**	
+**	@param	has			pointer to string
+**	@param	ned			pointer to string
+**	@param	len			lenght substring
+**	@return	char*	pointer to the beginning of found string. NULL if not found
+*/
 char	*ft_strnstr(const char *has, const char *ned, size_t len)
 {
 	size_t	i;
