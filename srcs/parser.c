@@ -102,5 +102,7 @@ int	ft_parsing(t_data *data, char *str)
 		else
 			ft_hadle_str(data, str, &i);
 	}
+	if (data->rez)
+		ft_pool_cmd(data, str, &i);
 	return (0);
 }

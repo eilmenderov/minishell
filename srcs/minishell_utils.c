@@ -23,6 +23,11 @@ int	ft_pr_error(char *str, int error_code, char c, int fl)
 	}
 	else if (fl == 2)
 		ft_putendl_fd(str, 2);
+	else if (fl == 3)
+	{
+		ft_putstr_fd("minishell: ", 2), ft_putstr_fd(str, 2);
+		ft_putendl_fd(": command not found", 2);
+	}
 	return (error_code);
 }
 
@@ -34,21 +39,20 @@ int	ft_pr_error(char *str, int error_code, char c, int fl)
 **	@param	i 0		iterator(just because of the norm)
 **	@param	len	0	iterator(just because of the norm)
 */
-void	ft_pool_env(t_data *data, char **env, int i, size_t len)
+void	ft_pool_env(t_data *data, int i, size_t len)
 {
 	t_env	*tmp;
 	t_env	*buf;
 
-	while (env && env[i])
+	while (data->env && data->env[i])
 	{
-		len = ft_strlen_m(env[i], '=');
+		len = ft_strlen_m(data->env[i], '=');
 		tmp = malloc(sizeof(t_env));
 		if (!tmp)
 			ft_pr_error(ERR_MALC, -1, 0, 0);
-		tmp->key = ft_strndup(env[i], len);
-		tmp->val = ft_strdup(&env[i][len + 1]);
-		if (!tmp->val || !tmp->key)
-			ft_pr_error(ERR_MALC, -1, 0, 0);
+		tmp->key = ft_strndup(data->env[i], len);
+		tmp->visible = 0;
+		tmp->val = ft_strdup(&data->env[i][len + 1]);
 		tmp->next = NULL, i++;
 		if (!data->beg_env)
 		{
@@ -76,10 +80,9 @@ void	ft_init_data(t_data *data, char **env)
 	data->error = 0;
 	data->fd_in = -1;
 	data->fd_out = -1;
-	data->env_path = NULL;
 	data->env = env;
 	data->rez = NULL;
-	ft_pool_env(data, env, 0, 0), ft_proc_envp(env, data);
+	ft_pool_env(data, 0, 0);
 	tmp = data->beg_env;
 	while (tmp)
 	{
@@ -115,7 +118,6 @@ void	ft_free_data(t_data *data)
 		tmp = tmp->next;
 		free(buf);
 	}
-	ft_free_split(data->env_path);
 	data = NULL;
 }
 
@@ -126,24 +128,20 @@ void	ft_free_data(t_data *data)
 **	@param	env		environment
 **	@param	data	struct t_data
 */
-void	ft_proc_envp(char **envp, t_data *data)
+char	**ft_proc_envp(t_data *data)
 {
+	t_env	*tmp;
 	int		i;
 	char	**rez;
 
-	i = 0;
-	rez = envp;
-	while (rez[i])
-	{
-		if (!ft_strncmp(rez[i], "PATH=", 5))
-			break ;
-		i++;
-	}
-	rez = ft_split(&rez[i][5], ':');
+	tmp = data->beg_env;
+	while (tmp && ft_strcmp(tmp->key, "PATH="))
+		tmp = tmp->next;
+	rez = ft_split(tmp->val, ':');
 	if (!rez)
 		ft_pr_error(ERR_MALC, -1, 0, 0);
 	i = 0;
 	while (rez[i])
 		rez[i] = ft_strjoin_m(rez[i], "/", 1), i++;
-	data->env_path = rez;
+	return (rez);
 }

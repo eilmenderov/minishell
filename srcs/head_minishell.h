@@ -22,6 +22,10 @@
 # define STDOUT		1
 # define FALSE		0
 # define TRUE		1
+# define PIPE		1
+# define DOB_PIPE	2
+# define DOB_AMPER	3
+# define POINT_ZAP	4
 
 # define ERR_MALC		"Error : malloc error"
 # define ERR_RDL		"Error : readline error"
@@ -46,18 +50,19 @@ typedef struct s_cmd
 {
 	char			*cmd;
 	char			**arg;
+	char			*ful_cmd;
 	pid_t			pid;
-	unsigned char	is_fork;
+	unsigned char	delim;
 	struct s_cmd	*next;
 }				t_cmd;
 
 typedef struct s_data
 {
+	int				counter;
 	unsigned char	error;
 	int				fd_in;
 	int				fd_out;
 	unsigned int	shlvl;
-	char			**env_path;
 	char			**env;
 	char			*rez;
 	t_env			*beg_env;
@@ -66,10 +71,10 @@ typedef struct s_data
 
 /* minishell_utils.c */
 int		ft_pr_error(char *str, int error_code, char c, int fl);
-void	ft_pool_env(t_data *data, char **env, int i, size_t len);
+void	ft_pool_env(t_data *data, int i, size_t len);
 void	ft_init_data(t_data *data, char **env);
 void	ft_free_data(t_data *data);
-void	ft_proc_envp(char **envp, t_data *data);
+char	**ft_proc_envp(t_data *data);
 
 /* parser.c */
 int		ft_parsing(t_data *data, char *str);

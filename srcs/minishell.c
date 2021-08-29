@@ -26,15 +26,16 @@ int	main(int ac, char **av, char **env)
 	int		i;
 
 	ft_init_data(&data, env);
+	data.counter = 0;
 	while (TRUE)
 	{
 		str = readline(SHELL_FW);
-		if (!str || !ft_strcmp(str, "exit"))
+		if (!ft_strcmp(str, "exit"))
 			break ;
 		add_history(str);
 		if (!ft_parsing(&data, str))
 		{
-			printf("%s\n", data.rez);
+			printf("|%s|%d|\n", data.cmd_start->ful_cmd, data.counter);
 			ft_start_cmd(&data);
 			free(data.rez), data.rez = NULL;
 		}
