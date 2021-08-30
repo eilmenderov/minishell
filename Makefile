@@ -69,7 +69,7 @@ norm:
 
 clean:		
 			@${RM} ${OBJS} ${BONUS_OBJS}
-			@make clean -C ./libft/
+#			@make clean -C ./libft/
 			@echo "${BLUE}clean done!${SHALLOW}"
 
 fclean:		
