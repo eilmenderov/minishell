@@ -51,6 +51,6 @@ int	main(int ac, char **av, char **env)
 		free(str), str = NULL;
 	ft_print_data(&data);
 	ft_free_data(&data);
-	sleep (20);
+	sleep (3);
 	return (0);
 }
