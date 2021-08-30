@@ -35,7 +35,7 @@ int	main(int ac, char **av, char **env)
 		add_history(str);
 		if (!ft_parsing(&data, str))
 		{
-			printf("|%s|\n", data.cmd_start->ful_cmd);
+//			printf("|%s|\n", data.cmd_start->ful_cmd);
 			if (ft_buildin(&data))
 			{
 				free(str), str = NULL;

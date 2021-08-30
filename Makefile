@@ -13,7 +13,7 @@ BONUS_OBJS = ${addprefix ${SRCS_BONUS_DIR}, ${BONUS:.c=.o}}
 
 NAME = minishell
 
-USER = vleida
+USER = saltmer
 
 B_NAME = minishell_b
 
