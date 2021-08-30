@@ -30,8 +30,8 @@ int	main(int ac, char **av, char **env)
 	while (TRUE)
 	{
 		str = readline(SHELL_FW);
-		if (!ft_strcmp(str, "exit"))
-			break ;
+//		if (!ft_strcmp(str, "exit"))
+//			break ;
 		add_history(str);
 		if (!ft_parsing(&data, str))
 		{
@@ -49,8 +49,8 @@ int	main(int ac, char **av, char **env)
 	}
 	if (str)
 		free(str), str = NULL;
-	ft_print_data(&data);
+//	ft_print_data(&data);
 	ft_free_data(&data);
-	sleep (20);
+//	sleep (20);
 	return (0);
 }

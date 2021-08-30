@@ -64,7 +64,7 @@ char	*ft_dollar(t_data *data, char *str, int *i, char *rez)
 	if (str[*i + 1] == '?')
 	{
 		*i = *i + 2;
-		return (ft_strjoin_m(rez, ft_strndup("return value", 12), 3));
+		return (ft_strjoin_m(rez, ft_itoa(data->ret_val), 3));
 	}
 	if (ft_ch_for_coinc(str[*i + 1], "#0$"))
 		return (ft_dol_exeption(data, str, i, rez));
