@@ -96,5 +96,10 @@ char	*ft_find_cmd(t_data *data, char *cmd);
 void	ft_start_cmd(t_data *data);
 int		ft_pool_cmd(t_data *data, char *str, int *i);
 int		ft_pool_cmd_st(t_data *data, char *str, int *i);
+void 	ft_free_cmd(t_data *data, t_cmd *do_cmd, char *cmd);
+
+/* biuld_in.c */
+int		ft_buildin(t_data *data);
+
 
 #endif

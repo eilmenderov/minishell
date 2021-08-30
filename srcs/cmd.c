@@ -30,6 +30,15 @@ char	*ft_find_cmd(t_data *data, char *cmd)
 	return (NULL);
 }
 
+void 	ft_free_cmd(t_data *data, t_cmd *do_cmd, char *cmd)
+{
+	free(cmd);
+	ft_free_split(do_cmd->arg);
+	free(do_cmd->ful_cmd);
+	free(data->cmd_start);
+	data->cmd_start = NULL;
+}
+
 void	ft_start_cmd(t_data *data)
 {
 	char	*cmd;
@@ -43,14 +52,13 @@ void	ft_start_cmd(t_data *data)
 	if (!cmd)
 	{
 		ft_pr_error(do_cmd->arg[0], 0, 0, 3);
-		free(cmd), ft_free_split(do_cmd->arg);
-		free(do_cmd->ful_cmd), free(data->cmd_start), data->cmd_start = NULL;
+		ft_free_cmd(data, do_cmd, cmd);
 		return ;
 	}
 	pid = fork();
 	if (pid < 0)
 	{
-		free(cmd), write(2, ERR_FORK, ft_strlen(ERR_FORK));
+		ft_free_cmd(data, do_cmd, cmd), write(2, ERR_FORK, ft_strlen(ERR_FORK));
 		return ;
 	}
 	if (pid == 0)
@@ -66,8 +74,7 @@ void	ft_start_cmd(t_data *data)
 	}
 	else
 	{
-		free(cmd), ft_free_split(do_cmd->arg);
-		free(do_cmd->ful_cmd), free(data->cmd_start), data->cmd_start = NULL;
+		ft_free_cmd(data, do_cmd, cmd);
 		wait(NULL);
 	}
 }

@@ -35,8 +35,14 @@ int	main(int ac, char **av, char **env)
 		add_history(str);
 		if (!ft_parsing(&data, str))
 		{
-			printf("|%s|%d|\n", data.cmd_start->ful_cmd, data.counter);
-			ft_start_cmd(&data);
+			printf("|%s|\n", data.cmd_start->ful_cmd);
+			if (ft_buildin(&data))
+			{
+				free(str), str = NULL;
+				continue ;
+			}
+			else
+				ft_start_cmd(&data);
 			free(data.rez), data.rez = NULL;
 		}
 		free(str), str = NULL;
