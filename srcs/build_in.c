@@ -58,16 +58,12 @@ void ft_unset(t_data *data, char *s, int i)
 	{
 		data->beg_env = tmp->next;
 		free(tmp->val), free(tmp->key), free(tmp), free(key_unset);
-//		ft_env(data);
 		return ;
 	}
-	j = 0;
 	while (tmp->next)
 	{
-		j++;
 		if (!tmp->next->next)
 		{
-			printf("sd\n");
 			if (!ft_strcmp(key_unset, tmp->next->key))
 			{
 				free(tmp->next->val), free(tmp->next->key), free(tmp->next), free
@@ -80,7 +76,6 @@ void ft_unset(t_data *data, char *s, int i)
 			break ;
 		tmp = tmp->next;
 	}
-	printf("%d\n", j);
 	tmp2 = tmp, tmp_del = tmp->next;
 	tmp2->next = tmp_del->next, tmp_del->next = NULL;
 	free(tmp_del->val), free(tmp_del->key), free(tmp_del), free(key_unset);
