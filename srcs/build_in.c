@@ -37,7 +37,7 @@ int	ft_buildin(t_data *data)
 //	printf("s_0 = |%s|\n", s_0);
 	if (!ft_strcmp(s_0, "echo"))
 	{
-		ft_echo(data), free(data->rez), data->rez = NULL;
+		ft_echo(data), ft_free_cmd(data->cmd_start, s_0);
 		return (1);
 	}
 //	else if (!ft_strcmp(s_0, "cd"))
