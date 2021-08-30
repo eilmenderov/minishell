@@ -41,7 +41,7 @@ char	*ft_find_cmd(t_data *data, char *cmd)
 	return (NULL);
 }
 
-void 	ft_free_cmd(t_cmd *do_cmd, char *cmd)
+void	ft_free_cmd(t_cmd *do_cmd, char *cmd)
 {
 	t_cmd	*tmp;
 
@@ -107,7 +107,7 @@ t_cmd	*ft_pool_new_cmd(t_data *data, char *str, int *i)
 		rez->delim = DOB_AMPER, (*i)++, (*i)++;
 	else if (str[*i] != 0 && str[*i] == '|' && str[*i + 1] == '|')
 		rez->delim = DOB_PIPE, (*i)++, (*i)++;
-	else if (str[*i] != 0 && str[*i]== ';')
+	else if (str[*i] != 0 && str[*i] == ';')
 		rez->delim = POINT_ZAP, (*i)++;
 	else
 		rez->delim = 0;

@@ -23,7 +23,7 @@ void	ft_echo(t_data *data)
 	}
 }
 
-void ft_env(t_data *data)
+void	ft_env(t_data *data)
 {
 	t_env	*tmp;
 
@@ -36,18 +36,18 @@ void ft_env(t_data *data)
 	}
 }
 
-void ft_pwd(t_data *data)
+void	ft_pwd(t_data *data)
 {
 	printf("%s\n", getenv("PWD"));
 }
 
-void ft_unset(t_data *data, char *s, int i)
+void	ft_unset(t_data *data, char *s, int i)
 {
 	t_env	*tmp;
 	t_env	*tmp2;
-	t_env 	*tmp_del;
-	char 	*key_unset;
-	int 	j;
+	t_env	*tmp_del;
+	char	*key_unset;
+	int		j;
 
 	j = ++i;
 	while (s[i] && !ft_ch_for_coinc(s[i], " "))
@@ -58,7 +58,6 @@ void ft_unset(t_data *data, char *s, int i)
 	{
 		data->beg_env = tmp->next;
 		free(tmp->val), free(tmp->key), free(tmp), free(key_unset);
-//		ft_env(data);
 		return ;
 	}
 	j = 0;
@@ -70,8 +69,8 @@ void ft_unset(t_data *data, char *s, int i)
 			printf("sd\n");
 			if (!ft_strcmp(key_unset, tmp->next->key))
 			{
-				free(tmp->next->val), free(tmp->next->key), free(tmp->next), free
-				(key_unset);
+				free(tmp->next->val), free(tmp->next->key);
+				free(tmp->next), free(key_unset);
 				tmp->next = NULL;
 				return ;
 			}
@@ -80,9 +79,10 @@ void ft_unset(t_data *data, char *s, int i)
 			break ;
 		tmp = tmp->next;
 	}
-	printf("%d\n", j);
-	tmp2 = tmp, tmp_del = tmp->next;
-	tmp2->next = tmp_del->next, tmp_del->next = NULL;
+	tmp2 = tmp;
+	tmp_del = tmp->next;
+	tmp2->next = tmp_del->next;
+	tmp_del->next = NULL;
 	free(tmp_del->val), free(tmp_del->key), free(tmp_del), free(key_unset);
 }
 

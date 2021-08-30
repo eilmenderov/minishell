@@ -7,7 +7,7 @@ static void	ft_print_data(t_data *data)
 {
 	t_env	*tmp;
 
-//	printf("err_fl = %d\n", data->error);
+	printf("err_fl = %d\n", data->error);
 	tmp = data->beg_env;
 	while (tmp)
 	{
@@ -35,7 +35,7 @@ int	main(int ac, char **av, char **env)
 		add_history(str);
 		if (!ft_parsing(&data, str))
 		{
-//			printf("|%s|\n", data.cmd_start->ful_cmd);
+			printf("|%s|\n", data.cmd_start->ful_cmd);
 			if (ft_buildin(&data))
 			{
 				free(str), str = NULL;

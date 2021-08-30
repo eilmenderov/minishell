@@ -135,7 +135,7 @@ char	**ft_proc_envp(t_data *data)
 	char	**rez;
 
 	tmp = data->beg_env;
-	while (tmp && ft_strcmp(tmp->key, "PATH="))
+	while (tmp && ft_strcmp(tmp->key, "PATH"))
 		tmp = tmp->next;
 	rez = ft_split(tmp->val, ':');
 	if (!rez)
