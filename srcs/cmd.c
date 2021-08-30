@@ -1,5 +1,17 @@
 #include "head_minishell.h"
 
+char	*ft_points(char	*cmd)
+{
+	int	i;
+
+	i = 1;
+	if (cmd[i] == '.')
+		return (ft_strdup(cmd));
+	if (cmd[i] == '/')
+		return (ft_strdup(&cmd[i + 1]));
+	return (NULL);
+}
+
 char	*ft_find_cmd(t_data *data, char *cmd)
 {
 	struct stat	buf;
@@ -7,11 +19,10 @@ char	*ft_find_cmd(t_data *data, char *cmd)
 	char		*try;
 	char		**env_path;
 
-	if (cmd[0] == '.' && cmd[1] == '/') // need to do
+	if (cmd[0] == '.')
 	{
-		try = ft_strdup(&cmd[2]);
-		if (!stat(try, &buf))
-			return (try);
+		try = ft_points(cmd);
+		return (try);
 	}
 	env_path = ft_proc_envp(data);
 	i = 0;
@@ -117,10 +128,5 @@ int	ft_pool_cmd(t_data *data, char *str, int *i)
 			tmp = tmp->next;
 		tmp->next = ft_pool_new_cmd(data, str, i);
 	}
-	return (0);
-}
-
-int	ft_pool_cmd_st(t_data *data, char *str, int *i)
-{
 	return (0);
 }
