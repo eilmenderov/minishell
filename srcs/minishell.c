@@ -47,10 +47,10 @@ int	main(int ac, char **av, char **env)
 		}
 		free(str), str = NULL;
 	}
-	if (str)
-		free(str), str = NULL;
-//	ft_print_data(&data);
-	ft_free_data(&data);
-//	sleep (20);
-	return (0);
+//	if (str)
+//		free(str), str = NULL;
+////	ft_print_data(&data);
+//	ft_free_data(&data);
+////	sleep (20);
+//	return (0);
 }
