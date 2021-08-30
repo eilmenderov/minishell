@@ -7,7 +7,7 @@ static void	ft_print_data(t_data *data)
 {
 	t_env	*tmp;
 
-	printf("err_fl = %d\n", data->error);
+//	printf("err_fl = %d\n", data->error);
 	tmp = data->beg_env;
 	while (tmp)
 	{

@@ -34,10 +34,10 @@ int	ft_buildin(t_data *data)
 	while (s[i] && !ft_ch_for_coinc(s[i], " "))
 		i++;
 	s_0 = ft_strndup(s, i);
+//	printf("s_0 = |%s|\n", s_0);
 	if (!ft_strcmp(s_0, "echo"))
 	{
-		ft_echo(data);
-		ft_free_cmd(data, data->cmd_start, s_0);
+		ft_echo(data), free(data->rez), data->rez = NULL;
 		return (1);
 	}
 //	else if (!ft_strcmp(s_0, "cd"))
