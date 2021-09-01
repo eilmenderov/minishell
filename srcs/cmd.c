@@ -66,15 +66,11 @@ void	ft_free_cmd(t_cmd *do_cmd, char *cmd)
 	free(do_cmd), do_cmd = NULL;
 }
 
-void	ft_start_cmd(t_data *data)
+void	ft_single_cmd(t_data *data, t_cmd *do_cmd, int pid, int ex)
 {
 	char	*cmd;
-	int		pid;
 	int		tmp;
-	int		ex;
-	t_cmd	*do_cmd;
 
-	do_cmd = data->cmd_start;
 	cmd = ft_find_cmd(do_cmd);
 	if (!cmd)
 	{
@@ -97,6 +93,21 @@ void	ft_start_cmd(t_data *data)
 	}
 	else
 		ft_free_cmd(do_cmd, cmd), wait(NULL);
+}
+
+void	ft_start_cmd(t_data *data)
+{
+	int	fl;
+
+	if (!data->cmd_start->next)
+	{
+		fl = ft_buildin(data->cmd_start);
+		if (fl)
+			ft_start_own_prog(data->cmd_start, fl);
+		else
+			ft_single_cmd(data, data->cmd_start, -1, -1);
+		return ;
+	}
 }
 
 t_cmd	*ft_pool_new_cmd(t_data *data, char *str, int *i)

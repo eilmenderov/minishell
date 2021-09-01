@@ -8,7 +8,7 @@
 **	@param	c			if fl = 1, char for message
 **	@param	fl			if fl = 0 -> exit else if fl = 1 print message with c
 **						else fl = 2 print str with newline
-**	@return	int			counts substrings
+**	@return	int			error_code value
 */
 int	ft_pr_error(char *str, int error_code, char c, int fl)
 {

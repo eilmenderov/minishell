@@ -59,6 +59,7 @@ typedef struct s_cmd
 
 typedef struct s_data
 {
+	int				fl;
 	int				ret_val;
 	unsigned char	error;
 	int				fd_in;
@@ -100,6 +101,7 @@ int		ft_pool_cmd_st(t_data *data, char *str, int *i);
 void	ft_free_cmd(t_cmd *do_cmd, char *cmd);
 
 /* biuld_in.c */
-int		ft_buildin(t_data *data);
+void	ft_start_own_prog(t_cmd *cmd, int fl);
+int		ft_buildin(t_cmd *cmd);
 
 #endif
