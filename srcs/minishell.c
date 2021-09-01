@@ -26,12 +26,16 @@ int	main(int ac, char **av, char **env)
 	int		i;
 
 	ft_init_data(&data, env);
-	data.counter = 0;
 	while (TRUE)
 	{
 		str = readline(SHELL_FW);
-//		if (!ft_strcmp(str, "exit"))
-//			break ;
+		if (!ft_strcmp(str, ""))
+		{
+			free(str);
+			continue ;
+		}
+		if (!str)
+			ft_pr_error(ERR_MALC, -1, 0, 0);
 		add_history(str);
 		if (!ft_parsing(&data, str))
 		{
@@ -47,10 +51,4 @@ int	main(int ac, char **av, char **env)
 		}
 		free(str), str = NULL;
 	}
-	if (str)
-		free(str), str = NULL;
-	ft_print_data(&data);
-	ft_free_data(&data);
-	sleep (3);
-	return (0);
 }

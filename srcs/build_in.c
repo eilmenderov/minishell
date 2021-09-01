@@ -83,30 +83,33 @@ void	ft_unset(t_data *data, char *s, int i)
 	free(tmp_del->val), free(tmp_del->key), free(tmp_del), free(key_unset);
 }
 
-void ft_exit(t_data *data, char *s, int i)
+void	ft_exit(t_data *data, char *s, int i)
 {
 	char	*arg;
-	int 	j;
-	int 	ret;
+	int		j;
 
-//	j = i;
 	while (s[i] && s[i] == ' ')
 		i++;
 	j = i;
 	while (s[i] && s[i] != ' ')
 		i++;
 	arg = ft_strndup(&s[j], i - j);
-	if (arg)
+	if (arg && arg[0])
 	{
 		ft_putendl_fd("exit", 1);
-//		if (ft_atoi(arg))
-//			data->ret_val =
+		i = 0;
+		while (ft_isdigit(arg[i]))
+			i++;
+		if (!arg[i])
+			data->ret_val = ft_atoi(arg);
+		else
+			data->ret_val = 255;
 		ft_pr_error(arg, 1, 0, 3);
 		free(arg);
 		exit(1);
 	}
-
-
+	else
+		ft_putendl_fd("exit", 1), exit(1);
 }
 
 int	ft_buildin(t_data *data)

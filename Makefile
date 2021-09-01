@@ -13,8 +13,6 @@ BONUS_OBJS = ${addprefix ${SRCS_BONUS_DIR}, ${BONUS:.c=.o}}
 
 NAME = minishell
 
-USER = saltmer
-
 B_NAME = minishell_b
 
 HEADER = ./srcs/head_minishell.h

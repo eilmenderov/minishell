@@ -1,34 +1,44 @@
 #include "head_minishell.h"
 
-char	*ft_points(char	*cmd)
+char	*ft_points(t_cmd *do_cmd)
 {
-	int	i;
+	int		i;
+	char	*rez;
+	t_env	*tmp;
 
-	i = 1;
-	if (cmd[i] == '.')
-		return (ft_strdup(cmd));
-	if (cmd[i] == '/')
-		return (ft_strdup(&cmd[i + 1]));
+	if (ft_ch_for_coinc(do_cmd->cmd[0], "./"))
+		return (ft_strdup(do_cmd->cmd));
+	tmp = do_cmd->data->beg_env;
+	while (tmp && ft_strcmp(tmp->key, "HOME"))
+		tmp = tmp->next;
+	if (tmp)
+	{
+		rez = ft_strjoin_m(tmp->val, ft_strdup(&do_cmd->cmd[1]), 2);
+		free(do_cmd->arg[0]);
+		do_cmd->arg[0] = ft_strdup(rez);
+		do_cmd->cmd = do_cmd->arg[0];
+		return (rez);
+	}
 	return (NULL);
 }
 
-char	*ft_find_cmd(t_data *data, char *cmd)
+char	*ft_find_cmd(t_cmd *do_cmd)
 {
 	struct stat	buf;
 	int			i;
 	char		*try;
 	char		**env_path;
 
-	if (cmd[0] == '.')
+	if (ft_ch_for_coinc(do_cmd->cmd[0], "./~"))
 	{
-		try = ft_points(cmd);
+		try = ft_points(do_cmd);
 		return (try);
 	}
-	env_path = ft_proc_envp(data);
+	env_path = ft_proc_envp(do_cmd->data);
 	i = 0;
 	while (env_path && env_path[i])
 	{
-		try = ft_strjoin(env_path[i], cmd);
+		try = ft_strjoin(env_path[i], do_cmd->cmd);
 		if (!stat(try, &buf))
 		{
 			ft_free_split(env_path), env_path = NULL;
@@ -65,7 +75,7 @@ void	ft_start_cmd(t_data *data)
 	t_cmd	*do_cmd;
 
 	do_cmd = data->cmd_start;
-	cmd = ft_find_cmd(data, do_cmd->arg[0]);
+	cmd = ft_find_cmd(do_cmd);
 	if (!cmd)
 	{
 		ft_pr_error(do_cmd->arg[0], 0, 0, 3), ft_free_cmd(do_cmd, cmd);
@@ -118,7 +128,6 @@ int	ft_pool_cmd(t_data *data, char *str, int *i)
 {
 	t_cmd	*tmp;
 
-	data->counter++;
 	if (!data->cmd_start)
 		data->cmd_start = ft_pool_new_cmd(data, str, i);
 	else

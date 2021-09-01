@@ -59,8 +59,7 @@ typedef struct s_cmd
 
 typedef struct s_data
 {
-	int				counter;
-	int 			ret_val;
+	int				ret_val;
 	unsigned char	error;
 	int				fd_in;
 	int				fd_out;
@@ -94,7 +93,7 @@ int		ft_redir(t_data *data, char *str, int *i);
 int		ft_here_doc(t_data *data, char *str, int *i);
 
 /* cmd.c */
-char	*ft_find_cmd(t_data *data, char *cmd);
+char	*ft_find_cmd(t_cmd *do_cmd);
 void	ft_start_cmd(t_data *data);
 int		ft_pool_cmd(t_data *data, char *str, int *i);
 int		ft_pool_cmd_st(t_data *data, char *str, int *i);
