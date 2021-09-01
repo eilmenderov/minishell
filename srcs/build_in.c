@@ -23,6 +23,11 @@ void	ft_echo(t_cmd *cmd)
 	}
 }
 
+void	ft_pwd(void)
+{
+	printf("%s\n", getenv("PWD"));
+}
+
 void	ft_env(t_env *beg_env)
 {
 	t_env	*tmp;
@@ -36,13 +41,40 @@ void	ft_env(t_env *beg_env)
 	}
 }
 
-void	ft_pwd(void)
+void	ft_exit(t_cmd *cmd)
 {
-	printf("%s\n", getenv("PWD"));
+	write (2, "This program(exit) is under development.\n", 41);
+	return ;
+	// char	*arg;
+	// int		j;
+
+	// while (s[i] && s[i] == ' ')
+	// 	i++;
+	// j = i;
+	// while (s[i] && s[i] != ' ')
+	// 	i++;
+	// arg = ft_strndup(&s[j], i - j);
+	// if (arg && arg[0])
+	// {
+	// 	ft_putendl_fd("exit", 1);
+	// 	i = 0;
+	// 	while (ft_isdigit(arg[i]))
+	// 		i++;
+	// 	if (!arg[i])
+	// 		data->ret_val = ft_atoi(arg);
+	// 	else
+	// 		data->ret_val = 255;
+	// 	ft_pr_error(arg, 1, 0, 3);
+	// 	free(arg);
+	// 	exit(1);
+	// }
+	// else
+	// 	ft_putendl_fd("exit", 1), exit(1);
 }
 
 void	ft_unset(t_cmd *cmd)
 {
+	write (2, "This program(unset) is under development.\n", 42);
 	return ;
 	// t_env	*tmp;
 	// t_env	*tmp2;
@@ -84,34 +116,16 @@ void	ft_unset(t_cmd *cmd)
 	// free(tmp_del->val), free(tmp_del->key), free(tmp_del), free(key_unset);
 }
 
-void	ft_exit(t_cmd *cmd)
+void	ft_export(t_cmd *cmd)
 {
+	write (2, "This program(export) is under development.\n", 43);
 	return ;
-	// char	*arg;
-	// int		j;
+}
 
-	// while (s[i] && s[i] == ' ')
-	// 	i++;
-	// j = i;
-	// while (s[i] && s[i] != ' ')
-	// 	i++;
-	// arg = ft_strndup(&s[j], i - j);
-	// if (arg && arg[0])
-	// {
-	// 	ft_putendl_fd("exit", 1);
-	// 	i = 0;
-	// 	while (ft_isdigit(arg[i]))
-	// 		i++;
-	// 	if (!arg[i])
-	// 		data->ret_val = ft_atoi(arg);
-	// 	else
-	// 		data->ret_val = 255;
-	// 	ft_pr_error(arg, 1, 0, 3);
-	// 	free(arg);
-	// 	exit(1);
-	// }
-	// else
-	// 	ft_putendl_fd("exit", 1), exit(1);
+void	ft_cd(t_cmd *cmd)
+{
+	write (2, "This program(cd) is under development.\n", 39);
+	return ;
 }
 
 void	ft_start_own_prog(t_cmd *cmd, int fl)
@@ -122,14 +136,14 @@ void	ft_start_own_prog(t_cmd *cmd, int fl)
 		ft_pwd(), ft_free_cmd(cmd, NULL);
 	else if (fl == 3)
 		ft_env(cmd->data->beg_env), ft_free_cmd(cmd, NULL);
-	// else if (fl == 4)
-	// 	ft_exit(cmd), ft_free_cmd(cmd, NULL);
-	// else if (fl == 5)
-	// 	ft_unset(cmd), ft_free_cmd(cmd, NULL);
-	// else if (fl == 6)
-	// 	ft_export(cmd), ft_free_cmd(cmd, NULL);
-	// else if (fl == 7)
-	// 	ft_cd(cmd), ft_free_cmd(cmd, NULL);
+	else if (fl == 4)
+		ft_exit(cmd), ft_free_cmd(cmd, NULL);
+	else if (fl == 5)
+		ft_unset(cmd), ft_free_cmd(cmd, NULL);
+	else if (fl == 6)
+		ft_export(cmd), ft_free_cmd(cmd, NULL);
+	else if (fl == 7)
+		ft_cd(cmd), ft_free_cmd(cmd, NULL);
 	else
 		ft_pr_error("Impossible", 0, 0, 2);
 }
