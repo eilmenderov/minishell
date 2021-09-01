@@ -131,19 +131,19 @@ void	ft_cd(t_cmd *cmd)
 void	ft_start_own_prog(t_cmd *cmd, int fl)
 {
 	if (fl == 1)
-		ft_echo(cmd), ft_free_cmd(cmd, NULL);
+		ft_echo(cmd), ft_free_cmd(cmd);
 	else if (fl == 2)
-		ft_pwd(), ft_free_cmd(cmd, NULL);
+		ft_pwd(), ft_free_cmd(cmd);
 	else if (fl == 3)
-		ft_env(cmd->data->beg_env), ft_free_cmd(cmd, NULL);
+		ft_env(cmd->data->beg_env), ft_free_cmd(cmd);
 	else if (fl == 4)
-		ft_exit(cmd), ft_free_cmd(cmd, NULL);
+		ft_exit(cmd), ft_free_cmd(cmd);
 	else if (fl == 5)
-		ft_unset(cmd), ft_free_cmd(cmd, NULL);
+		ft_unset(cmd), ft_free_cmd(cmd);
 	else if (fl == 6)
-		ft_export(cmd), ft_free_cmd(cmd, NULL);
+		ft_export(cmd), ft_free_cmd(cmd);
 	else if (fl == 7)
-		ft_cd(cmd), ft_free_cmd(cmd, NULL);
+		ft_cd(cmd), ft_free_cmd(cmd);
 	else
 		ft_pr_error("Impossible", 0, 0, 2);
 }

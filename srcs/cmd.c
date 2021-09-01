@@ -51,12 +51,10 @@ char	*ft_find_cmd(t_cmd *do_cmd)
 	return (NULL);
 }
 
-void	ft_free_cmd(t_cmd *do_cmd, char *cmd)
+void	ft_free_cmd(t_cmd *do_cmd)
 {
 	t_cmd	*tmp;
 
-	if (cmd)
-		free(cmd), cmd = NULL;
 	if (do_cmd->arg)
 		ft_free_split(do_cmd->arg), do_cmd->arg = NULL;
 	if (do_cmd->ful_cmd)
@@ -74,12 +72,12 @@ void	ft_single_cmd(t_data *data, t_cmd *do_cmd, int pid, int ex)
 	cmd = ft_find_cmd(do_cmd);
 	if (!cmd)
 	{
-		ft_pr_error(do_cmd->arg[0], 0, 0, 3), ft_free_cmd(do_cmd, cmd);
+		ft_pr_error(do_cmd->arg[0], 0, 0, 3), ft_free_cmd(do_cmd), free(cmd);
 		return ;
 	}
 	pid = fork();
 	if (pid < 0)
-		ft_free_cmd(do_cmd, cmd), write(2, ERR_FORK, ft_strlen(ERR_FORK));
+		ft_free_cmd(do_cmd), free(cmd), write(2, ERR_FORK, ft_strlen(ERR_FORK));
 	else if (pid == 0)
 	{
 		tmp = dup(1);
@@ -92,7 +90,7 @@ void	ft_single_cmd(t_data *data, t_cmd *do_cmd, int pid, int ex)
 			exit (1);
 	}
 	else
-		ft_free_cmd(do_cmd, cmd), wait(NULL);
+		ft_free_cmd(do_cmd), free(cmd), wait(NULL);
 }
 
 void	ft_multiple_cmd(t_cmd *cmd)
