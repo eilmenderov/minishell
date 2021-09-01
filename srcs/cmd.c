@@ -95,6 +95,11 @@ void	ft_single_cmd(t_data *data, t_cmd *do_cmd, int pid, int ex)
 		ft_free_cmd(do_cmd, cmd), wait(NULL);
 }
 
+void	ft_multiple_cmd(t_cmd *cmd)
+{
+	return ;
+}
+
 void	ft_start_cmd(t_data *data)
 {
 	int	fl;
@@ -108,6 +113,7 @@ void	ft_start_cmd(t_data *data)
 			ft_single_cmd(data, data->cmd_start, -1, -1);
 		return ;
 	}
+	ft_multiple_cmd(data->cmd_start);
 }
 
 t_cmd	*ft_pool_new_cmd(t_data *data, char *str, int *i)
