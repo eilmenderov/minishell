@@ -60,6 +60,7 @@ typedef struct s_cmd
 typedef struct s_data
 {
 	int				counter;
+	int 			ret_val;
 	unsigned char	error;
 	int				fd_in;
 	int				fd_out;

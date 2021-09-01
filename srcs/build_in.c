@@ -60,13 +60,10 @@ void	ft_unset(t_data *data, char *s, int i)
 		free(tmp->val), free(tmp->key), free(tmp), free(key_unset);
 		return ;
 	}
-	j = 0;
 	while (tmp->next)
 	{
-		j++;
 		if (!tmp->next->next)
 		{
-			printf("sd\n");
 			if (!ft_strcmp(key_unset, tmp->next->key))
 			{
 				free(tmp->next->val), free(tmp->next->key);
@@ -84,6 +81,32 @@ void	ft_unset(t_data *data, char *s, int i)
 	tmp2->next = tmp_del->next;
 	tmp_del->next = NULL;
 	free(tmp_del->val), free(tmp_del->key), free(tmp_del), free(key_unset);
+}
+
+void ft_exit(t_data *data, char *s, int i)
+{
+	char	*arg;
+	int 	j;
+	int 	ret;
+
+//	j = i;
+	while (s[i] && s[i] == ' ')
+		i++;
+	j = i;
+	while (s[i] && s[i] != ' ')
+		i++;
+	arg = ft_strndup(&s[j], i - j);
+	if (arg)
+	{
+		ft_putendl_fd("exit", 1);
+//		if (ft_atoi(arg))
+//			data->ret_val =
+		ft_pr_error(arg, 1, 0, 3);
+		free(arg);
+		exit(1);
+	}
+
+
 }
 
 int	ft_buildin(t_data *data)
@@ -121,8 +144,11 @@ int	ft_buildin(t_data *data)
 		ft_env(data), ft_free_cmd(data->cmd_start, s_0);
 		return (1);
 	}
-//	else if (!ft_strcmp(s_0, "exit"))
-//		ft_exit(data), return (1);
+	else if (!ft_strcmp(s_0, "exit"))
+	{
+		ft_exit(data, s, i), ft_free_cmd(data->cmd_start, s_0);
+		return (1);
+	}
 	if (s_0)
 		free(s_0);
 	return (0);
