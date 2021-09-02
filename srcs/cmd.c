@@ -66,6 +66,7 @@ void	ft_free_cmd(t_cmd *do_cmd)
 
 void	ft_single_cmd(t_data *data, t_cmd *do_cmd, int pid, int ex)
 {
+	/* Doesn't work with '<' redirects infile, yeat!!! in work!! */
 	char	*cmd;
 	int		tmp;
 
@@ -81,10 +82,10 @@ void	ft_single_cmd(t_data *data, t_cmd *do_cmd, int pid, int ex)
 	else if (pid == 0)
 	{
 		tmp = dup(1);
-		if (data->fd_out > 0)
-			dup2(data->fd_out, 1), close(data->fd_out);
+		if (do_cmd->fd_outfile > 0)
+			dup2(do_cmd->fd_outfile, 1), close(do_cmd->fd_outfile);
 		ex = execve(cmd, do_cmd->arg, data->env);
-		if (data->fd_out > 0)
+		if (do_cmd->fd_outfile > 0)
 			dup2(1, tmp), close(tmp);
 		if (ex == -1)
 			exit (1);
@@ -95,6 +96,7 @@ void	ft_single_cmd(t_data *data, t_cmd *do_cmd, int pid, int ex)
 
 void	ft_multiple_cmd(t_cmd *cmd)
 {
+	
 	return ;
 }
 
@@ -123,6 +125,8 @@ t_cmd	*ft_pool_new_cmd(t_data *data, char *str, int *i)
 	rez->cmd = rez->arg[0];
 	rez->ful_cmd = data->rez;
 	rez->data = data;
+	rez->fd_infile = data->fd_in;
+	rez->fd_outfile = data->fd_out;
 	data->rez = NULL;
 	rez->next = NULL;
 	rez->pid = 0;
@@ -152,5 +156,9 @@ int	ft_pool_cmd(t_data *data, char *str, int *i)
 			tmp = tmp->next;
 		tmp->next = ft_pool_new_cmd(data, str, i);
 	}
+	if (data->fd_in > 0)
+		data->fd_in = -1;
+	if (data->fd_out > 0)
+		data->fd_out = -1;
 	return (0);
 }

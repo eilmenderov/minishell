@@ -38,11 +38,14 @@
 # define ERR_SH_TKN		"minishell: syntax error near unexpected token "
 # define ERR_CMD		"minishell: command not found: "
 
+extern int	g_stat;
+
 typedef struct s_env
 {
 	char			*key;
 	char			*val;
 	unsigned char	visible;
+	struct s_env	*prev;
 	struct s_env	*next;
 }				t_env;
 
@@ -51,6 +54,8 @@ typedef struct s_cmd
 	char			*cmd;
 	char			**arg;
 	char			*ful_cmd;
+	int				fd_infile;
+	int				fd_outfile;
 	pid_t			pid;
 	unsigned char	delim;
 	struct s_data	*data;
@@ -65,6 +70,7 @@ typedef struct s_data
 	int				fd_in;
 	int				fd_out;
 	unsigned int	shlvl;
+	int				old_stat;
 	char			**env;
 	char			*rez;
 	t_env			*beg_env;
@@ -103,5 +109,9 @@ void	ft_free_cmd(t_cmd *do_cmd);
 /* biuld_in.c */
 void	ft_start_own_prog(t_cmd *cmd, int fl);
 int		ft_buildin(t_cmd *cmd);
+
+
+/* signal.c */
+void	ft_signal(void);
 
 #endif

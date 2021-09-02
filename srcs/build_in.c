@@ -43,77 +43,56 @@ void	ft_env(t_env *beg_env)
 
 void	ft_exit(t_cmd *cmd)
 {
-	write (2, "This program(exit) is under development.\n", 41);
-	return ;
-	// char	*arg;
-	// int		j;
+	/* problem with numeric argument required(try exit asd in bash) */
+	char	*arg;
+	int		j;
+	int		i;
 
-	// while (s[i] && s[i] == ' ')
-	// 	i++;
-	// j = i;
-	// while (s[i] && s[i] != ' ')
-	// 	i++;
-	// arg = ft_strndup(&s[j], i - j);
-	// if (arg && arg[0])
-	// {
-	// 	ft_putendl_fd("exit", 1);
-	// 	i = 0;
-	// 	while (ft_isdigit(arg[i]))
-	// 		i++;
-	// 	if (!arg[i])
-	// 		data->ret_val = ft_atoi(arg);
-	// 	else
-	// 		data->ret_val = 255;
-	// 	ft_pr_error(arg, 1, 0, 3);
-	// 	free(arg);
-	// 	exit(1);
-	// }
-	// else
-	// 	ft_putendl_fd("exit", 1), exit(1);
+	i = ft_strlen_m(cmd->ful_cmd, ' ');
+	while (cmd->ful_cmd[i] && cmd->ful_cmd[i] == ' ')
+		i++;
+	j = i;
+	while (cmd->ful_cmd[i] && cmd->ful_cmd[i] != ' ')
+		i++;
+	arg = ft_strndup(&cmd->ful_cmd[j], i - j);
+	if (arg && arg[0])
+	{
+		ft_putendl_fd("exit", 1);
+		i = 0;
+		while (ft_isdigit(arg[i]))
+			i++;
+		if (!arg[i])
+			cmd->data->ret_val = ft_atoi(arg);
+		else
+			cmd->data->ret_val = 255;
+		// ft_pr_error(arg, 1, 0, 3);
+		free(arg);
+		exit(1);
+	}
+	else
+		ft_putendl_fd("exit", 1), free(arg), exit(1);
 }
 
 void	ft_unset(t_cmd *cmd)
 {
-	write (2, "This program(unset) is under development.\n", 42);
-	return ;
-	// t_env	*tmp;
-	// t_env	*tmp2;
-	// t_env	*tmp_del;
-	// char	*key_unset;
-	// int		j;
+	t_env	*tmp;
+	int		i;
 
-	// j = ++i;
-	// while (s[i] && !ft_ch_for_coinc(s[i], " "))
-	// 	i++;
-	// key_unset = ft_strndup(&s[j], i - j);
-	// tmp = data->beg_env;
-	// if (!ft_strcmp(key_unset, tmp->key))
-	// {
-	// 	data->beg_env = tmp->next;
-	// 	free(tmp->val), free(tmp->key), free(tmp), free(key_unset);
-	// 	return ;
-	// }
-	// while (tmp->next)
-	// {
-	// 	if (!tmp->next->next)
-	// 	{
-	// 		if (!ft_strcmp(key_unset, tmp->next->key))
-	// 		{
-	// 			free(tmp->next->val), free(tmp->next->key);
-	// 			free(tmp->next), free(key_unset);
-	// 			tmp->next = NULL;
-	// 			return ;
-	// 		}
-	// 	}
-	// 	if (!ft_strcmp(key_unset, tmp->next->key))
-	// 		break ;
-	// 	tmp = tmp->next;
-	// }
-	// tmp2 = tmp;
-	// tmp_del = tmp->next;
-	// tmp2->next = tmp_del->next;
-	// tmp_del->next = NULL;
-	// free(tmp_del->val), free(tmp_del->key), free(tmp_del), free(key_unset);
+	i = 1;
+	while (cmd->arg[i])
+	{
+		tmp = cmd->data->beg_env;
+		while (tmp && ft_strcmp(tmp->key, cmd->arg[i]))
+			tmp = tmp->next;
+		if (!tmp)
+			continue ;
+		tmp->prev->next = tmp->next;
+		tmp->next->prev = tmp->prev;
+		free(tmp->key), tmp->key = NULL;
+		free(tmp->val), tmp->val = NULL;
+		free(tmp), tmp = NULL;
+		i++;
+	}
 }
 
 void	ft_export(t_cmd *cmd)
@@ -151,28 +130,28 @@ void	ft_start_own_prog(t_cmd *cmd, int fl)
 int	ft_buildin(t_cmd *cmd)
 {
 	char	*command;
-	int		i;
+	int		fl;
 
-	i = 0;
-	while (cmd->ful_cmd[i] && !ft_ch_for_coinc(cmd->ful_cmd[i], " "))
-		i++;
-	command = ft_strndup(cmd->ful_cmd, i);
-	i = 0;
+	fl = 0;
+	while (cmd->ful_cmd[fl] && !ft_ch_for_coinc(cmd->ful_cmd[fl], " "))
+		fl++;
+	command = ft_strndup(cmd->ful_cmd, fl);
+	fl = 0;
 	if (!ft_strcmp(command, "echo"))
-		i = 1;
+		fl = 1;
 	else if (!ft_strcmp(command, "pwd"))
-		i = 2;
+		fl = 2;
 	else if (!ft_strcmp(command, "env"))
-		i = 3;
+		fl = 3;
 	else if (!ft_strcmp(command, "exit"))
-		i = 4;
+		fl = 4;
 	else if (!ft_strcmp(command, "unset"))
-		i = 5;
+		fl = 5;
 	else if (!ft_strcmp(command, "export"))
-		i = 6;
+		fl = 6;
 	else if (!ft_strcmp(command, "cd"))
-		i = 7;
+		fl = 7;
 	if (command)
 		free(command), command = NULL;
-	return (i);
+	return (fl);
 }

@@ -1,5 +1,5 @@
 SRCS	=	minishell.c minishell_utils.c parser.c proc_redirects.c pars_dollar.c \
-			here_doc.c cmd.c build_in.c
+			here_doc.c cmd.c build_in.c signals.c
 
 BONUS	=	
 

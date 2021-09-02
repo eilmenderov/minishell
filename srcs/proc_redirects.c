@@ -20,7 +20,7 @@ static int	ft_open_app_read(t_data *data, char *f_name, int fl)
 	}
 	if (fl == 1 || fl == 2)
 		data->fd_out = fd;
-	else
+	else if (fl == 3)
 		data->fd_in = fd;
 	return (0);
 }

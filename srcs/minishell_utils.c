@@ -57,13 +57,13 @@ void	ft_pool_env(t_data *data, int i, size_t len)
 		if (!data->beg_env)
 		{
 			data->beg_env = tmp;
+			data->beg_env->prev = NULL;
 			buf = data->beg_env;
+			continue ;
 		}
-		else
-		{
-			buf->next = tmp;
-			buf = buf->next;
-		}
+		buf->next = tmp;
+		tmp->prev = buf;
+		buf = buf->next;
 	}
 }
 

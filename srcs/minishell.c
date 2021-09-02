@@ -1,5 +1,7 @@
 #include "head_minishell.h"
 
+int	g_stat;
+
 /*
 **	@brief	Print struct data
 */
@@ -16,11 +18,25 @@ static void	ft_print_data(t_data *data)
 	}
 }
 
-static void	ft_str_spec_case(char *str)
+static int	ft_str_spec_case(char *str)
 {
-	if (!str)
-		ft_pr_error(ERR_MALC, -1, 0, 0);
-	free(str), str = NULL;
+	if (!str || !ft_strcmp(str, ""))
+	{
+		if (str)
+			free(str), str = NULL;
+		return (1);
+	}
+	if (ft_strlen(str) == ft_how_many_char(str, ' '))
+	{
+		free(str);
+		return (1);
+	}
+	return (0);
+}
+
+static void	ft_clean_all(char *str)
+{
+	free (str), str = NULL;
 }
 
 /*
@@ -32,20 +48,24 @@ int	main(int ac, char **av, char **env)
 	char	*str;
 
 	ft_init_data(&data, env);
+	ft_signal();
 	while (TRUE)
 	{
 		str = readline(SHELL_FW);
-		if (!ft_strcmp(str, "") || !str)
+		if (g_stat == 100)
 		{
-			ft_str_spec_case(str);
-			continue ;
+			data.old_stat = 1;
+			g_stat = 0;
 		}
+		if (ft_str_spec_case(str))
+			continue ;
 		add_history(str);
 		if (!ft_parsing(&data, str))
 		{
+			printf("first_cmd : |%s|\n", data.cmd_start->ful_cmd);
 			ft_start_cmd(&data);
 			free(data.rez), data.rez = NULL;
 		}
-		free(str), str = NULL;
+		ft_clean_all(str);
 	}
 }

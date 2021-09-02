@@ -95,9 +95,10 @@ int	ft_parsing(t_data *data, char *str)
 		}
 		else if (str[i] == ' ')
 		{
-			data->rez = ft_strjoin_m(data->rez, " ", 1);
 			while (str[i] && str[i] == ' ')
 				i++;
+			if (data->rez && str[i] != 0)
+				data->rez = ft_strjoin_m(data->rez, " ", 1);
 		}
 		else
 			ft_hadle_str(data, str, &i);
