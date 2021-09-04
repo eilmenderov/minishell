@@ -93,10 +93,23 @@ void	ft_unset(t_cmd *cmd)
 	}
 }
 
+void	ft_print_export(t_env *env)
+{
+	return ;
+}
+
 void	ft_export(t_cmd *cmd)
 {
-	write (2, "This program(export) is under development.\n", 43);
-	return ;
+	int	i;
+
+	if (!cmd->arg[1])
+	{
+		ft_print_export(cmd->data->beg_env);
+		return ;
+	}
+	i = 0;
+	while (cmd->arg[++i])
+		ft_change_env(cmd, cmd->arg[i], 0);
 }
 
 void	ft_cd(t_cmd *cmd)
@@ -146,36 +159,29 @@ void	ft_start_own_prog(t_cmd *cmd, int fl)
 	else if (fl == 7)
 		ft_cd(cmd), ft_free_cmd(cmd);
 	else if (fl == 8)
-		ft_change_env(cmd, cmd->cmd, 0), ft_free_cmd(cmd);
+		ft_change_env(cmd, cmd->cmd, 1), ft_free_cmd(cmd);
 	else
 		ft_pr_error("Impossible", 0, 0, 2);
 }
 
 int	ft_buildin(t_cmd *cmd, int fl)
 {
-	char	*command;
-
-	while (cmd->ful_cmd[fl] && !ft_ch_for_coinc(cmd->ful_cmd[fl], " "))
-		fl++;
-	command = ft_strndup(cmd->ful_cmd, fl);
 	fl = 0;
-	if (!ft_strcmp(command, "echo"))
+	if (!ft_strcmp(cmd->cmd, "echo"))
 		fl = 1;
-	else if (!ft_strcmp(command, "pwd"))
+	else if (!ft_strcmp(cmd->cmd, "pwd"))
 		fl = 2;
-	else if (!ft_strcmp(command, "env"))
+	else if (!ft_strcmp(cmd->cmd, "env"))
 		fl = 3;
-	else if (!ft_strcmp(command, "exit"))
+	else if (!ft_strcmp(cmd->cmd, "exit"))
 		fl = 4;
-	else if (!ft_strcmp(command, "unset"))
+	else if (!ft_strcmp(cmd->cmd, "unset"))
 		fl = 5;
-	else if (!ft_strcmp(command, "export"))
+	else if (!ft_strcmp(cmd->cmd, "export"))
 		fl = 6;
-	else if (!ft_strcmp(command, "cd"))
+	else if (!ft_strcmp(cmd->cmd, "cd"))
 		fl = 7;
-	else if (ft_strlen_m(command, '='))
+	else if (ft_strlen_m(cmd->cmd, '='))
 		fl = 8;
-	if (command)
-		free(command), command = NULL;
 	return (fl);
 }
