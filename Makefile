@@ -17,11 +17,9 @@ B_NAME = minishell_b
 
 HEADER = ./srcs/head_minishell.h
 
-
 LIBS_MAC	=  ./libft/libft.a -lreadline -L /Users/${USER}/.brew/opt/readline/lib
 
 INCLUDE		=  -I /Users/${USER}/.brew/opt/readline/include
-
 
 LOGDATE		= $(shell date)
 

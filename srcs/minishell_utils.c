@@ -1,34 +1,18 @@
 #include "head_minishell.h"
 
-/*
-**	@brief	Print errors fd = 2
-**	
-**	@param	str			message
-**	@param	error_code	error code
-**	@param	c			if fl = 1, char for message
-**	@param	fl			if fl = 0 -> exit else if fl = 1 print message with c
-**						else fl = 2 print str with newline
-**	@return	int			error_code value
-*/
-int	ft_pr_error(char *str, int error_code, char c, int fl)
+t_env	*ft_new_env(char *key, char *val, unsigned char visible)
 {
-	if (!fl)
-		ft_putendl_fd(str, 2), exit(error_code);
-	else if (fl == 1)
-	{
-		ft_putstr_fd(str, 2);
-		ft_putchar_fd('\'', 2);
-		ft_putchar_fd(c, 2);
-		ft_putendl_fd("'", 2);
-	}
-	else if (fl == 2)
-		ft_putendl_fd(str, 2);
-	else if (fl == 3)
-	{
-		ft_putstr_fd("minishell: ", 2), ft_putstr_fd(str, 2);
-		ft_putendl_fd(": command not found", 2);
-	}
-	return (error_code);
+	t_env	*rez;
+
+	rez = malloc(sizeof(t_env));
+	if (!rez)
+		ft_pr_error(ERR_MALC, -1, 0, 0);
+	rez->key = key;
+	rez->val = val;
+	rez->visible = visible;
+	rez->next = NULL;
+	rez->prev = NULL;
+	return (rez);
 }
 
 /*
@@ -43,17 +27,14 @@ void	ft_pool_env(t_data *data, int i, size_t len)
 {
 	t_env	*tmp;
 	t_env	*buf;
+	char	*val;
 
 	while (data->env && data->env[i])
 	{
 		len = ft_strlen_m(data->env[i], '=');
-		tmp = malloc(sizeof(t_env));
-		if (!tmp)
-			ft_pr_error(ERR_MALC, -1, 0, 0);
-		tmp->key = ft_strndup(data->env[i], len);
-		tmp->visible = 0;
-		tmp->val = ft_strdup(&data->env[i][len + 1]);
-		tmp->next = NULL, i++;
+		val = ft_strdup(&data->env[i][len + 1]);
+		tmp = ft_new_env(ft_strndup(data->env[i], len), val, 0);
+		i++;
 		if (!data->beg_env)
 		{
 			data->beg_env = tmp;

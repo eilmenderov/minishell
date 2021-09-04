@@ -146,3 +146,9 @@
 minishell_*
 .DS_Store
 </p>
+
+## Problems:
+* try echo $(var1=5;echo $var1)
+* try !!
+* try history 10
+*  echo def

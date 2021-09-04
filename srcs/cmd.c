@@ -55,6 +55,10 @@ void	ft_free_cmd(t_cmd *do_cmd)
 {
 	t_cmd	*tmp;
 
+	if (do_cmd->fd_infile > 0)
+		close(do_cmd->fd_infile), do_cmd->fd_infile = -1;
+	if (do_cmd->fd_outfile > 0)
+		close(do_cmd->fd_outfile), do_cmd->fd_outfile = -1;
 	if (do_cmd->arg)
 		ft_free_split(do_cmd->arg), do_cmd->arg = NULL;
 	if (do_cmd->ful_cmd)
@@ -96,7 +100,6 @@ void	ft_single_cmd(t_data *data, t_cmd *do_cmd, int pid, int ex)
 
 void	ft_multiple_cmd(t_cmd *cmd)
 {
-	
 	return ;
 }
 
@@ -106,7 +109,7 @@ void	ft_start_cmd(t_data *data)
 
 	if (!data->cmd_start->next)
 	{
-		fl = ft_buildin(data->cmd_start);
+		fl = ft_buildin(data->cmd_start, 0);
 		if (fl)
 			ft_start_own_prog(data->cmd_start, fl);
 		else
