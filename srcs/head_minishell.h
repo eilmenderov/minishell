@@ -26,6 +26,7 @@
 # define DOB_PIPE	2
 # define DOB_AMPER	3
 # define POINT_ZAP	4
+# define PWD_LEN	1000
 
 # define ERR_MALC		"Error : malloc error"
 # define ERR_RDL		"Error : readline error"
@@ -42,6 +43,7 @@
 
 typedef struct s_env
 {
+	int 			num;
 	char			*key;
 	char			*val;
 	unsigned char	visible;
@@ -111,7 +113,7 @@ void	ft_free_cmd(t_cmd *do_cmd);
 
 /* biuld_in.c */
 void	ft_start_own_prog(t_cmd *cmd, int fl);
-void	ft_change_env(t_cmd *cmd, char *str, int visib);
+int 	ft_change_env(t_cmd *cmd, char *str, int visib);
 int		ft_buildin(t_cmd *cmd, int fl);
 
 /* signal.c */

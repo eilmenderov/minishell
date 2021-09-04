@@ -67,6 +67,11 @@ int	ft_pr_error(char *str, int error_code, char c, int fl)
 		ft_putstr_fd("minishell: ", 2), ft_putstr_fd(str, 2);
 		ft_putendl_fd(": command not found", 2);
 	}
+	else if (fl == 4)
+	{
+		ft_putstr_fd("minishell: cd: ", 2), ft_putstr_fd(str, 2);
+		ft_putstr_fd(": ", 2), ft_putendl_fd(strerror(errno), 2);
+	}
 	return (error_code);
 }
 

@@ -2,7 +2,6 @@
 
 char	*ft_points(t_cmd *do_cmd)
 {
-	int		i;
 	char	*rez;
 	t_env	*tmp;
 
