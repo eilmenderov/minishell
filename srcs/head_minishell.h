@@ -43,7 +43,7 @@
 
 typedef struct s_env
 {
-	int 			num;
+	int				num;
 	char			*key;
 	char			*val;
 	unsigned char	visible;
@@ -113,7 +113,7 @@ void	ft_free_cmd(t_cmd *do_cmd);
 
 /* biuld_in.c */
 void	ft_start_own_prog(t_cmd *cmd, int fl);
-int 	ft_change_env(t_cmd *cmd, char *str, int visib);
+int		ft_change_env(t_cmd *cmd, char *str, int visib);
 int		ft_buildin(t_cmd *cmd, int fl);
 
 /* signal.c */

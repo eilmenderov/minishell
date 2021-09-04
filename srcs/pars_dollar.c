@@ -59,7 +59,7 @@ char	*ft_dollar(t_data *data, char *str, int *i, char *rez)
 	if (str[*i + 1] == '-')
 	{
 		*i = *i + 2;
-		return (ft_strjoin_m(rez, ft_strndup("svMSHL", 6), 3));
+		return (ft_strjoin_m(rez, ft_strndup("_params_", 6), 3));
 	}
 	if (str[*i + 1] == '?')
 	{

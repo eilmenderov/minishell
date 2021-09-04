@@ -26,7 +26,7 @@ int	ft_echo(t_cmd *cmd)
 
 int	ft_pwd(t_data *data, int fl)
 {
-	char 	*str;
+	char	*str;
 	t_env	*tmp;
 
 	str = ft_calloc(PWD_LEN, sizeof(char));
@@ -37,7 +37,7 @@ int	ft_pwd(t_data *data, int fl)
 		return (0);
 	}
 	tmp = data->beg_env;
-	while(tmp && ft_strcmp(tmp->key, "PWD"))
+	while (tmp && ft_strcmp(tmp->key, "PWD"))
 		tmp = tmp->next;
 	if (tmp)
 		free(tmp->val), tmp->val = str;
