@@ -43,7 +43,7 @@ extern int	g_stat;
 
 typedef struct s_env
 {
-	int				num;
+	int				print;
 	char			*key;
 	char			*val;
 	unsigned char	visible;

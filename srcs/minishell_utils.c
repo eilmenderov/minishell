@@ -13,6 +13,7 @@ t_env	*ft_new_env(char *key, char *val, unsigned char visible)
 	rez->key = key;
 	rez->val = val;
 	rez->visible = visible;
+	rez->print = 0;
 	rez->next = NULL;
 	rez->prev = NULL;
 	return (rez);
