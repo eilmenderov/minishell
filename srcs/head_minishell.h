@@ -116,7 +116,7 @@ void	ft_free_cmd(t_cmd *do_cmd);
 t_cmd	*ft_pool_new_cmd(t_data *data, char *str, int *i);
 int		ft_pool_cmd(t_data *data, char *str, int *i);
 
-/* multiple_cmd.c */
+/* cmd_multiple.c */
 void	ft_multiple_cmd(t_cmd *cmd);
 
 /* biuld_in.c */
