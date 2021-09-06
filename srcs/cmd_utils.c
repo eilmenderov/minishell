@@ -101,17 +101,22 @@ int	ft_pool_cmd(t_data *data, char *str, int *i)
 	t_cmd	*tmp;
 
 	if (!data->cmd_start)
+	{
 		data->cmd_start = ft_pool_new_cmd(data, str, i);
+		data->cmd_start->num_start = data->total_cmd;
+	}
 	else
 	{
 		tmp = data->cmd_start;
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = ft_pool_new_cmd(data, str, i);
+		tmp->next->num_start = data->total_cmd;
 	}
 	if (data->fd_in > 0)
 		data->fd_in = -1;
 	if (data->fd_out > 0)
 		data->fd_out = -1;
+	data->total_cmd++;
 	return (0);
 }

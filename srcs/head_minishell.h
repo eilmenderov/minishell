@@ -56,6 +56,7 @@ typedef struct s_cmd
 	char			*cmd;
 	char			**arg;
 	char			*ful_cmd;
+	int				num_start;
 	int				fd_inf;
 	int				fd_outf;
 	int				tmp_fd[2];
@@ -72,6 +73,7 @@ typedef struct s_data
 	unsigned char	error;
 	int				fd_in;
 	int				fd_out;
+	int				total_cmd;
 	unsigned int	shlvl;
 	int				old_stat;
 	char			**env;

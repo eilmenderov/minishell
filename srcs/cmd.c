@@ -3,11 +3,13 @@
 void	ft_single_cmd(t_data *data, t_cmd *cmd, int pid, int ex)
 {
 	char	*cmd_s;
+	int		check;
 
 	cmd_s = ft_find_cmd(cmd);
 	if (!cmd_s)
 	{
 		ft_pr_error(cmd->arg[0], 0, 0, 3), ft_free_cmd(cmd), free(cmd_s);
+		data->ret_val = 1;
 		return ;
 	}
 	pid = fork();
@@ -22,12 +24,27 @@ void	ft_single_cmd(t_data *data, t_cmd *cmd, int pid, int ex)
 			exit (1);
 	}
 	else
+	{
 		ft_free_cmd(cmd), free(cmd_s);
+		waitpid(-1, &check, 0), data->ret_val = check;
+	}
 }
 
 void	ft_wait_all_cmd(t_data *data)
 {
-	wait(NULL);
+	int	check;
+	int	i;
+
+	check = 0;
+	i = 0;
+	while (TRUE)
+	{
+		waitpid(-1, &check, 0);
+		if (check != 0 || i == data->total_cmd)
+			break ;
+		i++;
+	}
+	data->ret_val = check;
 }
 
 void	ft_start_cmd(t_data *data)

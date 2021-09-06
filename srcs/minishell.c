@@ -99,7 +99,7 @@ int	main(int ac, char **av, char **env)
 		add_history(str);
 		if (!ft_parsing(&data, str))
 		{
-			ft_start_cmd(&data), ft_wait_all_cmd(&data), ft_signal();
+			ft_start_cmd(&data), ft_signal();
 			free(data.rez), data.rez = NULL;
 		}
 		ft_clean_all(str);
