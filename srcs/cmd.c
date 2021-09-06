@@ -18,8 +18,7 @@ void	ft_single_cmd(t_data *data, t_cmd *cmd, int pid, int ex)
 	else if (pid == 0)
 	{
 		ft_redirects_before(cmd);
-		ex = execve(cmd_s, cmd->arg, data->env);
-		ft_redirects_after(cmd);
+		ex = execve(cmd_s, cmd->arg, data->env), ft_redirects_after(cmd);
 		if (ex == -1)
 			exit (1);
 	}
