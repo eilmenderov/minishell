@@ -27,7 +27,7 @@ t_env	*ft_new_env(char *key, char *val, unsigned char visible)
 **	@param	i 0		iterator(just because of the norm)
 **	@param	len	0	iterator(just because of the norm)
 */
-void	ft_pool_env(t_data *data, int i, size_t len)
+static void	ft_pool_env(t_data *data, int i, size_t len)
 {
 	t_env	*tmp;
 	t_env	*buf;

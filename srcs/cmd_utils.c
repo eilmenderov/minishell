@@ -1,6 +1,6 @@
 #include "head_minishell.h"
 
-char	*ft_points(t_cmd *do_cmd)
+static char	*ft_points(t_cmd *do_cmd)
 {
 	char	*rez;
 	t_env	*tmp;

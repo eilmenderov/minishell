@@ -1,6 +1,6 @@
 #include "head_minishell.h"
 
-t_env	*ft_find_key(t_env *env)
+static t_env	*ft_find_key(t_env *env)
 {
 	t_env	*tmp;
 	t_env	*elem_sort;
@@ -27,7 +27,7 @@ t_env	*ft_find_key(t_env *env)
 	return (elem_sort);
 }
 
-void	ft_print_export(t_env *env)
+static void	ft_print_export(t_env *env)
 {
 	t_env	*tmp;
 	t_env	*elem_sort;
@@ -47,7 +47,7 @@ void	ft_print_export(t_env *env)
 	}
 }
 
-int	ft_export(t_cmd *cmd)
+static int	ft_export(t_cmd *cmd)
 {
 	int	i;
 

@@ -1,6 +1,6 @@
 #include "head_minishell.h"
 
-void	ft_single_cmd(t_data *data, t_cmd *cmd, int pid)
+static void	ft_single_cmd(t_data *data, t_cmd *cmd, int pid)
 {
 	char	*cmd_s;
 	int		check;

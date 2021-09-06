@@ -88,7 +88,6 @@ int		ft_pr_error(char *str, int error_code, char c, int fl);
 
 /* minishell_utils.c */
 t_env	*ft_new_env(char *key, char *val, unsigned char visible);
-void	ft_pool_env(t_data *data, int i, size_t len);
 void	ft_init_data(t_data *data, char **env);
 void	ft_free_data(t_data *data);
 char	**ft_proc_envp(t_data *data);
@@ -113,7 +112,6 @@ void	ft_start_cmd(t_data *data);
 void	ft_wait_all_cmd(t_data *data);
 
 /* cmd_utils.c */
-char	*ft_points(t_cmd *do_cmd);
 char	*ft_find_cmd(t_cmd *do_cmd);
 void	ft_free_cmd(t_cmd *do_cmd);
 t_cmd	*ft_pool_new_cmd(t_data *data, char *str, int *i);
@@ -128,7 +126,6 @@ void	ft_close_pipes(t_data *data, int fl);
 
 /* biuld_in.c */
 void	ft_start_own_prog(t_cmd *cmd, int fl);
-int		ft_change_env(t_cmd *cmd, char *str, int visib);
 int		ft_buildin(t_cmd *cmd, int fl);
 
 /* build_in_utils.c */
