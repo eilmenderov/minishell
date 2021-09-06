@@ -87,6 +87,11 @@ int	ft_change_env(t_cmd *cmd, char *str, int visib)
 		tmp->val = ft_strdup(&str[len + 1]), free(key);
 		return (0);
 	}
+	if (ft_chek_env_key(cmd->cmd, 1))
+	{
+		ft_pr_error(cmd->arg[0], 0, 0, 3);
+		return (1);
+	}
 	tmp = ft_new_env(key, ft_strdup(&str[len + 1]), visib);
 	tmp->next = cmd->data->beg_env;
 	cmd->data->beg_env->prev = tmp;

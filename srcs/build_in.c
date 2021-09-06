@@ -36,7 +36,8 @@ static void	ft_print_export(t_env *env)
 	while (tmp)
 	{
 		elem_sort = ft_find_key(env);
-		printf("declare -x %s=\"%s\"\n", elem_sort->key, elem_sort->val);
+		if (!elem_sort->visible)
+			printf("declare -x %s=\"%s\"\n", elem_sort->key, elem_sort->val);
 		tmp = tmp->next;
 	}
 	tmp = env;
@@ -64,7 +65,7 @@ static int	ft_export(t_cmd *cmd)
 			ft_pr_error("Error: export: not a valid identifier", 0, 0, 2);
 			return (1);
 		}
-		ft_change_env(cmd, cmd->arg[i], 0);
+		ft_change_env(cmd, cmd->arg[i], 0); /// !нужно подумать с export value без равно!
 	}
 	return (0);
 }

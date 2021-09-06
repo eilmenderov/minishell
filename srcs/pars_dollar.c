@@ -5,7 +5,7 @@ static char	*ft_dol_helper(char *key, t_env *env, char *rez)
 	t_env	*tmp;
 
 	tmp = env;
-	while (tmp && ft_strncmp(tmp->key, key, ft_strlen(tmp->key)))
+	while (tmp && ft_strcmp(tmp->key, key))
 		tmp = tmp->next;
 	free(key), key = NULL;
 	if (tmp)
