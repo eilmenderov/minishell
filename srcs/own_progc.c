@@ -88,3 +88,32 @@ void	ft_exit(t_cmd *cmd)
 		cmd->data->ret_val = 255, ft_pr_error(arg, 1, 0, 3);
 	free(arg), exit(cmd->data->ret_val);
 }
+
+int	ft_unset(t_cmd *cmd, int i)
+{
+	t_env	*tmp;
+
+	while (cmd->arg[++i])
+	{
+		if (ft_chek_env_key(cmd->arg[i], 0))
+		{
+			ft_pr_error("Error: unset: not a valid identifier", 0, 0, 2);
+			return (1);
+		}
+		tmp = cmd->data->beg_env;
+		while (tmp && ft_strcmp(tmp->key, cmd->arg[i]))
+			tmp = tmp->next;
+		if (!tmp)
+			continue ;
+		if (!tmp->prev)
+			cmd->data->beg_env = tmp->next;
+		else
+			tmp->prev->next = tmp->next;
+		if (tmp->next)
+			tmp->next->prev = tmp->prev;
+		free(tmp->key), tmp->key = NULL;
+		free(tmp->val), tmp->val = NULL;
+		free(tmp), tmp = NULL;
+	}
+	return (0);
+}

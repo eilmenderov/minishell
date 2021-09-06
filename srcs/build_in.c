@@ -1,32 +1,50 @@
 #include "head_minishell.h"
 
-int	ft_unset(t_cmd *cmd, int i)
+t_env	*ft_find_key(t_env *env)
 {
 	t_env	*tmp;
+	t_env	*elem_sort;
+	char	*str_tmp;
+	int		dif;
 
-	while (cmd->arg[++i])
+	tmp = env;
+	elem_sort = tmp;
+	str_tmp = NULL;
+	while (tmp)
 	{
-		if (ft_chek_env_key(cmd->arg[i], 0))
+		if (!tmp->print)
 		{
-			ft_pr_error("Error: unset: not a valid identifier", 0, 0, 2);
-			return (1);
+			dif = ft_strcmp(str_tmp, tmp->key);
+			if (dif > 0)
+			{
+				elem_sort = tmp;
+				str_tmp = tmp->key;
+			}
 		}
-		tmp = cmd->data->beg_env;
-		while (tmp && ft_strcmp(tmp->key, cmd->arg[i]))
-			tmp = tmp->next;
-		if (!tmp)
-			continue ;
-		if (!tmp->prev)
-			cmd->data->beg_env = tmp->next;
-		else
-			tmp->prev->next = tmp->next;
-		if (tmp->next)
-			tmp->next->prev = tmp->prev;
-		free(tmp->key), tmp->key = NULL;
-		free(tmp->val), tmp->val = NULL;
-		free(tmp), tmp = NULL;
+		tmp = tmp->next;
 	}
-	return (0);
+	elem_sort->print = 1;
+	return (elem_sort);
+}
+
+void	ft_print_export(t_env *env)
+{
+	t_env	*tmp;
+	t_env	*elem_sort;
+
+	tmp = env;
+	while (tmp)
+	{
+		elem_sort = ft_find_key(env);
+		printf("declare -x %s=\"%s\"\n", elem_sort->key, elem_sort->val);
+		tmp = tmp->next;
+	}
+	tmp = env;
+	while (tmp)
+	{
+		tmp->print = 0;
+		tmp = tmp->next;
+	}
 }
 
 int	ft_export(t_cmd *cmd)
@@ -47,34 +65,6 @@ int	ft_export(t_cmd *cmd)
 			return (1);
 		}
 		ft_change_env(cmd, cmd->arg[i], 0);
-	}
-	return (0);
-}
-
-int	ft_cd(t_cmd *cmd)
-{
-	t_env	*tmp;
-
-	if (!cmd->arg[1] || !ft_strcmp(cmd->arg[1], "~"))
-	{
-		tmp = cmd->data->beg_env;
-		while (tmp && ft_strcmp("HOME", tmp->key))
-			tmp = tmp->next;
-		if (chdir(tmp->val) == -1)
-		{
-			ft_pr_error(cmd->arg[1], 0, 0, 4);
-			return (1);
-		}
-		ft_pwd(cmd->data, 1, cmd);
-	}
-	else
-	{
-		if (chdir(cmd->arg[1]) == -1)
-		{
-			ft_pr_error(cmd->arg[1], 0, 0, 4);
-			return (1);
-		}
-		ft_pwd(cmd->data, 1, cmd);
 	}
 	return (0);
 }

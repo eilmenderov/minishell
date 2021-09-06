@@ -1,8 +1,31 @@
 #include "head_minishell.h"
 
-void	ft_print_export(t_env *env)
+int	ft_cd(t_cmd *cmd)
 {
-	return ;
+	t_env	*tmp;
+
+	if (!cmd->arg[1] || !ft_strcmp(cmd->arg[1], "~"))
+	{
+		tmp = cmd->data->beg_env;
+		while (tmp && ft_strcmp("HOME", tmp->key))
+			tmp = tmp->next;
+		if (chdir(tmp->val) == -1)
+		{
+			ft_pr_error(cmd->arg[1], 0, 0, 4);
+			return (1);
+		}
+		ft_pwd(cmd->data, 1, cmd);
+	}
+	else
+	{
+		if (chdir(cmd->arg[1]) == -1)
+		{
+			ft_pr_error(cmd->arg[1], 0, 0, 4);
+			return (1);
+		}
+		ft_pwd(cmd->data, 1, cmd);
+	}
+	return (0);
 }
 
 void	ft_redirects_before(t_cmd *cmd)
