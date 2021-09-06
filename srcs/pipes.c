@@ -21,25 +21,31 @@ void	ft_create_pipes(t_data *data)
 	data->fd_pipes[i] = NULL;
 }
 
-void	ft_close_pipes(t_data *data, int fl)
+void	ft_close_pipes(t_data *data, int pipe_num)
 {
 	int	i;
 
 	i = 0;
-	while (data->fd_pipes[i])
+	while (data->fd_pipes[i] && data->fd_pipes[i + 1])
 	{
-		if (fl == -1)
-		{
-			close(data->fd_pipes[i][0]), close(data->fd_pipes[i][1]);
-			printf("cl: fd[%d][0] = %d\tfd[%d][1] = %d\n", i, data->fd_pipes[i][0], i, data->fd_pipes[i][1]);
-		}
-		else
-		{
-			if (i != fl)
-				close(data->fd_pipes[i][1]), printf("cl: fd[%d][1]\n", i);
-			if (i + 1 != fl && data->fd_pipes[i + 1])
-				close(data->fd_pipes[i + 1][0]), printf("cl: fd[%d][0]d\n", i + 1);
-		}
+		if (i != pipe_num)
+			close(data->fd_pipes[i + 1][1]), data->fd_pipes[i + 1][1] = -1;
 		i++;
 	}
+	if (data->fd_pipes[0])
+		close(data->fd_pipes[0][1]), data->fd_pipes[0][1] = -1;
+	i = 0;
+	while (data->fd_pipes[i])
+	{
+		if (i != pipe_num)
+			close(data->fd_pipes[i][0]), data->fd_pipes[i][0] = -1;
+		i++;
+	}
+	// i = 0;
+	// while (data->fd_pipes[i])
+	// {
+	// 	printf("fd[%d][0] = %d\tfd[%d][1] = %d\n", i, data->fd_pipes[i][0], i, data->fd_pipes[i][1]);
+	// 	i++;
+	// }
+	// printf("OK\n");
 }

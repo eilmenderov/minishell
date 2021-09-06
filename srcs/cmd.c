@@ -1,6 +1,6 @@
 #include "head_minishell.h"
 
-void	ft_single_cmd(t_data *data, t_cmd *cmd, int pid, int ex)
+void	ft_single_cmd(t_data *data, t_cmd *cmd, int pid)
 {
 	char	*cmd_s;
 	int		check;
@@ -18,8 +18,8 @@ void	ft_single_cmd(t_data *data, t_cmd *cmd, int pid, int ex)
 	else if (pid == 0)
 	{
 		ft_redirects_before(cmd);
-		ex = execve(cmd_s, cmd->arg, data->env), ft_redirects_after(cmd);
-		exit (1);
+		if (execve(cmd_s, cmd->arg, data->env))
+			ft_redirects_after(cmd), exit (1);
 	}
 	else
 	{
@@ -57,7 +57,7 @@ void	ft_start_cmd(t_data *data)
 		if (fl)
 			ft_start_own_prog(data->cmd_start, fl);
 		else
-			ft_single_cmd(data, data->cmd_start, -1, -1);
+			ft_single_cmd(data, data->cmd_start, -1);
 		return ;
 	}
 	ft_multiple_cmd(data->cmd_start);
