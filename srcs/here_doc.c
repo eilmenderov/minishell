@@ -32,6 +32,6 @@ int	ft_here_doc(t_data *data, char *str, int *i)
 		free(line), line = NULL;
 	if (data->fd_in > 0)
 		close(data->fd_in), data->fd_in = -1;
-	close(fd[1]), data->fd_in = fd[0];
+	ft_putstr_fd("\n", fd[1]), close(fd[1]), data->fd_in = fd[0];
 	return (0);
 }

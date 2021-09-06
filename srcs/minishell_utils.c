@@ -1,5 +1,8 @@
 #include "head_minishell.h"
 
+/*
+**	@brief	Create env list with key and value
+*/
 t_env	*ft_new_env(char *key, char *val, unsigned char visible)
 {
 	t_env	*rez;

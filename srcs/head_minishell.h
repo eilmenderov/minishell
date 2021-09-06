@@ -26,7 +26,7 @@
 # define DOB_PIPE	2
 # define DOB_AMPER	3
 # define POINT_ZAP	4
-# define PWD_LEN	1000
+# define PWD_LEN	1024
 
 # define ERR_MALC		"Error : malloc error"
 # define ERR_RDL		"Error : readline error"
@@ -39,7 +39,7 @@
 # define ERR_SH_TKN		"minishell: syntax error near unexpected token "
 # define ERR_CMD		"minishell: command not found: "
 
-// extern int	g_stat;
+extern int	g_stat;
 
 typedef struct s_env
 {
@@ -56,8 +56,9 @@ typedef struct s_cmd
 	char			*cmd;
 	char			**arg;
 	char			*ful_cmd;
-	int				fd_infile;
-	int				fd_outfile;
+	int				fd_inf;
+	int				fd_outf;
+	int				tmp_fd[2];
 	pid_t			pid;
 	unsigned char	delim;
 	struct s_data	*data;
@@ -105,18 +106,39 @@ int		ft_redir(t_data *data, char *str, int *i);
 int		ft_here_doc(t_data *data, char *str, int *i);
 
 /* cmd.c */
-char	*ft_find_cmd(t_cmd *do_cmd);
 void	ft_start_cmd(t_data *data);
-int		ft_pool_cmd(t_data *data, char *str, int *i);
-int		ft_pool_cmd_st(t_data *data, char *str, int *i);
+void	ft_wait_all_cmd(t_data *data);
+
+/* cmd_utils.c */
+char	*ft_points(t_cmd *do_cmd);
+char	*ft_find_cmd(t_cmd *do_cmd);
 void	ft_free_cmd(t_cmd *do_cmd);
+t_cmd	*ft_pool_new_cmd(t_data *data, char *str, int *i);
+int		ft_pool_cmd(t_data *data, char *str, int *i);
+
+/* multiple_cmd.c */
+void	ft_multiple_cmd(t_cmd *cmd);
 
 /* biuld_in.c */
 void	ft_start_own_prog(t_cmd *cmd, int fl);
 int		ft_change_env(t_cmd *cmd, char *str, int visib);
 int		ft_buildin(t_cmd *cmd, int fl);
 
+/* build_in_utils.c */
+void	ft_print_export(t_env *env);
+int		ft_chek_env_key(char *str, int fl);
+int		ft_change_env(t_cmd *cmd, char *str, int visib);
+void	ft_redirects_before(t_cmd *cmd);
+void	ft_redirects_after(t_cmd *cmd);
+
+/* own_progc.c */
+void	ft_echo(t_cmd *cmd);
+int		ft_pwd(t_data *data, int fl, t_cmd *cmd);
+int		ft_env(t_cmd *cmd);
+void	ft_exit(t_cmd *cmd);
+
 /* signal.c */
 void	ft_signal(void);
+void	ft_signal_cmd(void);
 
 #endif

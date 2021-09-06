@@ -1,6 +1,6 @@
 #include "head_minishell.h"
 
-// int	g_stat;
+int	g_stat;
 
 /*
 **	@brief	Print struct data
@@ -87,11 +87,11 @@ int	main(int ac, char **av, char **env)
 	while (TRUE)
 	{
 		str = readline(SHELL_FW);
-		// if (g_stat == 100)
-		// {
-		// 	data.old_stat = 1;
-		// 	g_stat = 0;
-		// }
+		if (g_stat == 100)
+		{
+			data.old_stat = 1;
+			g_stat = 0;
+		}
 		if (!str)
 			str = ft_strdup("exit");
 		if (ft_str_spec_case(str))
@@ -99,8 +99,7 @@ int	main(int ac, char **av, char **env)
 		add_history(str);
 		if (!ft_parsing(&data, str))
 		{
-			// printf("first_cmd : |%s|\n", data.cmd_start->ful_cmd);
-			ft_start_cmd(&data);
+			ft_start_cmd(&data), ft_wait_all_cmd(&data), ft_signal();
 			free(data.rez), data.rez = NULL;
 		}
 		ft_clean_all(str);
