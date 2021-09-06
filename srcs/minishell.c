@@ -87,7 +87,7 @@ int	main(int ac, char **av, char **env)
 	while (TRUE)
 	{
 		str = readline(SHELL_FW);
-		if (g_stat == 100)
+		if (g_stat == 130)
 		{
 			data.old_stat = 1;
 			g_stat = 0;

@@ -74,6 +74,7 @@ typedef struct s_data
 	int				fd_in;
 	int				fd_out;
 	int				total_cmd;
+	int				**fd_pipes;
 	unsigned int	shlvl;
 	int				old_stat;
 	char			**env;
@@ -120,6 +121,10 @@ int		ft_pool_cmd(t_data *data, char *str, int *i);
 
 /* cmd_multiple.c */
 void	ft_multiple_cmd(t_cmd *cmd);
+
+/* pipes.c */
+void	ft_create_pipes(t_data *data);
+void	ft_close_pipes(t_data *data, int fl);
 
 /* biuld_in.c */
 void	ft_start_own_prog(t_cmd *cmd, int fl);

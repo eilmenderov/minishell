@@ -152,3 +152,13 @@ minishell_*
 * try !!
 * try history 10
 *  echo def
+```
+i = 0;
+while (data->fd_pipes[i])
+{
+	printf("fd[%d][0] = %d\tfd[%d][1] = %d\n", i, data->fd_pipes[i][0], i, data->fd_pipes[i][1]);
+	i++;
+}
+printf("OK\n");
+exit(0);
+```

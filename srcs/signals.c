@@ -10,7 +10,7 @@ static void	ft_signal_cltr_c(int sig)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-	g_stat = 100;
+	g_stat = 130;
 }
 
 /*

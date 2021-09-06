@@ -19,13 +19,13 @@ void	ft_single_cmd(t_data *data, t_cmd *cmd, int pid, int ex)
 	{
 		ft_redirects_before(cmd);
 		ex = execve(cmd_s, cmd->arg, data->env), ft_redirects_after(cmd);
-		if (ex == -1)
-			exit (1);
+		exit (1);
 	}
 	else
 	{
-		ft_free_cmd(cmd), free(cmd_s);
-		waitpid(-1, &check, 0), data->ret_val = check;
+		ft_free_cmd(cmd), free(cmd_s), waitpid(-1, &check, 0);
+		if (check)
+			data->ret_val = 1;
 	}
 }
 
