@@ -132,7 +132,7 @@ int		ft_change_env(t_cmd *cmd, char *str, int visib);
 int		ft_buildin(t_cmd *cmd, int fl);
 
 /* build_in_utils.c */
-void	ft_print_export(t_env *env);
+int		ft_cd(t_cmd *cmd);
 int		ft_chek_env_key(char *str, int fl);
 int		ft_change_env(t_cmd *cmd, char *str, int visib);
 void	ft_redirects_before(t_cmd *cmd);
@@ -143,6 +143,7 @@ void	ft_echo(t_cmd *cmd);
 int		ft_pwd(t_data *data, int fl, t_cmd *cmd);
 int		ft_env(t_cmd *cmd);
 void	ft_exit(t_cmd *cmd);
+int		ft_unset(t_cmd *cmd, int i);
 
 /* signal.c */
 void	ft_signal(void);
