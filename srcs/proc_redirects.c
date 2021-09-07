@@ -15,7 +15,7 @@ static int	ft_open_app_read(t_data *data, char *f_name, int fl)
 	free(f_name);
 	if (fd == -1)
 	{
-		ft_pr_error(strerror(errno), 0, 0, 2);
+		ft_pr_error(NULL, 0, 0, 5);
 		return (-1);
 	}
 	if (fl == 1 || fl == 2)

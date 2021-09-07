@@ -85,7 +85,7 @@ int	ft_pr_error(char *str, int error_code, char c, int fl)
 		ft_putstr_fd(": ", 2), ft_putendl_fd(strerror(errno), 2);
 	}
 	else if (fl == 5)
-		ft_putstr_fd("minishell: ", 2), ft_putendl_fd(str, 2);
+		ft_putstr_fd("minishell: ", 2), ft_putendl_fd(strerror(errno), 2);
 	return (error_code);
 }
 

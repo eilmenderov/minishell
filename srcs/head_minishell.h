@@ -27,7 +27,6 @@
 # define DOB_AMPER	3
 # define POINT_ZAP	4
 # define PWD_LEN	1024
-# define STERR		strerror(errno)
 
 # define ERR_MALC		"Error : malloc error"
 # define ERR_RDL		"Error : readline error"
