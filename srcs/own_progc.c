@@ -7,14 +7,16 @@ void	ft_echo(t_cmd *cmd)
 
 	i = 0;
 	s = cmd->ful_cmd;
+	if (cmd->fd_inf > 0)
+		close(cmd->fd_inf), cmd->fd_inf = -1;
 	while (s[i] && !ft_ch_for_coinc(s[i], " "))
 		i++;
-	i++, ft_redirects_before(cmd);
+	i++;
 	if (s[i] == '-' && s[i + 1] == 'n')
 		ft_putstr_fd(&s[i + 3], 1);
 	else
 		ft_putendl_fd(&s[i], 1);
-	ft_redirects_after(cmd), cmd->data->ret_val = 0;
+	cmd->data->ret_val = 0;
 }
 
 int	ft_pwd(t_data *data, int fl, t_cmd *cmd)
@@ -26,9 +28,7 @@ int	ft_pwd(t_data *data, int fl, t_cmd *cmd)
 	str = ft_strjoin_m(NULL, str, 2);
 	if (!fl)
 	{
-		ft_redirects_before(cmd);
 		printf("%s\n", str), free(str);
-		ft_redirects_after(cmd);
 		return (0);
 	}
 	tmp = data->beg_env;
@@ -50,7 +50,6 @@ int	ft_env(t_cmd *cmd)
 		ft_pr_error("Error: env: support only one arg", 0, 0, 2);
 		return (127);
 	}
-	ft_redirects_before(cmd);
 	tmp = cmd->data->beg_env;
 	while (tmp)
 	{
@@ -58,7 +57,6 @@ int	ft_env(t_cmd *cmd)
 			printf("%s=%s\n", tmp->key, tmp->val);
 		tmp = tmp->next;
 	}
-	ft_redirects_after(cmd);
 	return (0);
 }
 
@@ -68,6 +66,7 @@ void	ft_exit(t_cmd *cmd)
 	int		j;
 	int		i;
 
+	ft_redirects_after(cmd);
 	i = ft_strlen_m(cmd->ful_cmd, ' ');
 	if (!i)
 		i = ft_strlen(cmd->ful_cmd);

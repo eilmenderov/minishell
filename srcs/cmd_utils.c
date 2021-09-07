@@ -54,6 +54,8 @@ void	ft_free_cmd(t_cmd *do_cmd)
 {
 	t_cmd	*tmp;
 
+	if (!do_cmd)
+		return ;
 	if (do_cmd->fd_inf > 0)
 		close(do_cmd->fd_inf), do_cmd->fd_inf = -1;
 	if (do_cmd->fd_outf > 0)

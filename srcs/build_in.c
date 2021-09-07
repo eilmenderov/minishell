@@ -80,22 +80,22 @@ static int	ft_export(t_cmd *cmd, int i)
 void	ft_start_own_prog(t_cmd *cmd, int fl)
 {
 	if (fl == 1)
-		ft_echo(cmd), ft_free_cmd(cmd);
+		ft_echo(cmd);
 	else if (fl == 2)
-		cmd->data->ret_val = ft_pwd(cmd->data, 0, cmd), ft_free_cmd(cmd);
+		cmd->data->ret_val = ft_pwd(cmd->data, 0, cmd);
 	else if (fl == 3)
-		cmd->data->ret_val = ft_env(cmd), ft_free_cmd(cmd);
+		cmd->data->ret_val = ft_env(cmd);
 	else if (fl == 4)
-		ft_exit(cmd), ft_free_cmd(cmd);
+		ft_exit(cmd);
 	else if (fl == 5)
-		cmd->data->ret_val = ft_unset(cmd, 0), ft_free_cmd(cmd);
+		cmd->data->ret_val = ft_unset(cmd, 0);
 	else if (fl == 6)
-		cmd->data->ret_val = ft_export(cmd, 0), ft_free_cmd(cmd);
+		cmd->data->ret_val = ft_export(cmd, 0);
 	else if (fl == 7)
-		cmd->data->ret_val = ft_cd(cmd), ft_free_cmd(cmd);
+		cmd->data->ret_val = ft_cd(cmd);
 	else if (fl == 8)
 		cmd->data->ret_val
-			= ft_change_env(cmd, cmd->cmd, 1, 0), ft_free_cmd(cmd);
+			= ft_change_env(cmd, cmd->cmd, 1, 0);
 	else
 		ft_pr_error("Impossible", 0, 0, 2);
 }

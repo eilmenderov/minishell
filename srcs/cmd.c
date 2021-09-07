@@ -43,24 +43,30 @@ void	ft_wait_all_cmd(t_data *data)
 			break ;
 		i++;
 	}
-	data->ret_val = check;
+	if (check)
+		data->ret_val = 1;
 	usleep (300);
-	printf("check = %d\n", check);
+	printf("echo $? = %d\n", check);
 }
 
 void	ft_start_cmd(t_data *data)
 {
-	int	fl;
+	int		fl;
+	t_cmd	*cmd;
 
+	cmd = data->cmd_start;
 	ft_signal_cmd();
-	if (!data->cmd_start->next)
+	if (!cmd->next)
 	{
-		fl = ft_buildin(data->cmd_start, 0);
+		fl = ft_buildin(cmd, 0);
 		if (fl)
-			ft_start_own_prog(data->cmd_start, fl);
+		{
+			ft_redirects_before(cmd), ft_start_own_prog(cmd, fl);
+			ft_redirects_after(cmd), ft_free_cmd(cmd);
+		}
 		else
-			ft_single_cmd(data, data->cmd_start, -1);
+			ft_single_cmd(data, cmd, -1);
 		return ;
 	}
-	ft_multiple_cmd(data->cmd_start);
+	ft_multiple_cmd(cmd);
 }

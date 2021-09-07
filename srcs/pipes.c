@@ -42,9 +42,9 @@ void	ft_close_pipes(t_data *data, t_cmd *cmd, int pipe_num)
 			close(data->fd_pipes[i][0]), data->fd_pipes[i][0] = -1;
 		i++;
 	}
-	if (cmd->fd_inf > 0)
+	if (data->fd_pipes[pipe_num] && cmd->fd_inf > 0)
 		close(data->fd_pipes[pipe_num][0]), data->fd_pipes[pipe_num][0] = -1;
 	pipe_num++;
-	if (cmd->fd_outf > 0)
+	if (data->fd_pipes[pipe_num] && cmd->fd_outf > 0)
 		close(data->fd_pipes[pipe_num][1]), data->fd_pipes[pipe_num][1] = -1;
 }
