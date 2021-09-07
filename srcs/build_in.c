@@ -36,8 +36,10 @@ static void	ft_print_export(t_env *env)
 	while (tmp)
 	{
 		elem_sort = ft_find_key(env);
-		if (!elem_sort->visible)
+		if (!elem_sort->visible && elem_sort->val)
 			printf("declare -x %s=\"%s\"\n", elem_sort->key, elem_sort->val);
+		else if (!elem_sort->visible && !elem_sort->val)
+			printf("declare -x %s\n", elem_sort->key);
 		tmp = tmp->next;
 	}
 	tmp = env;
@@ -48,16 +50,13 @@ static void	ft_print_export(t_env *env)
 	}
 }
 
-static int	ft_export(t_cmd *cmd)
+static int	ft_export(t_cmd *cmd, int i)
 {
-	int	i;
-
 	if (!cmd->arg[1])
 	{
 		ft_print_export(cmd->data->beg_env);
 		return (0);
 	}
-	i = 0;
 	while (cmd->arg[++i])
 	{
 		if (ft_chek_env_key(cmd->arg[i], 1))
@@ -65,7 +64,15 @@ static int	ft_export(t_cmd *cmd)
 			ft_pr_error("Error: export: not a valid identifier", 0, 0, 2);
 			return (1);
 		}
-		ft_change_env(cmd, cmd->arg[i], 0); /// !нужно подумать с export value без равно!
+		if (ft_strlen_m(cmd->arg[i], '='))
+			ft_change_env(cmd, cmd->arg[i], 0, 0);
+		else
+		{
+			cmd->data->beg_env->prev
+				= ft_new_env(ft_strdup(cmd->arg[i]), NULL, 0);
+			cmd->data->beg_env->prev->next = cmd->data->beg_env;
+			cmd->data->beg_env = cmd->data->beg_env->prev;
+		}
 	}
 	return (0);
 }
@@ -83,11 +90,12 @@ void	ft_start_own_prog(t_cmd *cmd, int fl)
 	else if (fl == 5)
 		cmd->data->ret_val = ft_unset(cmd, 0), ft_free_cmd(cmd);
 	else if (fl == 6)
-		cmd->data->ret_val = ft_export(cmd), ft_free_cmd(cmd);
+		cmd->data->ret_val = ft_export(cmd, 0), ft_free_cmd(cmd);
 	else if (fl == 7)
 		cmd->data->ret_val = ft_cd(cmd), ft_free_cmd(cmd);
 	else if (fl == 8)
-		cmd->data->ret_val = ft_change_env(cmd, cmd->cmd, 1), ft_free_cmd(cmd);
+		cmd->data->ret_val
+			= ft_change_env(cmd, cmd->cmd, 1, 0), ft_free_cmd(cmd);
 	else
 		ft_pr_error("Impossible", 0, 0, 2);
 }

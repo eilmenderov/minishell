@@ -34,9 +34,21 @@ static int	ft_str_spec_case(char *str)
 	return (0);
 }
 
-static void	ft_clean_all(char *str)
+static void	ft_clean_all(char *str, t_cmd *start)
 {
+	t_cmd	*tmp;
+
 	free (str), str = NULL;
+	if (!start)
+		return ;
+	tmp = start;
+	tmp->data->cmd_start = NULL;
+	while (tmp)
+	{
+		start = tmp->next;
+		ft_free_cmd(tmp);
+		tmp = start;
+	}
 }
 
 /*
@@ -102,6 +114,6 @@ int	main(int ac, char **av, char **env)
 			ft_start_cmd(&data), ft_signal();
 			free(data.rez), data.rez = NULL;
 		}
-		ft_clean_all(str);
+		ft_clean_all(str, data.cmd_start);
 	}
 }

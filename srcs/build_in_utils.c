@@ -69,10 +69,9 @@ int	ft_chek_env_key(char *str, int fl)
 	return (0);
 }
 
-int	ft_change_env(t_cmd *cmd, char *str, int visib)
+int	ft_change_env(t_cmd *cmd, char *str, int visib, int len)
 {
 	char	*key;
-	int		len;
 	t_env	*tmp;
 
 	len = ft_strlen_m(str, '=');

@@ -122,7 +122,7 @@ void	ft_multiple_cmd(t_cmd *cmd);
 
 /* pipes.c */
 void	ft_create_pipes(t_data *data);
-void	ft_close_pipes(t_data *data, int fl);
+void	ft_close_pipes(t_data *data, t_cmd *cmd, int fl);
 
 /* biuld_in.c */
 void	ft_start_own_prog(t_cmd *cmd, int fl);
@@ -131,7 +131,7 @@ int		ft_buildin(t_cmd *cmd, int fl);
 /* build_in_utils.c */
 int		ft_cd(t_cmd *cmd);
 int		ft_chek_env_key(char *str, int fl);
-int		ft_change_env(t_cmd *cmd, char *str, int visib);
+int		ft_change_env(t_cmd *cmd, char *str, int visib, int len);
 void	ft_redirects_before(t_cmd *cmd);
 void	ft_redirects_after(t_cmd *cmd);
 

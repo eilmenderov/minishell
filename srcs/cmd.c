@@ -44,6 +44,8 @@ void	ft_wait_all_cmd(t_data *data)
 		i++;
 	}
 	data->ret_val = check;
+	usleep (300);
+	printf("check = %d\n", check);
 }
 
 void	ft_start_cmd(t_data *data)
