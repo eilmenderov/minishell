@@ -81,6 +81,7 @@ void	ft_init_data(t_data *data, char **env)
 		}
 		tmp = tmp->next;
 	}
+	data->my_env = ft_env_to_char(data->beg_env);
 }
 
 /*

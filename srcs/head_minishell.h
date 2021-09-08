@@ -79,6 +79,7 @@ typedef struct s_data
 	unsigned int	shlvl;
 	int				old_stat;
 	char			**env;
+	char 			**my_env;
 	char			*rez;
 	t_env			*beg_env;
 	t_cmd			*cmd_start;
@@ -86,6 +87,7 @@ typedef struct s_data
 
 /* minishell.c */
 int		ft_pr_error(char *str, int error_code, char c, int fl);
+char	**ft_env_to_char(t_env *env);
 
 /* minishell_utils.c */
 t_env	*ft_new_env(char *key, char *val, unsigned char visible);

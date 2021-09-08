@@ -18,7 +18,7 @@ static void	ft_single_cmd(t_data *data, t_cmd *cmd, int pid)
 	else if (pid == 0)
 	{
 		ft_redirects_before(cmd);
-		if (execve(cmd_s, cmd->arg, data->env))
+		if (execve(cmd_s, cmd->arg, data->my_env)) // вот тут нужно свой env передавать
 			ft_redirects_after(cmd), ft_pr_error(NULL, 0, 0, 5), exit(1);
 	}
 	else

@@ -18,6 +18,31 @@ static void	ft_print_data(t_data *data)
 	}
 }
 
+char	**ft_env_to_char(t_env *env)
+{
+	t_env	*tmp;
+	int 	i;
+	char 	**new_env;
+
+	tmp = env;
+	i = 0;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	new_env = (char **)malloc(sizeof(char *) * (i + 1));
+	i = 0;
+	tmp = env;
+	while (tmp)
+	{
+		new_env[i++] = ft_strjoin_m(ft_strjoin(tmp->key, "="), tmp->val, 1);
+		tmp = tmp->next;
+	}
+	new_env[i] = NULL;
+	return (new_env);
+}
+
 static int	ft_str_spec_case(char *str)
 {
 	if (!ft_strcmp(str, ""))
