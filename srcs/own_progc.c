@@ -3,6 +3,7 @@
 void	ft_echo(t_cmd *cmd)
 {
 	int		i;
+	int 	j;
 	char	*s;
 
 	i = 0;
@@ -12,8 +13,17 @@ void	ft_echo(t_cmd *cmd)
 	while (s[i] && !ft_ch_for_coinc(s[i], " "))
 		i++;
 	i++;
-	if (s[i] == '-' && s[i + 1] == 'n')
-		ft_putstr_fd(&s[i + 3], 1);
+	j = i;
+	if (s[i] == '-')
+	{
+		i++;
+		while (s[i] == 'n')
+			i++;
+		if (ft_ch_for_coinc(s[i], " "))
+			ft_putstr_fd(&s[i + 1], 1);
+		else
+			ft_putendl_fd(&s[j], 1);
+	}
 	else
 		ft_putendl_fd(&s[i], 1);
 	cmd->data->ret_val = 0;
