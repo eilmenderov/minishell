@@ -1,5 +1,21 @@
 #include "head_minishell.h"
 
+void ft_change_oldpwd(t_cmd *cmd)
+{
+	char	*str;
+	t_env	*tmp;
+
+	str = getcwd(NULL, PWD_LEN);
+	str = ft_strjoin_m(NULL, str, 2);
+	tmp = cmd->data->beg_env;
+	while (tmp && ft_strcmp(tmp->key, "OLDPWD"))
+		tmp = tmp->next;
+	if (tmp)
+		free(tmp->val), tmp->val = str;
+	else
+		free(str);
+}
+
 int	ft_cd(t_cmd *cmd)
 {
 	t_env	*tmp;
@@ -9,6 +25,7 @@ int	ft_cd(t_cmd *cmd)
 		tmp = cmd->data->beg_env;
 		while (tmp && ft_strcmp("HOME", tmp->key))
 			tmp = tmp->next;
+		ft_change_oldpwd(cmd);
 		if (chdir(tmp->val) == -1)
 		{
 			ft_pr_error(cmd->arg[1], 0, 0, 4);
@@ -18,6 +35,7 @@ int	ft_cd(t_cmd *cmd)
 	}
 	else
 	{
+		ft_change_oldpwd(cmd);
 		if (chdir(cmd->arg[1]) == -1)
 		{
 			ft_pr_error(cmd->arg[1], 0, 0, 4);

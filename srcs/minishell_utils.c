@@ -77,8 +77,11 @@ void	ft_init_data(t_data *data, char **env)
 		{
 			data->shlvl = ft_atoi(tmp->val) + 1;
 			free(tmp->val), tmp->val = ft_itoa(data->shlvl);
-			break ;
 		}
+		if (!ft_strcmp(tmp->key, "OLDPWD"))
+			free(tmp->val), tmp->val = NULL;
+		if (!ft_strcmp(tmp->key, "PWD"))
+			ft_pwd(data, 1, NULL);
 		tmp = tmp->next;
 	}
 	data->my_env = ft_env_to_char(data->beg_env);
