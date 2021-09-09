@@ -92,7 +92,7 @@ void	ft_start_own_prog(t_cmd *cmd, int fl)
 	else if (fl == 6)
 		cmd->data->ret_val = ft_export(cmd, 0);
 	else if (fl == 7)
-		cmd->data->ret_val = ft_cd(cmd);
+		cmd->data->ret_val = ft_cd(cmd, NULL);
 	else if (fl == 8)
 		cmd->data->ret_val
 			= ft_change_env(cmd, cmd->cmd, 1, 0);

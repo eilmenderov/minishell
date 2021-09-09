@@ -50,6 +50,7 @@ static void	ft_pool_env(t_data *data, int i, size_t len)
 		tmp->prev = buf;
 		buf = buf->next;
 	}
+	data->env = NULL;
 }
 
 /*
@@ -58,25 +59,25 @@ static void	ft_pool_env(t_data *data, int i, size_t len)
 **	@param	data	struct t_data
 **	@param	env		environment
 */
-void	ft_init_data(t_data *data, char **env)
+void	ft_init_data(t_data *data, char **env, t_env *tmp)
 {
-	t_env	*tmp;
-
 	data->error = 0;
 	data->fd_in = -1;
 	data->fd_out = -1;
 	data->ret_val = 0;
 	data->total_cmd = 0;
 	data->env = env;
-	data->rez = NULL;
-	ft_pool_env(data, 0, 0);
+	data->fd_pipes = NULL;
+	data->rez = NULL, ft_pool_env(data, 0, 0);
 	tmp = data->beg_env;
 	while (tmp)
 	{
 		if (!ft_strcmp(tmp->key, "SHLVL"))
 		{
-			data->shlvl = ft_atoi(tmp->val) + 1;
-			free(tmp->val), tmp->val = ft_itoa(data->shlvl);
+			data->shlvl = ft_atoi(tmp->val) + 1, free(tmp->val);
+			if (data->shlvl < 0)
+				data->shlvl = 0;
+			tmp->val = ft_itoa(data->shlvl);
 		}
 		if (!ft_strcmp(tmp->key, "OLDPWD"))
 			free(tmp->val), tmp->val = NULL;
@@ -84,7 +85,6 @@ void	ft_init_data(t_data *data, char **env)
 			ft_pwd(data, 1, NULL);
 		tmp = tmp->next;
 	}
-	data->my_env = ft_env_to_char(data->beg_env);
 }
 
 /*

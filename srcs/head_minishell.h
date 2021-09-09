@@ -76,10 +76,11 @@ typedef struct s_data
 	int				fd_out;
 	int				total_cmd;
 	int				**fd_pipes;
-	unsigned int	shlvl;
+	int				shlvl;
 	int				old_stat;
+	int				*all_pid;
+	char			*tmp;
 	char			**env;
-	char 			**my_env;
 	char			*rez;
 	t_env			*beg_env;
 	t_cmd			*cmd_start;
@@ -87,11 +88,11 @@ typedef struct s_data
 
 /* minishell.c */
 int		ft_pr_error(char *str, int error_code, char c, int fl);
-char	**ft_env_to_char(t_env *env);
+void	ft_env_to_char(t_data *data);
 
 /* minishell_utils.c */
 t_env	*ft_new_env(char *key, char *val, unsigned char visible);
-void	ft_init_data(t_data *data, char **env);
+void	ft_init_data(t_data *data, char **env, t_env *tmp);
 void	ft_free_data(t_data *data);
 char	**ft_proc_envp(t_data *data);
 
@@ -132,11 +133,10 @@ void	ft_start_own_prog(t_cmd *cmd, int fl);
 int		ft_buildin(t_cmd *cmd, int fl);
 
 /* build_in_utils.c */
-int		ft_cd(t_cmd *cmd);
+int		ft_cd(t_cmd *cmd, t_env *tmp);
 int		ft_chek_env_key(char *str, int fl);
 int		ft_change_env(t_cmd *cmd, char *str, int visib, int len);
-void	ft_redirects_before(t_cmd *cmd);
-void	ft_redirects_after(t_cmd *cmd);
+void	ft_redirects(t_cmd *cmd, int fl);
 
 /* own_progc.c */
 void	ft_echo(t_cmd *cmd);

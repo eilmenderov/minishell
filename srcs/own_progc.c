@@ -3,7 +3,7 @@
 void	ft_echo(t_cmd *cmd)
 {
 	int		i;
-	int 	j;
+	int		j;
 	char	*s;
 
 	i = 0;
@@ -76,7 +76,7 @@ void	ft_exit(t_cmd *cmd)
 	int		j;
 	int		i;
 
-	ft_redirects_after(cmd);
+	ft_redirects(cmd, 1);
 	i = ft_strlen_m(cmd->ful_cmd, ' ');
 	if (!i)
 		i = ft_strlen(cmd->ful_cmd);

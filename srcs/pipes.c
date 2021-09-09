@@ -19,6 +19,7 @@ void	ft_create_pipes(t_data *data)
 		i++;
 	}
 	data->fd_pipes[i] = NULL;
+	data->all_pid = malloc(sizeof(int) * data->total_cmd);
 }
 
 void	ft_close_pipes(t_data *data, t_cmd *cmd, int pipe_num)

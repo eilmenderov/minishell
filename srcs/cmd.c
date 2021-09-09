@@ -17,9 +17,9 @@ static void	ft_single_cmd(t_data *data, t_cmd *cmd, int pid)
 		ft_free_cmd(cmd), free(cmd_s), ft_pr_error(ERR_FORK, 0, 0, 2);
 	else if (pid == 0)
 	{
-		ft_redirects_before(cmd);
-		if (execve(cmd_s, cmd->arg, data->my_env)) // вот тут нужно свой env передавать
-			ft_redirects_after(cmd), ft_pr_error(NULL, 0, 0, 5), exit(1);
+		ft_redirects(cmd, 0);
+		if (execve(cmd_s, cmd->arg, data->env))
+			ft_redirects(cmd, 1), ft_pr_error(NULL, 0, 0, 5), exit(1);
 	}
 	else
 	{
@@ -45,8 +45,6 @@ void	ft_wait_all_cmd(t_data *data)
 	}
 	if (check)
 		data->ret_val = 1;
-	usleep (300);
-	printf("echo $? = %d\n", check);
 }
 
 void	ft_start_cmd(t_data *data)
@@ -61,8 +59,8 @@ void	ft_start_cmd(t_data *data)
 		fl = ft_buildin(cmd, 0);
 		if (fl)
 		{
-			ft_redirects_before(cmd), ft_start_own_prog(cmd, fl);
-			ft_redirects_after(cmd), ft_free_cmd(cmd);
+			ft_redirects(cmd, 0), ft_start_own_prog(cmd, fl);
+			ft_redirects(cmd, 1), ft_free_cmd(cmd);
 		}
 		else
 			ft_single_cmd(data, cmd, -1);

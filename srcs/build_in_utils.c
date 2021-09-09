@@ -1,31 +1,34 @@
 #include "head_minishell.h"
 
-void ft_change_oldpwd(t_cmd *cmd)
+void	ft_change_oldpwd(t_cmd *cmd, int fl)
 {
-	char	*str;
 	t_env	*tmp;
 
-	str = getcwd(NULL, PWD_LEN);
-	str = ft_strjoin_m(NULL, str, 2);
-	tmp = cmd->data->beg_env;
-	while (tmp && ft_strcmp(tmp->key, "OLDPWD"))
-		tmp = tmp->next;
-	if (tmp)
-		free(tmp->val), tmp->val = str;
-	else
-		free(str);
+	if (!fl)
+	{
+		cmd->data->tmp = getcwd(NULL, PWD_LEN);
+		cmd->data->tmp = ft_strjoin_m(NULL, cmd->data->tmp, 2);
+	}
+	else if (fl == 1)
+	{
+		tmp = cmd->data->beg_env;
+		while (tmp && ft_strcmp(tmp->key, "OLDPWD"))
+			tmp = tmp->next;
+		if (tmp)
+			free(tmp->val), tmp->val = cmd->data->tmp;
+		else
+			free(cmd->data->tmp), cmd->data->tmp = NULL;
+	}
 }
 
-int	ft_cd(t_cmd *cmd)
+int	ft_cd(t_cmd *cmd, t_env *tmp)
 {
-	t_env	*tmp;
-
+	ft_change_oldpwd(cmd, 0);
 	if (!cmd->arg[1] || !ft_strcmp(cmd->arg[1], "~"))
 	{
 		tmp = cmd->data->beg_env;
 		while (tmp && ft_strcmp("HOME", tmp->key))
 			tmp = tmp->next;
-		ft_change_oldpwd(cmd);
 		if (chdir(tmp->val) == -1)
 		{
 			ft_pr_error(cmd->arg[1], 0, 0, 4);
@@ -35,7 +38,6 @@ int	ft_cd(t_cmd *cmd)
 	}
 	else
 	{
-		ft_change_oldpwd(cmd);
 		if (chdir(cmd->arg[1]) == -1)
 		{
 			ft_pr_error(cmd->arg[1], 0, 0, 4);
@@ -43,25 +45,32 @@ int	ft_cd(t_cmd *cmd)
 		}
 		ft_pwd(cmd->data, 1, cmd);
 	}
+	ft_change_oldpwd(cmd, 1);
 	return (0);
 }
 
-void	ft_redirects_before(t_cmd *cmd)
+void	ft_redirects(t_cmd *cmd, int fl)
 {
-	cmd->tmp_fd[1] = dup(STDOUT);
-	cmd->tmp_fd[0] = dup(STDIN);
-	if (cmd->fd_outf > 0)
-		dup2(cmd->fd_outf, STDOUT), close(cmd->fd_outf);
-	if (cmd->fd_inf > 0)
-		dup2(cmd->fd_inf, STDIN), close(cmd->fd_inf);
-}
-
-void	ft_redirects_after(t_cmd *cmd)
-{	
-	close(STDIN);
-	close(STDOUT);
-	dup2(cmd->tmp_fd[1], STDOUT), close(cmd->tmp_fd[1]), cmd->tmp_fd[1] = -1;
-	dup2(cmd->tmp_fd[0], STDIN), close(cmd->tmp_fd[0]), cmd->tmp_fd[0] = -1;
+	if (!fl)
+	{
+		ft_env_to_char(cmd->data);
+		cmd->tmp_fd[1] = dup(STDOUT);
+		cmd->tmp_fd[0] = dup(STDIN);
+		if (cmd->fd_outf > 0)
+			dup2(cmd->fd_outf, STDOUT), close(cmd->fd_outf);
+		if (cmd->fd_inf > 0)
+			dup2(cmd->fd_inf, STDIN), close(cmd->fd_inf);
+	}
+	else
+	{
+		ft_free_split(cmd->data->env);
+		close(STDIN);
+		close(STDOUT);
+		dup2(cmd->tmp_fd[1], STDOUT);
+		close(cmd->tmp_fd[1]), cmd->tmp_fd[1] = -1;
+		dup2(cmd->tmp_fd[0], STDIN);
+		close(cmd->tmp_fd[0]), cmd->tmp_fd[0] = -1;
+	}
 }
 
 int	ft_chek_env_key(char *str, int fl)

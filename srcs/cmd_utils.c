@@ -40,7 +40,7 @@ char	*ft_find_cmd(t_cmd *do_cmd)
 		try = ft_strjoin(env_path[i], do_cmd->cmd);
 		if (!stat(try, &buf))
 		{
-			do_cmd->data->shlvl++;
+			ft_free_split(env_path), env_path = NULL;
 			return (try);
 		}
 		free(try), i++;
