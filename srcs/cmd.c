@@ -53,6 +53,8 @@ void	ft_start_cmd(t_data *data)
 	t_cmd	*cmd;
 
 	cmd = data->cmd_start;
+	if (!cmd)
+		return ;
 	ft_signal_cmd();
 	if (!cmd->next)
 	{
@@ -60,7 +62,8 @@ void	ft_start_cmd(t_data *data)
 		if (fl)
 		{
 			ft_redirects(cmd, 0), ft_start_own_prog(cmd, fl);
-			ft_redirects(cmd, 1), ft_free_cmd(cmd);
+			ft_redirects(cmd, 1), ft_free_cmd(cmd), data->cmd_start = NULL;
+			data->count = 0;
 		}
 		else
 			ft_single_cmd(data, cmd, -1);

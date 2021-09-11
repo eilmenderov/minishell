@@ -1,6 +1,6 @@
 #include "head_minishell.h"
 
-static t_env	*ft_find_key(t_env *env)
+t_env	*ft_find_key(t_env *env)
 {
 	t_env	*tmp;
 	t_env	*elem_sort;
@@ -25,56 +25,6 @@ static t_env	*ft_find_key(t_env *env)
 	}
 	elem_sort->print = 1;
 	return (elem_sort);
-}
-
-static void	ft_print_export(t_env *env)
-{
-	t_env	*tmp;
-	t_env	*elem_sort;
-
-	tmp = env;
-	while (tmp)
-	{
-		elem_sort = ft_find_key(env);
-		if (!elem_sort->visible && elem_sort->val)
-			printf("declare -x %s=\"%s\"\n", elem_sort->key, elem_sort->val);
-		else if (!elem_sort->visible && !elem_sort->val)
-			printf("declare -x %s\n", elem_sort->key);
-		tmp = tmp->next;
-	}
-	tmp = env;
-	while (tmp)
-	{
-		tmp->print = 0;
-		tmp = tmp->next;
-	}
-}
-
-static int	ft_export(t_cmd *cmd, int i)
-{
-	if (!cmd->arg[1])
-	{
-		ft_print_export(cmd->data->beg_env);
-		return (0);
-	}
-	while (cmd->arg[++i])
-	{
-		if (ft_chek_env_key(cmd->arg[i], 1))
-		{
-			ft_pr_error("Error: export: not a valid identifier", 0, 0, 2);
-			return (1);
-		}
-		if (ft_strlen_m(cmd->arg[i], '='))
-			ft_change_env(cmd, cmd->arg[i], 0, 0);
-		else
-		{
-			cmd->data->beg_env->prev
-				= ft_new_env(ft_strdup(cmd->arg[i]), NULL, 0);
-			cmd->data->beg_env->prev->next = cmd->data->beg_env;
-			cmd->data->beg_env = cmd->data->beg_env->prev;
-		}
-	}
-	return (0);
 }
 
 void	ft_start_own_prog(t_cmd *cmd, int fl)

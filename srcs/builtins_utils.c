@@ -49,30 +49,6 @@ int	ft_cd(t_cmd *cmd, t_env *tmp)
 	return (0);
 }
 
-void	ft_redirects(t_cmd *cmd, int fl)
-{
-	if (!fl)
-	{
-		ft_env_to_char(cmd->data);
-		cmd->tmp_fd[1] = dup(STDOUT);
-		cmd->tmp_fd[0] = dup(STDIN);
-		if (cmd->fd_outf > 0)
-			dup2(cmd->fd_outf, STDOUT), close(cmd->fd_outf);
-		if (cmd->fd_inf > 0)
-			dup2(cmd->fd_inf, STDIN), close(cmd->fd_inf);
-	}
-	else
-	{
-		ft_free_split(cmd->data->env);
-		close(STDIN);
-		close(STDOUT);
-		dup2(cmd->tmp_fd[1], STDOUT);
-		close(cmd->tmp_fd[1]), cmd->tmp_fd[1] = -1;
-		dup2(cmd->tmp_fd[0], STDIN);
-		close(cmd->tmp_fd[0]), cmd->tmp_fd[0] = -1;
-	}
-}
-
 int	ft_chek_env_key(char *str, int fl)
 {
 	int	i;
@@ -84,14 +60,27 @@ int	ft_chek_env_key(char *str, int fl)
 	i = 1;
 	while (str[i])
 	{
-		if (str[i] != '_' && str[i] != '='
+		if (str[i] != '_' && str[i] != '=' && str[i] != '+'
 			&& !ft_isalpha(str[i]) && !ft_isdigit(str[i]))
 			return (1);
 		if (str[i] == '=' && !fl)
 			return (1);
-		else if (str[i] == '=' && fl)
+		else if ((str[i] == '=' || str[i] == '+') && fl)
 			break ;
 		i++;
+	}
+	return (0);
+}
+
+static int	ft_change_env_helper(t_env *tmp, char *str, char *key, int len)
+{
+	if (tmp)
+	{
+		if (str[len] == '+')
+			tmp->val = ft_strjoin_m(tmp->val, ft_strdup(&str[len + 2]), 3);
+		else if (tmp->val)
+			free(tmp->val), tmp->val = ft_strdup(&str[len + 1]);
+		free(key);
 	}
 	return (0);
 }
@@ -101,18 +90,15 @@ int	ft_change_env(t_cmd *cmd, char *str, int visib, int len)
 	char	*key;
 	t_env	*tmp;
 
-	len = ft_strlen_m(str, '=');
+	len = ft_strlen_m(str, '+');
+	if (!len)
+		len = ft_strlen_m(str, '=');
 	key = ft_strndup(str, len);
 	tmp = cmd->data->beg_env;
 	while (tmp && ft_strcmp(tmp->key, key))
 		tmp = tmp->next;
 	if (tmp)
-	{
-		if (tmp->val)
-			free(tmp->val);
-		tmp->val = ft_strdup(&str[len + 1]), free(key);
-		return (0);
-	}
+		return (ft_change_env_helper(tmp, str, key, len));
 	if (ft_chek_env_key(cmd->cmd, 1))
 	{
 		ft_pr_error(cmd->arg[0], 0, 0, 3);

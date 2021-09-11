@@ -19,7 +19,7 @@ void	ft_create_pipes(t_data *data)
 		i++;
 	}
 	data->fd_pipes[i] = NULL;
-	data->all_pid = malloc(sizeof(int) * data->total_cmd);
+	data->all_pid = malloc(sizeof(int) * (data->total_cmd));
 }
 
 void	ft_close_pipes(t_data *data, t_cmd *cmd, int pipe_num)
@@ -48,4 +48,28 @@ void	ft_close_pipes(t_data *data, t_cmd *cmd, int pipe_num)
 	pipe_num++;
 	if (data->fd_pipes[pipe_num] && cmd->fd_outf > 0)
 		close(data->fd_pipes[pipe_num][1]), data->fd_pipes[pipe_num][1] = -1;
+}
+
+void	ft_redirects(t_cmd *cmd, int fl)
+{
+	if (!fl)
+	{
+		ft_env_to_char(cmd->data);
+		cmd->tmp_fd[1] = dup(STDOUT);
+		cmd->tmp_fd[0] = dup(STDIN);
+		if (cmd->fd_inf > 0)
+			dup2(cmd->fd_inf, STDIN), close(cmd->fd_inf);
+		if (cmd->fd_outf > 0)
+			dup2(cmd->fd_outf, STDOUT), close(cmd->fd_outf);
+	}
+	else
+	{
+		ft_free_split(cmd->data->env);
+		close(STDIN);
+		close(STDOUT);
+		dup2(cmd->tmp_fd[1], STDOUT);
+		close(cmd->tmp_fd[1]), cmd->tmp_fd[1] = -1;
+		dup2(cmd->tmp_fd[0], STDIN);
+		close(cmd->tmp_fd[0]), cmd->tmp_fd[0] = -1;
+	}
 }

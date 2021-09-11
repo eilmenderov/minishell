@@ -50,23 +50,13 @@ char	*ft_find_cmd(t_cmd *do_cmd)
 	return (NULL);
 }
 
-void	ft_free_cmd(t_cmd *do_cmd)
+static void	ft_pool_helper(t_cmd *cmd, char *str, int *i)
 {
-	t_cmd	*tmp;
-
-	if (!do_cmd)
-		return ;
-	if (do_cmd->fd_inf > 0)
-		close(do_cmd->fd_inf), do_cmd->fd_inf = -1;
-	if (do_cmd->fd_outf > 0)
-		close(do_cmd->fd_outf), do_cmd->fd_outf = -1;
-	if (do_cmd->arg)
-		ft_free_split(do_cmd->arg), do_cmd->arg = NULL;
-	if (do_cmd->ful_cmd)
-		free(do_cmd->ful_cmd), do_cmd->ful_cmd = NULL;
-	tmp = do_cmd->next;
-	do_cmd->data->cmd_start = tmp;
-	free(do_cmd), do_cmd = NULL;
+	cmd->data->rez = NULL;
+	cmd->next = NULL;
+	cmd->pid = 0;
+	cmd->dino = ft_strndup(&str[cmd->data->count], *i - cmd->data->count);
+	cmd->data->count = *i + 1;
 }
 
 t_cmd	*ft_pool_new_cmd(t_data *data, char *str, int *i)
@@ -82,9 +72,7 @@ t_cmd	*ft_pool_new_cmd(t_data *data, char *str, int *i)
 	rez->fd_outf = data->fd_out;
 	rez->tmp_fd[0] = -1;
 	rez->tmp_fd[1] = -1;
-	data->rez = NULL;
-	rez->next = NULL;
-	rez->pid = 0;
+	ft_pool_helper(rez, str, i);
 	if (str[*i] != 0 && str[*i] == '|' && str[*i + 1] != '|')
 		rez->delim = PIPE, (*i)++;
 	else if (str[*i] != 0 && str[*i] == '&' && str[*i + 1] == '&')
@@ -102,6 +90,8 @@ int	ft_pool_cmd(t_data *data, char *str, int *i)
 {
 	t_cmd	*tmp;
 
+	if (!data->rez)
+		return (1);
 	if (!data->cmd_start)
 	{
 		data->cmd_start = ft_pool_new_cmd(data, str, i);

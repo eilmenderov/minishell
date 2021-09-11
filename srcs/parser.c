@@ -81,17 +81,18 @@ char	*ft_proc_open(t_data *data, char *str, int *i, char *rez)
 	return (rez);
 }
 
-int	ft_parsing(t_data *data, char *str)
+int	ft_parsing(t_data *data, char *str, int i)
 {
-	int	i;
-
-	i = 0;
 	while (str[i])
 	{
 		if (ft_ch_for_coinc(str[i], "><|&;"))
 		{
 			if (ft_redir(data, str, &i))
+			{
+				if (data->ret_val)
+					ft_pr_error(ERR_SH_TKN, 0, 0, 2), data->ret_val = 2;
 				return (1);
+			}
 		}
 		else if (str[i] == ' ')
 		{

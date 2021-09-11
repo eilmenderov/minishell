@@ -148,10 +148,9 @@ minishell_*
 </p>
 
 ## Problems:
-* try echo $(var1=5;echo $var1)
-* try !!
-* try history 10
-*  echo def
+* try ls -l > 2 | echo 123
+* try echo -n -n -n 12345
+
 ```
 i = 0;
 while (data->fd_pipes[i])

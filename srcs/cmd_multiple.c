@@ -1,6 +1,6 @@
 #include "head_minishell.h"
 
-void	ft_first_cmd(t_cmd *cmd)
+static void	ft_first_cmd(t_cmd *cmd)
 {
 	int		fl;
 	char	*cmd_s;
@@ -23,7 +23,7 @@ void	ft_first_cmd(t_cmd *cmd)
 	ft_redirects(cmd, 1);
 }
 
-void	ft_child(t_cmd *cmd)
+static void	ft_child(t_cmd *cmd)
 {
 	int		fl;
 	char	*cmd_s;
@@ -51,7 +51,7 @@ void	ft_child(t_cmd *cmd)
 	ft_redirects(cmd, 1);
 }
 
-void	ft_last_cmd(t_cmd *cmd)
+static void	ft_last_cmd(t_cmd *cmd)
 {
 	int		fl;
 	char	*cmd_s;
@@ -63,6 +63,7 @@ void	ft_last_cmd(t_cmd *cmd)
 		cmd->fd_inf = cmd->data->fd_pipes[cmd->num_start - 1][0];
 	cmd->data->fd_pipes[cmd->num_start - 1][0] = -1;
 	ft_redirects(cmd, 0);
+	printf("last_st\n");
 	if (fl)
 		ft_start_own_prog(cmd, fl);
 	else
@@ -77,6 +78,7 @@ void	ft_last_cmd(t_cmd *cmd)
 void	ft_multiple_cmd(t_cmd *cmd)
 {
 	int		i;
+	int		fl;
 	t_cmd	*tmp;
 
 	ft_create_pipes(cmd->data), i = 0;
@@ -85,10 +87,10 @@ void	ft_multiple_cmd(t_cmd *cmd)
 	{
 		if (tmp->delim != PIPE && tmp->delim != 0)
 			ft_pr_error("Sorry not supported yeat", -1, 0, 0);
-		cmd->data->all_pid[i] = fork();
-		if (cmd->data->all_pid[i] < 0)
+		fl = fork();
+		if (fl < 0)
 			ft_pr_error(ERR_FORK, -1, 0, 0);
-		else if (!cmd->data->all_pid[i])
+		if (i < cmd->data->total_cmd && !fl)
 		{
 			ft_close_pipes(tmp->data, tmp, tmp->num_start);
 			if (tmp == tmp->data->cmd_start)
@@ -97,6 +99,7 @@ void	ft_multiple_cmd(t_cmd *cmd)
 				ft_child(tmp), exit(cmd->data->ret_val);
 			ft_last_cmd(tmp), exit(cmd->data->ret_val);
 		}
+		cmd->data->all_pid[i] = fl;
 		tmp = tmp->next, i++;
 	}
 	ft_close_pipes(cmd->data, cmd, -1);

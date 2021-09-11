@@ -12,7 +12,7 @@ static int	ft_open_app_read(t_data *data, char *f_name, int fl)
 		fd = open(f_name, O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	else if (fl == 3)
 		fd = open(f_name, O_RDONLY);
-	free(f_name);
+	free(f_name), f_name = NULL;
 	if (fd == -1)
 	{
 		ft_pr_error(NULL, 0, 0, 5);
@@ -42,7 +42,7 @@ static int	ft_general_open(t_data *data, char *str, int *i, int fl)
 	j = *i;
 	while (str[*i] && !ft_ch_for_coinc(str[*i], "> <|&;"))
 		f_name = ft_proc_open(data, str, i, f_name);
-	if (j == *i)
+	if (j == *i || !f_name)
 	{
 		ft_pr_error(ERR_SH_NEWL, 0, str[*i], 1);
 		return (-2);
@@ -52,7 +52,7 @@ static int	ft_general_open(t_data *data, char *str, int *i, int fl)
 	return (ft_open_app_read(data, f_name, fl));
 }
 
-static int	ft_open_app_here(t_data *data, char *str, int *i, char *rez)
+static int	ft_open_app_here(t_data *data, char *str, int *i)
 {
 	if (ft_ch_for_coinc(str[*i + 2], ";><"))
 	{
@@ -70,7 +70,7 @@ static int	ft_open_app_here(t_data *data, char *str, int *i, char *rez)
 		return (ft_general_open(data, str, i, 1));
 	}
 	else if (str[*i] == '<' && str[*i + 1] == '<')
-		return (ft_here_doc(data, str, i));
+		return (ft_here_doc(data, str, i, NULL));
 	else
 	{
 		ft_pr_error(ERR_SH_TKN, 0, str[*i + 2], 1);
@@ -78,7 +78,7 @@ static int	ft_open_app_here(t_data *data, char *str, int *i, char *rez)
 	}
 }
 
-static int	ft_open_file(t_data *data, char *str, int *i, char *rez)
+static int	ft_open_file(t_data *data, char *str, int *i)
 {
 	if (ft_ch_for_coinc(str[*i + 1], ";"))
 	{
@@ -106,14 +106,28 @@ int	ft_redir(t_data *data, char *str, int *i)
 	if ((str[*i] == '<' || str[*i] == '>')
 		&& (str[*i + 1] == '<' || str[*i + 1] == '>'))
 	{
-		ans = ft_open_app_here(data, str, i, data->rez);
-		if (ans)
+		ans = ft_open_app_here(data, str, i);
+		if (!data->rez && !ans && !str[*i])
+		{
+			close(data->fd_in), close(data->fd_out), data->ret_val = 1;
+			data->fd_in = -1;
+			data->fd_out = -1;
+			return (1);
+		}
+		if (ans && data->rez)
 			free(data->rez), data->rez = NULL;
 	}
 	else if ((str[*i] == '>' || str[*i] == '<'))
 	{
-		ans = ft_open_file(data, str, i, data->rez);
-		if (ans)
+		ans = ft_open_file(data, str, i);
+		if (!data->rez && !ans && !str[*i])
+		{
+			close(data->fd_in), close(data->fd_out), data->ret_val = 1;
+			data->fd_in = -1;
+			data->fd_out = -1;
+			return (1);
+		}
+		if (ans && data->rez)
 			free(data->rez), data->rez = NULL;
 	}
 	else if (str[*i] == '|' || str[*i] == '&' || str[*i] == ';')

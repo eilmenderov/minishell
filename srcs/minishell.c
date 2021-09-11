@@ -2,31 +2,6 @@
 
 int	g_stat;
 
-void	ft_env_to_char(t_data *data)
-{
-	t_env	*tmp;
-	int		i;
-	char	**new_env;
-
-	tmp = data->beg_env;
-	i = 0;
-	while (tmp)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	new_env = (char **)malloc(sizeof(char *) * (i + 1));
-	i = 0;
-	tmp = data->beg_env;
-	while (tmp)
-	{
-		new_env[i] = ft_strjoin_m(ft_strjoin(tmp->key, "="), tmp->val, 1);
-		tmp = tmp->next, i++;
-	}
-	new_env[i] = NULL;
-	data->env = new_env;
-}
-
 static int	ft_str_spec_case(char *str)
 {
 	if (!ft_strcmp(str, ""))
@@ -41,31 +16,6 @@ static int	ft_str_spec_case(char *str)
 		return (1);
 	}
 	return (0);
-}
-
-static void	ft_clean_all(char *str, t_cmd *start)
-{
-	t_cmd	*tmp;
-	int		i;
-
-	free (str), str = NULL;
-	if (!start)
-		return ;
-	if (start->data->all_pid)
-		free(start->data->all_pid), start->data->all_pid = NULL;
-	i = 0;
-	while (start->data->fd_pipes && start->data->fd_pipes[i])
-		free(start->data->fd_pipes[i]), start->data->fd_pipes[i] = NULL, i++;
-	if (start->data->fd_pipes)
-		free(start->data->fd_pipes), start->data->fd_pipes = NULL;
-	tmp = start;
-	tmp->data->cmd_start = NULL;
-	while (tmp)
-	{
-		start = tmp->next;
-		ft_free_cmd(tmp);
-		tmp = start;
-	}
 }
 
 /*
@@ -128,11 +78,8 @@ int	main(int ac, char **av, char **env)
 		if (ft_str_spec_case(str))
 			continue ;
 		add_history(str);
-		if (!ft_parsing(&data, str))
-		{
+		if (!ft_parsing(&data, str, 0))
 			ft_start_cmd(&data), ft_signal();
-			free(data.rez), data.rez = NULL;
-		}
 		ft_clean_all(str, data.cmd_start), data.cmd_start = NULL;
 	}
 }

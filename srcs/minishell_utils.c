@@ -51,6 +51,7 @@ static void	ft_pool_env(t_data *data, int i, size_t len)
 		buf = buf->next;
 	}
 	data->env = NULL;
+	data->count = 0;
 }
 
 /*
@@ -88,31 +89,6 @@ void	ft_init_data(t_data *data, char **env, t_env *tmp)
 }
 
 /*
-**	@brief	Free memory which was allocated
-**	
-**	@param	data	struct t_data
-*/
-void	ft_free_data(t_data *data)
-{
-	t_env	*tmp;
-	t_env	*buf;
-
-	tmp = data->beg_env;
-	data->beg_env = NULL;
-	while (tmp)
-	{
-		if (tmp->key)
-			free(tmp->key), tmp->key = NULL;
-		if (tmp->val)
-			free(tmp->val), tmp->val = NULL;
-		buf = tmp;
-		tmp = tmp->next;
-		free(buf);
-	}
-	data = NULL;
-}
-
-/*
 **	@brief	Prepares the environment to run with the command
 **			and fills out data->env_path
 **	
@@ -135,4 +111,26 @@ char	**ft_proc_envp(t_data *data)
 	while (rez[i])
 		rez[i] = ft_strjoin_m(rez[i], "/", 1), i++;
 	return (rez);
+}
+
+void	ft_env_to_char(t_data *data)
+{
+	t_env	*tmp;
+	int		i;
+	char	**new_env;
+
+	tmp = data->beg_env;
+	i = 0;
+	while (tmp)
+		tmp = tmp->next, i++;
+	new_env = malloc(sizeof(char *) * (i + 1));
+	i = 0;
+	tmp = data->beg_env;
+	while (tmp)
+	{
+		new_env[i] = ft_strjoin_m(ft_strjoin_m(tmp->key, "=", 0), tmp->val, 1);
+		tmp = tmp->next, i++;
+	}
+	new_env[i] = NULL;
+	data->env = new_env;
 }
