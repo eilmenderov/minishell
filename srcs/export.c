@@ -89,7 +89,7 @@ int	ft_export(t_cmd *cmd, int i)
 	{
 		if (ft_chek_env_key(cmd->arg[i], 1))
 		{
-			ft_pr_error("Error: export: not a valid identifier", 0, 0, 2);
+			cmd->data->ret_val = 1, ft_pr_error(ERR_EXP, 0, 0, 2);
 			return (1);
 		}
 		if (ft_strlen_m(cmd->arg[i], '=') || ft_strlen_m(cmd->arg[i], '+'))

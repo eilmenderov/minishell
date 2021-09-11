@@ -69,5 +69,5 @@ void	ft_start_cmd(t_data *data)
 			ft_single_cmd(data, cmd, -1);
 		return ;
 	}
-	ft_multiple_cmd(cmd);
+	ft_multiple_cmd(cmd, 0);
 }

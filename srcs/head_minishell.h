@@ -35,10 +35,11 @@
 # define ERR_PIPE		"Error : pipe error"
 # define ERR_DUP		"Error : dup2 error"
 # define PID_EXEP		"[Sorry, we're not allowed to use func getpid]"
-# define ERR_SH_NEWL	"minishell: syntax error near unexpected token 'newln'"
+# define ERR_SH_NEWL	"minishell: syntax error near unexpected token newline"
 # define ERR_SH_TKN		"minishell: syntax error near unexpected token "
 # define ERR_CMD		"minishell: command not found: "
 # define ERR_NFD		"minishell: No such file or directory"
+# define ERR_EXP		"Error: export: not a valid identifier"
 
 extern int	g_stat;
 
@@ -100,7 +101,7 @@ void	ft_start_own_prog(t_cmd *cmd, int fl);
 int		ft_buildin(t_cmd *cmd, int fl);
 
 /* cmd_multiple.c 4/5 */
-void	ft_multiple_cmd(t_cmd *cmd);
+void	ft_multiple_cmd(t_cmd *cmd, int i);
 
 /* cmd_utils.c 5/5 */
 char	*ft_find_cmd(t_cmd *do_cmd);
@@ -147,10 +148,11 @@ void	ft_hadle_str(t_data *data, char *str, int *i);
 char	*ft_proc_open(t_data *data, char *str, int *i, char *rez);
 int		ft_parsing(t_data *data, char *str, int i);
 
-/* pipes_redir.c 3/5 */
+/* pipes_redir.c 4/5 */
 void	ft_create_pipes(t_data *data);
 void	ft_close_pipes(t_data *data, t_cmd *cmd, int fl);
 void	ft_redirects(t_cmd *cmd, int fl);
+int		ft_redir_helper(t_data *data);
 
 /* proc_redirects.c 5/5 */
 int		ft_redir(t_data *data, char *str, int *i);

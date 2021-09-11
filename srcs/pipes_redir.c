@@ -73,3 +73,13 @@ void	ft_redirects(t_cmd *cmd, int fl)
 		close(cmd->tmp_fd[0]), cmd->tmp_fd[0] = -1;
 	}
 }
+
+int	ft_redir_helper(t_data *data)
+{
+	close(data->fd_in);
+	close(data->fd_out);
+	data->ret_val = 1;
+	data->fd_in = -1;
+	data->fd_out = -1;
+	return (1);
+}

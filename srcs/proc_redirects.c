@@ -44,7 +44,7 @@ static int	ft_general_open(t_data *data, char *str, int *i, int fl)
 		f_name = ft_proc_open(data, str, i, f_name);
 	if (j == *i || !f_name)
 	{
-		ft_pr_error(ERR_SH_NEWL, 0, str[*i], 1);
+		ft_pr_error(ERR_SH_NEWL, 0, 0, 2), data->ret_val = 1;
 		return (-2);
 	}
 	while (str[*i] && str[*i] == ' ')
@@ -56,15 +56,15 @@ static int	ft_open_app_here(t_data *data, char *str, int *i)
 {
 	if (ft_ch_for_coinc(str[*i + 2], ";><"))
 	{
-		ft_pr_error(ERR_SH_TKN, 0, str[*i + 2], 1);
+		ft_pr_error(ERR_SH_TKN, 0, str[*i + 2], 1), data->ret_val = 1;
 		return (-1);
 	}
-	if (ft_ch_for_coinc(str[*i + 2], "\0\n"))
+	else if (ft_ch_for_coinc(str[*i + 2], "\n\0"))
 	{
-		ft_pr_error(ERR_SH_NEWL, 0, str[*i + 2], 1);
+		ft_pr_error(ERR_SH_NEWL, 0, 0, 2), data->ret_val = 1;
 		return (-2);
 	}
-	if (str[*i] == '>' && str[*i + 1] == '>')
+	else if (str[*i] == '>' && str[*i + 1] == '>')
 	{
 		*i = *i + 2;
 		return (ft_general_open(data, str, i, 1));
@@ -73,7 +73,7 @@ static int	ft_open_app_here(t_data *data, char *str, int *i)
 		return (ft_here_doc(data, str, i, NULL));
 	else
 	{
-		ft_pr_error(ERR_SH_TKN, 0, str[*i + 2], 1);
+		ft_pr_error(ERR_SH_TKN, 0, str[*i + 2], 1), data->ret_val = 1;
 		return (-6);
 	}
 }
@@ -82,15 +82,15 @@ static int	ft_open_file(t_data *data, char *str, int *i)
 {
 	if (ft_ch_for_coinc(str[*i + 1], ";"))
 	{
-		ft_pr_error(ERR_SH_TKN, 0, str[*i + 2], 1);
+		ft_pr_error(ERR_SH_TKN, 0, str[*i + 2], 1), data->ret_val = 1;
 		return (-1);
 	}
 	if (ft_ch_for_coinc(str[*i + 1], "\0\n"))
 	{
-		ft_pr_error(ERR_SH_NEWL, 0, str[*i + 2], 1);
+		ft_pr_error(ERR_SH_NEWL, 0, str[*i + 2], 1), data->ret_val = 1;
 		return (-2);
 	}
-	if (str[*i] == '>')
+	else if (str[*i] == '>')
 	{
 		*i = *i + 1;
 		return (ft_general_open(data, str, i, 2));
@@ -108,12 +108,7 @@ int	ft_redir(t_data *data, char *str, int *i)
 	{
 		ans = ft_open_app_here(data, str, i);
 		if (!data->rez && !ans && !str[*i])
-		{
-			close(data->fd_in), close(data->fd_out), data->ret_val = 1;
-			data->fd_in = -1;
-			data->fd_out = -1;
-			return (1);
-		}
+			return (ft_redir_helper(data));
 		if (ans && data->rez)
 			free(data->rez), data->rez = NULL;
 	}
@@ -121,12 +116,7 @@ int	ft_redir(t_data *data, char *str, int *i)
 	{
 		ans = ft_open_file(data, str, i);
 		if (!data->rez && !ans && !str[*i])
-		{
-			close(data->fd_in), close(data->fd_out), data->ret_val = 1;
-			data->fd_in = -1;
-			data->fd_out = -1;
-			return (1);
-		}
+			return (ft_redir_helper(data));
 		if (ans && data->rez)
 			free(data->rez), data->rez = NULL;
 	}

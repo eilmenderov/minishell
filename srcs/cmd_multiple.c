@@ -63,7 +63,6 @@ static void	ft_last_cmd(t_cmd *cmd)
 		cmd->fd_inf = cmd->data->fd_pipes[cmd->num_start - 1][0];
 	cmd->data->fd_pipes[cmd->num_start - 1][0] = -1;
 	ft_redirects(cmd, 0);
-	printf("last_st\n");
 	if (fl)
 		ft_start_own_prog(cmd, fl);
 	else
@@ -75,14 +74,12 @@ static void	ft_last_cmd(t_cmd *cmd)
 	ft_redirects(cmd, 1);
 }
 
-void	ft_multiple_cmd(t_cmd *cmd)
+void	ft_multiple_cmd(t_cmd *cmd, int i)
 {
-	int		i;
 	int		fl;
 	t_cmd	*tmp;
 
-	ft_create_pipes(cmd->data), i = 0;
-	tmp = cmd;
+	ft_create_pipes(cmd->data), tmp = cmd;
 	while (tmp)
 	{
 		if (tmp->delim != PIPE && tmp->delim != 0)
@@ -102,6 +99,5 @@ void	ft_multiple_cmd(t_cmd *cmd)
 		cmd->data->all_pid[i] = fl;
 		tmp = tmp->next, i++;
 	}
-	ft_close_pipes(cmd->data, cmd, -1);
-	ft_wait_all_cmd(cmd->data);
+	ft_close_pipes(cmd->data, cmd, -1), ft_wait_all_cmd(cmd->data);
 }
