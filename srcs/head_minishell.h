@@ -133,7 +133,7 @@ void	ft_env_to_char(t_data *data);
 int		ft_pr_error(char *str, int error_code, char c, int fl);
 
 /* own_progc.c 5/5 */
-void	ft_echo(t_cmd *cmd);
+void	ft_echo(t_cmd *cmd, char *s);
 int		ft_pwd(t_data *data, int fl, t_cmd *cmd);
 int		ft_env(t_cmd *cmd);
 void	ft_exit(t_cmd *cmd);
