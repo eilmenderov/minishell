@@ -67,6 +67,7 @@ void	ft_init_data(t_data *data, char **env, t_env *tmp)
 	data->fd_out = -1;
 	data->ret_val = 0;
 	data->total_cmd = 0;
+	data->all_pid = NULL;
 	data->env = env;
 	data->fd_pipes = NULL;
 	data->rez = NULL, ft_pool_env(data, 0, 0);

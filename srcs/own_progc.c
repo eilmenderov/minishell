@@ -1,11 +1,9 @@
 #include "head_minishell.h"
 
-void	ft_echo(t_cmd *cmd, char *s)
+void	ft_echo(t_cmd *cmd, char *s, int i)
 {
-	int		i;
 	int		j;
 
-	i = 0;
 	if (cmd->fd_inf > 0)
 		close(cmd->fd_inf), cmd->fd_inf = -1;
 	while (s[i] && !ft_ch_for_coinc(s[i], " "))
@@ -14,13 +12,13 @@ void	ft_echo(t_cmd *cmd, char *s)
 	while (s[i] != ' ')
 	{
 		if (s[i + 1] == '-' && s[i + 2] == '-')
-			break;
+			break ;
 		if (s[i + 1] == '-')
 			i++;
 		while (s[i + 2] == 'n')
 			i++;
 		if (s[i + 2] == ' ')
-			i+= 3;
+			i += 3;
 		else
 			break ;
 	}
@@ -87,7 +85,8 @@ void	ft_exit(t_cmd *cmd)
 	while (cmd->ful_cmd[i] && cmd->ful_cmd[i] != ' ')
 		i++;
 	if (i == j)
-		ft_putendl_fd("exit", 1), exit(0);
+		ft_putendl_fd("exit", 1),
+		ft_free_data(cmd->data), exit(cmd->data->ret_val);
 	arg = ft_strndup(&cmd->ful_cmd[j], i - j);
 	ft_putendl_fd("exit", 1), i = 0;
 	while (ft_isdigit(arg[i]))
@@ -96,7 +95,7 @@ void	ft_exit(t_cmd *cmd)
 		cmd->data->ret_val = ft_atoi(arg);
 	else
 		cmd->data->ret_val = 255, ft_pr_error(arg, 1, 0, 3);
-	free(arg), exit(cmd->data->ret_val);
+	free(arg), ft_free_data(cmd->data), exit(cmd->data->ret_val);
 }
 
 int	ft_unset(t_cmd *cmd, int i)

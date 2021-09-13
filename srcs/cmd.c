@@ -8,8 +8,7 @@ static void	ft_single_cmd(t_data *data, t_cmd *cmd, int pid)
 	cmd_s = ft_find_cmd(cmd);
 	if (!cmd_s)
 	{
-		ft_pr_error(cmd->arg[0], 0, 0, 3), ft_free_cmd(cmd), free(cmd_s);
-		data->ret_val = 1;
+		ft_pr_error(cmd->arg[0], 0, 0, 3), ft_free_cmd(cmd), data->ret_val = 1;
 		return ;
 	}
 	pid = fork();

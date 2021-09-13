@@ -19,6 +19,7 @@ void	ft_create_pipes(t_data *data)
 		i++;
 	}
 	data->fd_pipes[i] = NULL;
+	i = 0;
 	data->all_pid = malloc(sizeof(int) * (data->total_cmd));
 }
 
@@ -58,9 +59,9 @@ void	ft_redirects(t_cmd *cmd, int fl)
 		cmd->tmp_fd[1] = dup(STDOUT);
 		cmd->tmp_fd[0] = dup(STDIN);
 		if (cmd->fd_inf > 0)
-			dup2(cmd->fd_inf, STDIN), close(cmd->fd_inf);
+			dup2(cmd->fd_inf, STDIN), close(cmd->fd_inf), cmd->fd_inf = -1;
 		if (cmd->fd_outf > 0)
-			dup2(cmd->fd_outf, STDOUT), close(cmd->fd_outf);
+			dup2(cmd->fd_outf, STDOUT), close(cmd->fd_outf), cmd->fd_outf = -1;
 	}
 	else
 	{

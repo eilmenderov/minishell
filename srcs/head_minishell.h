@@ -118,7 +118,7 @@ int		ft_export(t_cmd *cmd, int i);
 /* free_clear.c 3/5 */
 void	ft_free_cmd(t_cmd *do_cmd);
 void	ft_free_data(t_data *data);
-void	ft_clean_all(char *str, t_cmd *start);
+void	ft_clean_all(char *str, t_cmd *start, int i);
 
 /* here_doc.c 2/5 */
 int		ft_here_doc(t_data *data, char *str, int *i, char *stoper);
@@ -133,7 +133,7 @@ void	ft_env_to_char(t_data *data);
 int		ft_pr_error(char *str, int error_code, char c, int fl);
 
 /* own_progc.c 5/5 */
-void	ft_echo(t_cmd *cmd, char *s);
+void	ft_echo(t_cmd *cmd, char *s, int i);
 int		ft_pwd(t_data *data, int fl, t_cmd *cmd);
 int		ft_env(t_cmd *cmd);
 void	ft_exit(t_cmd *cmd);

@@ -5,6 +5,8 @@ static char	*ft_points(t_cmd *do_cmd)
 	char	*rez;
 	t_env	*tmp;
 
+	if (do_cmd->cmd && do_cmd->cmd[1] == '.' && do_cmd->cmd[2] == 0)
+		return (NULL);
 	if (ft_ch_for_coinc(do_cmd->cmd[0], "./"))
 		return (ft_strdup(do_cmd->cmd));
 	tmp = do_cmd->data->beg_env;

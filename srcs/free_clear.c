@@ -44,15 +44,16 @@ void	ft_free_data(t_data *data)
 		tmp = tmp->next;
 		free(buf);
 	}
+	ft_clean_all(NULL, data->cmd_start, 0);
 	data = NULL;
 }
 
-void	ft_clean_all(char *str, t_cmd *start)
+void	ft_clean_all(char *str, t_cmd *start, int i)
 {
 	t_cmd	*tmp;
-	int		i;
 
-	free (str), str = NULL;
+	if (str)
+		free(str), str = NULL;
 	if (!start)
 		return ;
 	if (start->data->rez)
@@ -62,7 +63,6 @@ void	ft_clean_all(char *str, t_cmd *start)
 	close(start->data->fd_in), close(start->data->fd_out);
 	if (start->data->all_pid)
 		free(start->data->all_pid), start->data->all_pid = NULL;
-	i = 0;
 	while (start->data->fd_pipes && start->data->fd_pipes[i])
 		free(start->data->fd_pipes[i]), start->data->fd_pipes[i] = NULL, i++;
 	if (start->data->fd_pipes)

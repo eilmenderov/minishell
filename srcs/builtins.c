@@ -30,7 +30,7 @@ t_env	*ft_find_key(t_env *env)
 void	ft_start_own_prog(t_cmd *cmd, int fl)
 {
 	if (fl == 1)
-		ft_echo(cmd, cmd->ful_cmd);
+		ft_echo(cmd, cmd->ful_cmd, 0);
 	else if (fl == 2)
 		cmd->data->ret_val = ft_pwd(cmd->data, 0, cmd);
 	else if (fl == 3)

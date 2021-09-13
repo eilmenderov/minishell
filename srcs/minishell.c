@@ -80,6 +80,7 @@ int	main(int ac, char **av, char **env)
 		add_history(str);
 		if (!ft_parsing(&data, str, 0))
 			ft_start_cmd(&data), ft_signal();
-		ft_clean_all(str, data.cmd_start), data.cmd_start = NULL;
+		ft_clean_all(str, data.cmd_start, 0);
+		data.cmd_start = NULL;
 	}
 }
