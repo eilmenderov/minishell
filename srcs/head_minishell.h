@@ -153,6 +153,7 @@ void	ft_create_pipes(t_data *data);
 void	ft_close_pipes(t_data *data, t_cmd *cmd, int fl);
 void	ft_redirects(t_cmd *cmd, int fl);
 int		ft_redir_helper(t_data *data);
+void	ft_close_all(t_data *data);
 
 /* proc_redirects.c 5/5 */
 int		ft_redir(t_data *data, char *str, int *i);

@@ -8,7 +8,8 @@ static void	ft_single_cmd(t_data *data, t_cmd *cmd, int pid)
 	cmd_s = ft_find_cmd(cmd);
 	if (!cmd_s)
 	{
-		ft_pr_error(cmd->arg[0], 0, 0, 3), ft_free_cmd(cmd), data->ret_val = 1;
+		ft_pr_error(cmd->arg[0], 0, 0, 3), ft_free_cmd(cmd);
+		data->ret_val = 127;
 		return ;
 	}
 	pid = fork();
@@ -18,7 +19,7 @@ static void	ft_single_cmd(t_data *data, t_cmd *cmd, int pid)
 	{
 		ft_redirects(cmd, 0);
 		if (execve(cmd_s, cmd->arg, data->env))
-			ft_redirects(cmd, 1), ft_pr_error(NULL, 0, 0, 5), exit(1);
+			ft_redirects(cmd, 1), ft_pr_error(NULL, 0, 0, 5), exit(errno);
 	}
 	else
 	{
@@ -68,5 +69,5 @@ void	ft_start_cmd(t_data *data)
 			ft_single_cmd(data, cmd, -1);
 		return ;
 	}
-	ft_multiple_cmd(cmd, 0);
+	ft_multiple_cmd(cmd, 0), ft_signal();
 }

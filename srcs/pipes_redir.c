@@ -84,3 +84,16 @@ int	ft_redir_helper(t_data *data)
 	data->fd_out = -1;
 	return (1);
 }
+
+void	ft_close_all(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->fd_pipes && data->fd_pipes[i])
+	{
+		close(data->fd_pipes[i][0]), data->fd_pipes[i][0] = -1;
+		close(data->fd_pipes[i][1]), data->fd_pipes[i][1] = -1;
+		i++;
+	}
+}

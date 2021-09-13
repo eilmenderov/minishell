@@ -64,6 +64,8 @@ int	main(int ac, char **av, char **env)
 	t_data	data;
 	char	*str;
 
+	if (ac != 1)
+		return (0);
 	ft_init_data(&data, env, NULL), ft_signal();
 	while (TRUE)
 	{
@@ -79,7 +81,7 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		add_history(str);
 		if (!ft_parsing(&data, str, 0))
-			ft_start_cmd(&data), ft_signal();
+			ft_start_cmd(&data);
 		ft_clean_all(str, data.cmd_start, 0);
 		data.cmd_start = NULL;
 	}

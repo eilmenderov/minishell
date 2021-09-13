@@ -105,6 +105,8 @@ char	**ft_proc_envp(t_data *data)
 	tmp = data->beg_env;
 	while (tmp && ft_strcmp(tmp->key, "PATH"))
 		tmp = tmp->next;
+	if (!tmp)
+		return (NULL);
 	rez = ft_split(tmp->val, ':');
 	if (!rez)
 		ft_pr_error(ERR_MALC, -1, 0, 0);
@@ -118,20 +120,26 @@ void	ft_env_to_char(t_data *data)
 {
 	t_env	*tmp;
 	int		i;
-	char	**new_env;
+	char	**rez;
 
 	tmp = data->beg_env;
 	i = 0;
 	while (tmp)
-		tmp = tmp->next, i++;
-	new_env = malloc(sizeof(char *) * (i + 1));
+	{
+		if (tmp->visible == 0)
+			i++;
+		tmp = tmp->next;
+	}
+	rez = malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	tmp = data->beg_env;
 	while (tmp)
 	{
-		new_env[i] = ft_strjoin_m(ft_strjoin_m(tmp->key, "=", 0), tmp->val, 1);
-		tmp = tmp->next, i++;
+		if (tmp->visible == 0)
+			rez[i] = ft_strjoin_m(ft_strjoin_m(tmp->key, "=", 0),
+					tmp->val, 1), i++;
+		tmp = tmp->next;
 	}
-	new_env[i] = NULL;
-	data->env = new_env;
+	rez[i] = NULL;
+	data->env = rez;
 }

@@ -6,10 +6,9 @@ void	ft_echo(t_cmd *cmd, char *s, int i)
 
 	if (cmd->fd_inf > 0)
 		close(cmd->fd_inf), cmd->fd_inf = -1;
-	while (s[i] && !ft_ch_for_coinc(s[i], " "))
-		i++;
-	i++, j = i;
-	while (s[i] != ' ')
+	i = ft_strlen_m(s, ' ') + 1;
+	j = i;
+	while (s[i] != ' ' && s[i] == '-')
 	{
 		if (s[i + 1] == '-' && s[i + 2] == '-')
 			break ;
