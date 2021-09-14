@@ -12,6 +12,8 @@ static int	ft_open_app_read(t_data *data, char *f_name, int fl)
 		fd = open(f_name, O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	else if (fl == 3)
 		fd = open(f_name, O_RDONLY);
+	else
+		fd = -1;
 	free(f_name), f_name = NULL;
 	if (fd == -1)
 	{
@@ -122,5 +124,7 @@ int	ft_redir(t_data *data, char *str, int *i)
 	}
 	else if (str[*i] == '|' || str[*i] == '&' || str[*i] == ';')
 		ans = ft_pool_cmd(data, str, i);
+	else
+		ans = 1;
 	return (ans);
 }

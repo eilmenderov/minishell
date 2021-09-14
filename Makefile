@@ -18,9 +18,9 @@ B_NAME = minishell
 
 HEADER = ./srcs/head_minishell.h
 
-LIBS_MAC	=  ./libft/libft.a -lreadline -L /Users/${USER}/.brew/opt/readline/lib
+LIBS_MAC	=  ./libft/libft.a -lreadline -L/Users/${USER}/.brew/opt/readline/lib
 
-INCLUDE		=  -I /Users/${USER}/.brew/opt/readline/include
+INCLUDE		=  -I/Users/${USER}/.brew/opt/readline/include
 
 LOGDATE		= $(shell date)
 
@@ -44,7 +44,7 @@ SHALLOW = \033[0m
 all:		${NAME}
 
 %.o:%.c		${HEADER}
-			@${CC} ${CFLAGC} -c $< -o ${<:.c=.o}
+			@${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 libft:		
 			@make -C ./libft/

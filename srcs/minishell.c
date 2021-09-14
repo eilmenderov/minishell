@@ -74,6 +74,7 @@ int	main(int ac, char **av, char **env)
 	t_data	data;
 	char	*str;
 
+	(void)av;
 	if (ac != 1)
 		return (0);
 	ft_init_data(&data, env, NULL), ft_signal();

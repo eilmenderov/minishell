@@ -32,6 +32,7 @@ int	ft_pwd(t_data *data, int fl, t_cmd *cmd)
 	char	*str;
 	t_env	*tmp;
 
+	(void)cmd;
 	str = getcwd(NULL, PWD_LEN);
 	str = ft_strjoin_m(NULL, str, 2);
 	if (!fl)

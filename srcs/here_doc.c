@@ -12,7 +12,7 @@ static void	ft_heredoc_helper(char *line, t_data *data, char *stoper, int fd[2])
 	data->fd_in = fd[0];
 }
 
-static void	ft_child(int fd[2], char *stop, t_data *data)
+static void	ft_child(int fd[2], char *stop)
 {
 	char	*line;
 
@@ -62,7 +62,7 @@ int	ft_here_doc(t_data *data, char *str, int *i, char *stop)
 	if (flag < 0)
 		ft_pr_error(ERR_FORK, -1, 0, 0);
 	else if (!flag)
-		ft_child(fd, stop, data);
+		ft_child(fd, stop);
 	waitpid(flag, &check, 0), ft_signal();
 	ft_heredoc_helper(NULL, data, stop, fd);
 	if (check)
