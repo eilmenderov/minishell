@@ -90,8 +90,6 @@ typedef struct s_data
 }				t_data;
 
 /* builtins_utils.c 5/5 */
-void	ft_change_oldpwd(t_cmd *cmd, int fl);
-int		ft_cd(t_cmd *cmd, t_env *tmp);
 int		ft_chek_env_key(char *str, int fl);
 int		ft_change_env(t_cmd *cmd, char *str, int visib, int len);
 
@@ -99,6 +97,10 @@ int		ft_change_env(t_cmd *cmd, char *str, int visib, int len);
 t_env	*ft_find_key(t_env *env);
 void	ft_start_own_prog(t_cmd *cmd, int fl);
 int		ft_buildin(t_cmd *cmd, int fl);
+
+/* cd.c */
+void	ft_change_oldpwd(t_cmd *cmd, int fl);
+int		ft_cd(t_cmd *cmd, t_env *tmp);
 
 /* cmd_multiple.c 4/5 */
 void	ft_multiple_cmd(t_cmd *cmd, int i);
