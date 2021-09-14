@@ -1,11 +1,25 @@
 #include "head_minishell.h"
 
+static void	ft_first_helper(t_cmd *cmd)
+{
+	int	i;
+
+	close(cmd->data->fd_pipes[0][0]), cmd->data->fd_pipes[0][0] = -1;
+	i = 1;
+	while (cmd->data->fd_pipes && cmd->data->fd_pipes[i])
+	{
+		close(cmd->data->fd_pipes[i][0]), cmd->data->fd_pipes[i][0] = -1;
+		close(cmd->data->fd_pipes[i][1]), cmd->data->fd_pipes[i][1] = -1;
+		i++;
+	}
+}
+
 static void	ft_first_cmd(t_cmd *cmd)
 {
 	int		fl;
 	char	*cmd_s;
 
-	fl = ft_buildin(cmd, 0);
+	ft_first_helper(cmd), fl = ft_buildin(cmd, 0);
 	if (cmd->fd_outf > 0)
 		close(cmd->data->fd_pipes[cmd->num_start][1]);
 	else
@@ -20,7 +34,7 @@ static void	ft_first_cmd(t_cmd *cmd)
 		fl = execve(cmd_s, cmd->arg, cmd->data->env), free(cmd_s);
 		ft_pr_error(NULL, 0, 0, 5), cmd->data->ret_val = 1;
 	}
-	ft_redirects(cmd, 1);
+	ft_redirects(cmd, 1), exit(cmd->data->ret_val);
 }
 
 static void	ft_child(t_cmd *cmd)
@@ -28,7 +42,7 @@ static void	ft_child(t_cmd *cmd)
 	int		fl;
 	char	*cmd_s;
 
-	fl = ft_buildin(cmd, 0);
+	ft_close_pipes(cmd->data, cmd, cmd->num_start), fl = ft_buildin(cmd, 0);
 	if (cmd->fd_inf > 0)
 		close(cmd->data->fd_pipes[cmd->num_start - 1][0]);
 	else
@@ -48,7 +62,7 @@ static void	ft_child(t_cmd *cmd)
 		fl = execve(cmd_s, cmd->arg, cmd->data->env), free(cmd_s);
 		ft_pr_error(NULL, 0, 0, 5), cmd->data->ret_val = 1;
 	}
-	ft_redirects(cmd, 1);
+	ft_redirects(cmd, 1), exit(cmd->data->ret_val);
 }
 
 static void	ft_last_cmd(t_cmd *cmd)
@@ -56,7 +70,7 @@ static void	ft_last_cmd(t_cmd *cmd)
 	int		fl;
 	char	*cmd_s;
 
-	fl = ft_buildin(cmd, 0);
+	ft_close_pipes(cmd->data, cmd, cmd->num_start), fl = ft_buildin(cmd, 0);
 	if (cmd->fd_inf > 0)
 		close(cmd->data->fd_pipes[cmd->num_start - 1][0]);
 	else
@@ -71,7 +85,7 @@ static void	ft_last_cmd(t_cmd *cmd)
 		fl = execve(cmd_s, cmd->arg, cmd->data->env), free(cmd_s);
 		ft_pr_error(NULL, 0, 0, 5), cmd->data->ret_val = 1;
 	}
-	ft_redirects(cmd, 1);
+	ft_redirects(cmd, 1), exit(cmd->data->ret_val);
 }
 
 void	ft_multiple_cmd(t_cmd *cmd, int i)
@@ -79,7 +93,7 @@ void	ft_multiple_cmd(t_cmd *cmd, int i)
 	int		fl;
 	t_cmd	*tmp;
 
-	ft_create_pipes(cmd->data), tmp = cmd;
+	tmp = cmd->data->cmd_start, ft_create_pipes(cmd->data);
 	while (tmp)
 	{
 		if (tmp->delim != PIPE && tmp->delim != 0)
@@ -87,14 +101,15 @@ void	ft_multiple_cmd(t_cmd *cmd, int i)
 		fl = fork();
 		if (fl < 0)
 			ft_pr_error(ERR_FORK, -1, 0, 0);
-		if (i < cmd->data->total_cmd && !fl)
+		if (!fl)
 		{
-			ft_close_pipes(tmp->data, tmp, tmp->num_start);
-			if (tmp == tmp->data->cmd_start)
-				ft_first_cmd(tmp), exit(cmd->data->ret_val);
+			if (!tmp->next)
+				ft_last_cmd(tmp);
+			else if (!tmp->num_start)
+				ft_first_cmd(tmp);
 			else if (tmp->next)
-				ft_child(tmp), exit(cmd->data->ret_val);
-			ft_last_cmd(tmp), exit(cmd->data->ret_val);
+				ft_child(tmp);
+			exit(100);
 		}
 		cmd->data->all_pid[i] = fl;
 		tmp = tmp->next, i++;

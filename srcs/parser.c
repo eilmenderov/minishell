@@ -42,7 +42,7 @@ static char	*ft_double_quotes(t_data *data, char *str, int *i, char *rez)
 
 void	ft_hadle_str(t_data *data, char *str, int *i)
 {
-	while (str[*i] && !ft_ch_for_coinc(str[*i], "> <|&;"))
+	while (str[*i] && !ft_ch_for_coinc(str[*i], "> \t<|&;"))
 	{
 		if (str[*i] == '\'')
 			data->rez = ft_quotes(str, i, data->rez);
@@ -56,7 +56,7 @@ void	ft_hadle_str(t_data *data, char *str, int *i)
 			*i = *i + 2;
 		}
 		else
-			data->rez = ft_normal(str, i, data->rez, "> <|&\\;'\"$");
+			data->rez = ft_normal(str, i, data->rez, "> \t<|&\\;'\"$");
 	}
 }
 
@@ -84,6 +84,8 @@ char	*ft_proc_open(t_data *data, char *str, int *i, char *rez)
 int	ft_parsing(t_data *data, char *str, int i)
 {
 	data->total_cmd = 0;
+	data->count = 0;
+	data->env = NULL;
 	while (str[i])
 	{
 		if (ft_ch_for_coinc(str[i], "><|&;"))
@@ -91,9 +93,9 @@ int	ft_parsing(t_data *data, char *str, int i)
 			if (ft_redir(data, str, &i))
 				return (1);
 		}
-		else if (str[i] == ' ')
+		else if (str[i] == ' ' || str[i] == '\t')
 		{
-			while (str[i] && str[i] == ' ')
+			while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 				i++;
 			if (data->rez && !ft_ch_for_coinc(str[i], "|&;\0"))
 				data->rez = ft_strjoin_m(data->rez, " ", 1);

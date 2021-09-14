@@ -40,7 +40,7 @@
 # define ERR_CMD		"minishell: command not found: "
 # define ERR_NFD		"minishell: No such file or directory"
 # define ERR_EXP		"Error: export: not a valid identifier"
-
+# define ERR_INFORK		"Error: unexpected error in child process"
 extern int	g_stat;
 
 typedef struct s_env
@@ -98,11 +98,11 @@ t_env	*ft_find_key(t_env *env);
 void	ft_start_own_prog(t_cmd *cmd, int fl);
 int		ft_buildin(t_cmd *cmd, int fl);
 
-/* cd.c */
+/* cd.c 3/5 */
 void	ft_change_oldpwd(t_cmd *cmd, int fl);
 int		ft_cd(t_cmd *cmd, t_env *tmp);
 
-/* cmd_multiple.c 4/5 */
+/* cmd_multiple.c 5/5 */
 void	ft_multiple_cmd(t_cmd *cmd, int i);
 
 /* cmd_utils.c 5/5 */
@@ -122,7 +122,7 @@ void	ft_free_cmd(t_cmd *do_cmd);
 void	ft_free_data(t_data *data);
 void	ft_clean_all(char *str, t_cmd *start, int i);
 
-/* here_doc.c 2/5 */
+/* here_doc.c 3/5 */
 int		ft_here_doc(t_data *data, char *str, int *i, char *stoper);
 
 /* minishell_utils.c 5/5 */
@@ -131,7 +131,8 @@ void	ft_init_data(t_data *data, char **env, t_env *tmp);
 char	**ft_proc_envp(t_data *data);
 void	ft_env_to_char(t_data *data);
 
-/* minishell.c 3/5 */
+/* minishell.c 4/5 */
+void	ft_null_data(t_data *data);
 int		ft_pr_error(char *str, int error_code, char c, int fl);
 
 /* own_progc.c 5/5 */

@@ -10,12 +10,22 @@ static int	ft_str_spec_case(char *str)
 			free(str), str = NULL;
 		return (1);
 	}
-//	if (ft_strlen(str) == ft_how_many_char(str, ' '))
-//	{
-//		free(str);
-//		return (1);
-//	}
 	return (0);
+}
+
+void	ft_null_data(t_data *data)
+{
+	data->error = 0;
+	data->fd_in = -1;
+	data->fd_out = -1;
+	data->ret_val = 0;
+	data->total_cmd = 0;
+	data->old_stat = 0;
+	data->fl = 0;
+	data->all_pid = NULL;
+	data->fd_pipes = NULL;
+	data->tmp = NULL;
+	data->rez = NULL;
 }
 
 /*

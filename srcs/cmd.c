@@ -32,19 +32,23 @@ static void	ft_single_cmd(t_data *data, t_cmd *cmd, int pid)
 void	ft_wait_all_cmd(t_data *data)
 {
 	int	check;
+	int	all;
 	int	i;
 
+	all = 0;
 	check = 0;
 	i = 0;
-	while (TRUE)
+	while (i != data->total_cmd)
 	{
 		waitpid(-1, &check, 0);
-		if (check != 0 || i == data->total_cmd)
-			break ;
+		all += check;
 		i++;
 	}
-	if (check)
+	if (all)
+	{
+		ft_pr_error(ERR_INFORK, 0, 0, 2);
 		data->ret_val = 1;
+	}
 }
 
 void	ft_start_cmd(t_data *data)
@@ -67,7 +71,8 @@ void	ft_start_cmd(t_data *data)
 		}
 		else
 			ft_single_cmd(data, cmd, -1);
+		ft_signal();
 		return ;
 	}
-	ft_multiple_cmd(cmd, 0), ft_signal();
+	ft_multiple_cmd(data->cmd_start, 0), ft_signal();
 }

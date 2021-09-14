@@ -2,9 +2,18 @@
 
 <p>The objective of this project is for you to create a simple shell. Yes, your little bash or zsh. You will learn a lot about processes and file descriptors.</p>
 
+### **You can find subject and check list [here](./docs)**
 
-<h3>How to use:</h3>
-<p>make re && make clean && ./minishell</p>
+## How to use: ##
+```
+to install readline:	make readline
+to start project:		make re && ./minishell
+to check norm:			make norm
+```
+If you have some problems with readline, install it on you PC and change PATH with library and include way in Makefile.
+
+<h3>Example:</h3>
+<img src="./example.png" alt="Example">
 
 <h2>Введение</h2>
 
@@ -84,41 +93,41 @@
 <h3>You are allowed to use the following functions:</h3>
 
 <ul>
-	<li><a href="http://manpages.org/readline/3">-- readline -- (типо gnl !!!нужно фришить!!! #include <stdio.h>)</a></li>
-	<li><a href="http://ru.manpages.org/fork/2">-- fork -- (создает дочерний процесс #include <unistd.h>)</a></li>
-	<li><a href="http://ru.manpages.org/waitpid/2">-- wait / waitpid -- (ожидает завершения процесса  #include <sys/wait.h>)</a></li>
-	<li><a href="http://ru.manpages.org/wait3/2">-- wait3 -- (ожидает смену состояния в стиле BSD #include <sys/wait.h>)</a></li>
-	<li><a href="http://ru.manpages.org/wait4/2">-- wait4 -- (ожидает смену состояния в стиле BSD #include <sys/wait.h>)</a></li>
-	<li><a href="http://ru.manpages.org/signal/2">-- signal -- (работа с сигналами #include <signal.h>)</a></li>
-	<li><a href="https://www.opennet.ru/man.shtml?topic=kill&category=3&russian=5">-- kill -- (send a signal to a process or a group of processes #include <signal.h>)</a></li>
-	<li><a href="http://ru.manpages.org/getcwd/3">-- getcwd -- (возвращают текущий рабочий каталог #include <unistd.h>)</a></li>
-	<li><a href="http://ru.manpages.org/chdir/2">-- chdir -- (изменить рабочий каталог #include <unistd.h>)</a></li>
-	<li><a href="http://ru.manpages.org/stat/2">-- stat / lstat / fstat -- (считывает состояние файла #include <unistd.h>)</a></li>
-	<li><a href="https://www.opennet.ru/man.shtml?topic=unlink&russian=0&category=&submit=%F0%CF%CB%C1%DA%C1%D4%D8+man">-- unlink -- (удаляет указанный файл #include <unistd.h>)</a></li>
-	<li><a href="https://www.opennet.ru/man.shtml?topic=execve&russian=0&category=&submit=%F0%CF%CB%C1%DA%C1%D4%D8+man">-- execve -- (выполнить программу #include <unistd.h>)</a></li>
-	<li><a href="https://www.opennet.ru/man.shtml?topic=dup&russian=0&category=&submit=%F0%CF%CB%C1%DA%C1%D4%D8+man">-- dup / dup2 -- (создать дубликат файлового дескриптора #include <unistd.h>)</a></li>
-	<li><a href="https://www.opennet.ru/man.shtml?topic=pipe&category=2&russian=0">-- pipe -- (создает канал #include <unistd.h>)</a></li>
-	<li><a href="http://ru.manpages.org/opendir/3">-- opendir -- (открывает каталог #include <dirent.h>)</a></li>
-	<li><a href="http://ru.manpages.org/readdir/3">-- readdir -- (чтение содержимого каталога #include <dirent.h>)</a></li>
-	<li><a href="http://ru.manpages.org/closedir/3">-- closedir -- (закрыть каталог #include <dirent.h>)</a></li>
+	<li><a href="http://manpages.org/readline/3">-- readline -- (типо gnl !!!нужно фришить!!! #include stdio.h)</a></li>
+	<li><a href="http://ru.manpages.org/fork/2">-- fork -- (создает дочерний процесс #include unistd.h)</a></li>
+	<li><a href="http://ru.manpages.org/waitpid/2">-- wait / waitpid -- (ожидает завершения процесса  #include sys/wait.h)</a></li>
+	<li><a href="http://ru.manpages.org/wait3/2">-- wait3 -- (ожидает смену состояния в стиле BSD #include sys/wait.h)</a></li>
+	<li><a href="http://ru.manpages.org/wait4/2">-- wait4 -- (ожидает смену состояния в стиле BSD #include sys/wait.h)</a></li>
+	<li><a href="http://ru.manpages.org/signal/2">-- signal -- (работа с сигналами #include signal.h)</a></li>
+	<li><a href="https://www.opennet.ru/man.shtml?topic=kill&category=3&russian=5">-- kill -- (send a signal to a process or a group of processes #include signal.h)</a></li>
+	<li><a href="http://ru.manpages.org/getcwd/3">-- getcwd -- (возвращают текущий рабочий каталог #include unistd.h)</a></li>
+	<li><a href="http://ru.manpages.org/chdir/2">-- chdir -- (изменить рабочий каталог #include unistd.h)</a></li>
+	<li><a href="http://ru.manpages.org/stat/2">-- stat / lstat / fstat -- (считывает состояние файла #include unistd.h)</a></li>
+	<li><a href="https://www.opennet.ru/man.shtml?topic=unlink&russian=0&category=&submit=%F0%CF%CB%C1%DA%C1%D4%D8+man">-- unlink -- (удаляет указанный файл #include unistd.h)</a></li>
+	<li><a href="https://www.opennet.ru/man.shtml?topic=execve&russian=0&category=&submit=%F0%CF%CB%C1%DA%C1%D4%D8+man">-- execve -- (выполнить программу #include unistd.h)</a></li>
+	<li><a href="https://www.opennet.ru/man.shtml?topic=dup&russian=0&category=&submit=%F0%CF%CB%C1%DA%C1%D4%D8+man">-- dup / dup2 -- (создать дубликат файлового дескриптора #include unistd.h)</a></li>
+	<li><a href="https://www.opennet.ru/man.shtml?topic=pipe&category=2&russian=0">-- pipe -- (создает канал #include unistd.h)</a></li>
+	<li><a href="http://ru.manpages.org/opendir/3">-- opendir -- (открывает каталог #include dirent.h)</a></li>
+	<li><a href="http://ru.manpages.org/readdir/3">-- readdir -- (чтение содержимого каталога #include dirent.h)</a></li>
+	<li><a href="http://ru.manpages.org/closedir/3">-- closedir -- (закрыть каталог #include dirent.h)</a></li>
 	<li><a href="http://ru.manpages.org/isatty/3">-- isatty -- (проверяет, указывает ли файловый дескриптор на терминал #include <unistd.h>)</a></li>
-	<li><a href="http://ru.manpages.org/ttyname/3">-- ttyname -- (возвращает имя терминала #include <unistd.h>)</a></li>
-	<li><a href="http://ru.manpages.org/ttyslot/3">-- ttyslot -- (поиск слота текущего терминала пользователя в определённом файле #include <unistd.h>)</a></li>
-	<li><a href="http://ru.manpages.org/ioctl/2">-- ioctl -- (управляет устройством  #include <sys/ioctl.h>)</a></li>
-	<li><a href="http://ru.manpages.org/getenv/3">-- getenv -- (возвращают значения переменной окружения #include <stdlib.h>)</a></li>
-	<li><a href="http://manpages.org/tcsetattr#synopsis">-- tcsetattr -- (установить параметры, связанные с терминалом  #include <termios.h>)</a></li>
-	<li><a href="http://manpages.org/tcgetattr">-- tcgetattr -- (получить параметры, связанные с терминалом #include <termios.h>)</a></li>
-	<li><a href="http://manpages.org/tgetflag/3">-- tgetent / tgetflag / tgetnum / tgetstr / tgoto / tputs -- (#include <curses.h>  #include <term.h>)</a></li>
-	<li><a href="https://www.opennet.ru/man.shtml?topic=strerror&russian=0&category=&submit=%F0%CF%CB%C1%DA%C1%D4%D8+man">-- strerror -- (возвращают строку, описывающую ошибку #include <string.h>)</a></li>
-	<li><a href="http://ru.manpages.org/errno/3">-- errno -- (код последней ошибки #include <errno.h>)</a></li>
-	<li><a href="https://www.opennet.ru/man.shtml?topic=printf&russian=0&category=&submit=%F0%CF%CB%C1%DA%C1%D4%D8+man">-- printf -- (#include <stdio.h>)</a></li>
+	<li><a href="http://ru.manpages.org/ttyname/3">-- ttyname -- (возвращает имя терминала #include unistd.h)</a></li>
+	<li><a href="http://ru.manpages.org/ttyslot/3">-- ttyslot -- (поиск слота текущего терминала пользователя в определённом файле #include unistd.h)</a></li>
+	<li><a href="http://ru.manpages.org/ioctl/2">-- ioctl -- (управляет устройством  #include sys/ioctl.h)</a></li>
+	<li><a href="http://ru.manpages.org/getenv/3">-- getenv -- (возвращают значения переменной окружения #include stdlib.h)</a></li>
+	<li><a href="http://manpages.org/tcsetattr#synopsis">-- tcsetattr -- (установить параметры, связанные с терминалом  #include termios.h)</a></li>
+	<li><a href="http://manpages.org/tcgetattr">-- tcgetattr -- (получить параметры, связанные с терминалом #include termios.h)</a></li>
+	<li><a href="http://manpages.org/tgetflag/3">-- tgetent / tgetflag / tgetnum / tgetstr / tgoto / tputs -- (#include curses.h #include term.h)</a></li>
+	<li><a href="https://www.opennet.ru/man.shtml?topic=strerror&russian=0&category=&submit=%F0%CF%CB%C1%DA%C1%D4%D8+man">-- strerror -- (возвращают строку, описывающую ошибку #include string.h)</a></li>
+	<li><a href="http://ru.manpages.org/errno/3">-- errno -- (код последней ошибки #include errno.h)</a></li>
+	<li><a href="https://www.opennet.ru/man.shtml?topic=printf&russian=0&category=&submit=%F0%CF%CB%C1%DA%C1%D4%D8+man">-- printf -- (#include stdio.h)</a></li>
 	<li><a href="https://www.opennet.ru/man.shtml?topic=malloc&russian=0&category=&submit=%F0%CF%CB%C1%DA%C1%D4%D8+man">-- malloc --</a></li>
 	<li><a href="http://www.c-cpp.ru/content/free">-- free --</a></li>
 	<li><a href="https://www.opennet.ru/man.shtml?topic=write&russian=0&category=&submit=%F0%CF%CB%C1%DA%C1%D4%D8+man">-- write --</a></li>
-	<li><a href="http://ru.manpages.org/open/2">-- open -- (открывае/создает файл  #include <fcntl.h>)</a></li>
-	<li><a href="http://ru.manpages.org/read/2">-- read -- (читает из файловго дескриптора #include <unistd.h>)</a></li>
-	<li><a href="http://ru.manpages.org/close/2">-- close -- (закрывает файловый дескриптор #include <unistd.h>)</a></li>
-	<li><a href="https://www.opennet.ru/man.shtml?topic=exit&russian=0&category=&submit=%F0%CF%CB%C1%DA%C1%D4%D8+man">-- exit -- (функция, завершающая работу программы #include <unistd.h>)</a></li>
+	<li><a href="http://ru.manpages.org/open/2">-- open -- (открывае/создает файл  #include fcntl.h)</a></li>
+	<li><a href="http://ru.manpages.org/read/2">-- read -- (читает из файловго дескриптора #include unistd.h)</a></li>
+	<li><a href="http://ru.manpages.org/close/2">-- close -- (закрывает файловый дескриптор #include unistd.h)</a></li>
+	<li><a href="https://www.opennet.ru/man.shtml?topic=exit&russian=0&category=&submit=%F0%CF%CB%C1%DA%C1%D4%D8+man">-- exit -- (функция, завершающая работу программы #include unistd.h)</a></li>
 	<li>rl_clear_history</li>
 	<li>rl_on_new_line</li>
 	<li>rl_replace_line</li>
@@ -140,24 +149,12 @@
     <li>-I /Users/${USER}/.brew/opt/readline/include</li>
 </ul>
 
-<p>
-.gitignore
-/msh
-minishell_*
-.DS_Store
-</p>
-
-## Problems:
-* try ls -l > 2 | echo 123
-* try echo -n -n -n 12345
-
 ```
-i = 0;
-while (data->fd_pipes[i])
-{
-	printf("fd[%d][0] = %d\tfd[%d][1] = %d\n", i, data->fd_pipes[i][0], i, data->fd_pipes[i][1]);
-	i++;
-}
-printf("OK\n");
-exit(0);
+	i = 0;
+	t_data *data = cmd->data;
+	while (data->fd_pipes[i])
+	{
+		printf("fd[%d][0] = %d\tfd[%d][1] = %d\n", i, data->fd_pipes[i][0], i, data->fd_pipes[i][1]);
+		i++;
+	}
 ```
