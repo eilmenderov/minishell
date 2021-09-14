@@ -83,6 +83,7 @@ char	*ft_proc_open(t_data *data, char *str, int *i, char *rez)
 
 int	ft_parsing(t_data *data, char *str, int i)
 {
+	data->total_cmd = 0;
 	while (str[i])
 	{
 		if (ft_ch_for_coinc(str[i], "><|&;"))

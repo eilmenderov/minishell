@@ -10,11 +10,11 @@ static int	ft_str_spec_case(char *str)
 			free(str), str = NULL;
 		return (1);
 	}
-	if (ft_strlen(str) == ft_how_many_char(str, ' '))
-	{
-		free(str);
-		return (1);
-	}
+//	if (ft_strlen(str) == ft_how_many_char(str, ' '))
+//	{
+//		free(str);
+//		return (1);
+//	}
 	return (0);
 }
 

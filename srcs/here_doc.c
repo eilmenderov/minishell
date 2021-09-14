@@ -1,11 +1,13 @@
 #include "head_minishell.h"
 
-static void	ft_hd_helper(char *line, t_data *data)
+static void	ft_hd_helper(char *line, t_data *data, char *stop)
 {
 	if (line)
 		free(line), line = NULL;
 	if (data->fd_in > 0)
 		close(data->fd_in), data->fd_in = -1;
+	if (stop)
+		free(stop); stop = NULL;
 }
 
 /*
@@ -39,6 +41,6 @@ int	ft_here_doc(t_data *data, char *str, int *i, char *stoper)
 			break ;
 		ft_putendl_fd(line, fd[1]), free(line), line = NULL, write(1, "> ", 2);
 	}
-	ft_hd_helper(line, data), close(fd[1]), data->fd_in = fd[0];
+	ft_hd_helper(line, data, stoper), close(fd[1]), data->fd_in = fd[0];
 	return (0);
 }
