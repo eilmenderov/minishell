@@ -28,6 +28,7 @@ static int	ft_go_key(t_cmd *cmd, t_env *tmp, char *str_key, int fl)
 		tmp = tmp->next;
 	if (chdir(tmp->val) == -1)
 	{
+		free(cmd->data->tmp), cmd->data->tmp = NULL;
 		ft_pr_error(cmd->arg[1], 0, 0, 4);
 		return (1);
 	}
