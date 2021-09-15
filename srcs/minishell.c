@@ -74,8 +74,7 @@ int	main(int ac, char **av, char **env)
 	t_data	data;
 	char	*str;
 
-	(void)av;
-	rl_outstream = stderr;
+	(void)av, rl_outstream = stderr;
 	if (ac != 1)
 		return (0);
 	ft_init_data(&data, env, NULL), ft_signal();
@@ -94,7 +93,7 @@ int	main(int ac, char **av, char **env)
 		add_history(str);
 		if (!ft_parsing(&data, str, 0))
 			ft_start_cmd(&data);
-		ft_clean_all(str, data.cmd_start, 0);
+		ft_clean_all(str, data.cmd_start, 0, &data);
 		data.cmd_start = NULL;
 	}
 }

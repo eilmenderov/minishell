@@ -37,18 +37,17 @@ void	ft_wait_all_cmd(t_data *data)
 
 	all = 0;
 	check = 0;
+	waitpid(data->all_pid[data->total_cmd - 1], &check, 0);
 	i = 0;
-	while (i != data->total_cmd)
+	while (i < data->total_cmd - 1)
 	{
-		waitpid(-1, &check, 0);
-		all += check;
+		waitpid(-1, &all, 0);
 		i++;
 	}
-	if (all)
-	{
-		ft_pr_error(ERR_INFORK, 0, 0, 2);
+	if (check)
 		data->ret_val = 1;
-	}
+	else
+		data->ret_val = 0;
 }
 
 void	ft_start_cmd(t_data *data)

@@ -141,14 +141,14 @@ If you have some problems with readline, install it on you PC and change PATH wi
 
 <p>HOME macOS:</p>
 <ul>
-    <li>-L /usr/local/opt/readline/lib</li>
-    <li>-I /usr/local/opt/readline/include</li>
+    <li>-L/usr/local/opt/readline/lib</li>
+    <li>-I/usr/local/opt/readline/include</li>
 </ul>
 
 <p>school21 macOS:</p>
 <ul>
-    <li>-L /Users/${USER}/.brew/opt/readline/lib</li>
-    <li>-I /Users/${USER}/.brew/opt/readline/include</li>
+    <li>-L/Users/${USER}/.brew/opt/readline/lib</li>
+    <li>-I/Users/${USER}/.brew/opt/readline/include</li>
 </ul>
 
 ```

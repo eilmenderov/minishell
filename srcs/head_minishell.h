@@ -121,7 +121,7 @@ int		ft_export(t_cmd *cmd, int i);
 /* free_clear.c 3/5 */
 void	ft_free_cmd(t_cmd *do_cmd);
 void	ft_free_data(t_data *data);
-void	ft_clean_all(char *str, t_cmd *start, int i);
+void	ft_clean_all(char *str, t_cmd *start, int i, t_data *data);
 
 /* here_doc.c 3/5 */
 int		ft_here_doc(t_data *data, char *str, int *i, char *stoper);
