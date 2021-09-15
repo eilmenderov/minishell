@@ -3,7 +3,7 @@
 void	ft_echo(t_cmd *cmd, char *s, int i)
 {
 	int		j;
-	int 	k;
+	int		k;
 
 	if (cmd->fd_inf > 0)
 		close(cmd->fd_inf), cmd->fd_inf = -1;
