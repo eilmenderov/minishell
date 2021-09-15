@@ -6,18 +6,17 @@ void	ft_echo(t_cmd *cmd, char *s, int i)
 
 	if (cmd->fd_inf > 0)
 		close(cmd->fd_inf), cmd->fd_inf = -1;
-	i = ft_strlen_m(s, ' ') + 1;
-	j = i;
+	while (s[i] && !ft_ch_for_coinc(s[i], " "))
+		i++;
+	i++, j = i;
 	while (s[i] != ' ' && s[i] == '-')
 	{
 		if (s[i + 1] == '-' && s[i + 2] == '-')
 			break ;
-		if (s[i + 1] == '-')
+		while (s[i + 1] == 'n')
 			i++;
-		while (s[i + 2] == 'n')
-			i++;
-		if (s[i + 2] == ' ')
-			i += 3;
+		if (s[i + 1] == ' ' || !s[i + 1])
+			i += 2;
 		else
 			break ;
 	}
@@ -85,10 +84,10 @@ void	ft_exit(t_cmd *cmd)
 	while (cmd->ful_cmd[i] && cmd->ful_cmd[i] != ' ')
 		i++;
 	if (i == j)
-		ft_putendl_fd("exit", 1),
+		ft_putendl_fd("exit", 2),
 		ft_free_data(cmd->data), exit(cmd->data->ret_val);
 	arg = ft_strndup(&cmd->ful_cmd[j], i - j);
-	ft_putendl_fd("exit", 1), i = 0;
+	ft_putendl_fd("exit", 2), i = 0;
 	while (ft_isdigit(arg[i]))
 		i++;
 	if (!arg[i])
