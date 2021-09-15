@@ -75,6 +75,7 @@ int	main(int ac, char **av, char **env)
 	char	*str;
 
 	(void)av;
+	rl_outstream = stderr;
 	if (ac != 1)
 		return (0);
 	ft_init_data(&data, env, NULL), ft_signal();

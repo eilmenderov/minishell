@@ -4,7 +4,11 @@
 
 ### **You can find subject and check list [here](./docs)**
 
+<<<<<<< HEAD
 ### This group project was written together with [Avchar](https://github.com/Avchar)
+=======
+### This group project was written together with [Zhenya-bz](https://github.com/Zhunya-bz)
+>>>>>>> 29ea12c546e5ac8bd1bdf74fd131a5c9bbbf2e05
 
 ## How to use: ##
 ```
