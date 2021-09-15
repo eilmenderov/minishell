@@ -2,27 +2,29 @@ SRCS	=	minishell.c minishell_utils.c parser.c proc_redirects.c pars_dollar.c	\
 			here_doc.c cmd.c builtins.c signals.c own_progc.c builtins_utils.c		\
 			cmd_utils.c cmd_multiple.c pipes_redir.c export.c free_clear.c cd.c
 
-BONUS	=	
+# BONUS	=	
 
-SRCS_DIR = ./srcs/
+SRCS_DIR = srcs/
 
-SRCS_BONUS_DIR = ./srcs/
+# SRCS_BONUS_DIR = srcs/
 
 OBJS	=	${addprefix ${SRCS_DIR}, ${SRCS:.c=.o}}
 
-BONUS_OBJS = ${addprefix ${SRCS_BONUS_DIR}, ${BONUS:.c=.o}}
+# BONUS_OBJS = ${addprefix ${SRCS_BONUS_DIR}, ${BONUS:.c=.o}}
 
 NAME = minishell
 
-B_NAME = minishell
+# B_NAME = minishell
 
-HEADER = ./srcs/head_minishell.h
+HEADER = ./srcs/head_minishell.h ./libft/srcs/libft.h
 
-LIBS_MAC	=  ./libft/libft.a -lreadline -L/Users/${USER}/.brew/opt/readline/lib
+LIB			=	./libft/libft.a
 
-INCLUDE		=  -I/Users/${USER}/.brew/opt/readline/include
+LIBS_MAC	=	-L/Users/${USER}/.brew/opt/readline/lib
 
-LOGDATE		= $(shell date)
+INCLUDE		=	-I/Users/${USER}/.brew/opt/readline/include -I./srcs/ -I./libft/srcs/
+
+LOGDATE		=	$(shell date)
 
 CC = gcc
 RM = rm -f
@@ -44,14 +46,14 @@ SHALLOW = \033[0m
 all:		${NAME}
 
 %.o:%.c		${HEADER}
-			@${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
+			@${CC} ${CFLAGS} ${INCLUDE} -c $< -o ${<:.c=.o}
 
 libft:		
 			@make -C ./libft/
 
 ${NAME}:	${OBJS} ${HEADER}
 			@make -C ./libft/
-			@${CC} ${CFLAGC} -o ${NAME} ${OBJS} ${LIBS_MAC} ${INCLUDE} 
+			@${CC} ${CFLAGC} ${INCLUDE} -o ${NAME} ${OBJS} ${LIB} -lreadline ${LIBS_MAC}
 			@echo "${GREEN}${NAME} compile!${SHALLOW}"
 
 readline:	
@@ -85,6 +87,5 @@ push:		fclean
 			@echo "${GREEN}---Push done!---${SHALLOW}"
 
 bonus:		${NAME}
-
 
 re:			fclean all

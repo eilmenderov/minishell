@@ -41,6 +41,7 @@
 # define ERR_NFD		"minishell: No such file or directory"
 # define ERR_EXP		"Error: export: not a valid identifier"
 # define ERR_INFORK		"Error: unexpected error in child process"
+
 extern int	g_stat;
 
 typedef struct s_env
