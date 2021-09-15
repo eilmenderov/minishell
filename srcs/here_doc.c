@@ -17,21 +17,19 @@ static void	ft_child(int fd[2], char *stop)
 	char	*line;
 
 	line = NULL;
-	close(fd[0]);
-	write(1, "> ", 2);
+	close(fd[0]), ft_signal_cmd();
 	while (TRUE)
 	{	
-		if (get_next_line(0, &line) == -1)
-			ft_pr_error(ERR_GNL, -1, 0, 0);
+		line = readline(">");
 		if (!ft_strcmp(line, stop) || !line)
 			break ;
-		ft_putendl_fd(line, fd[1]), free(line), line = NULL, write(1, "> ", 2);
+		ft_putendl_fd(line, fd[1]), free(line), line = NULL;
 	}
 	if (stop)
 		free(stop), stop = NULL;
 	if (line)
 		free(line), line = NULL;
-	close(fd[1]), exit(0);
+	close(fd[1]), ft_signal(), exit(0);
 }
 
 /*
@@ -57,13 +55,13 @@ int	ft_here_doc(t_data *data, char *str, int *i, char *stop)
 		data->ret_val = 1, ft_pr_error(ERR_SH_NEWL, 0, 0, 2);
 		return (1);
 	}
-	pipe(fd), ft_signal_cmd(), check = 0;
+	pipe(fd), check = 0;
 	flag = fork();
 	if (flag < 0)
 		ft_pr_error(ERR_FORK, -1, 0, 0);
 	else if (!flag)
 		ft_child(fd, stop);
-	waitpid(flag, &check, 0), ft_signal();
+	waitpid(flag, &check, 0);
 	ft_heredoc_helper(NULL, data, stop, fd);
 	if (check)
 		return (1);
