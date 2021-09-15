@@ -41,7 +41,7 @@ SHALLOW = \033[0m
 
 # END COLORS
 
-.PHONY: all clean fclean re bonus norm libft readline pull push
+.PHONY: all clean fclean re bonus norm libft readline pull push test
 
 all:		${NAME}
 
@@ -55,6 +55,9 @@ ${NAME}:	${OBJS} ${HEADER}
 			@make -C ./libft/
 			@${CC} ${CFLAGC} ${INCLUDE} -o ${NAME} ${OBJS} ${LIB} -lreadline ${LIBS_MAC}
 			@echo "${GREEN}${NAME} compile!${SHALLOW}"
+
+test:
+			@bash test.sh all
 
 readline:	
 			@brew install readline

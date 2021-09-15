@@ -101,6 +101,7 @@ if [ "$1" == "echo" ] || [ "$1" == "all" ]; then
   exec_test 'echo -nnnnn+nnn -n test tout'
   exec_test 'echo -nnnnnnnnm -n test tout'
   exec_test 'echo '
+  exec_test 'echo'
 fi
 
 # CD TESTS

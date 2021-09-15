@@ -147,8 +147,7 @@ If you have some problems with readline, install it on you PC and change PATH wi
 
 ## Usage
 
-1. Run ``bash test.sh all``
-2. Run specific test by ``bash test.sh [echo exit pipe etc..]``
+* Run: ``make test``, or for  specific test: ``bash test.sh [echo exit pipe etc..]``
 
 ## What does it test ?
 
