@@ -3,22 +3,25 @@
 void	ft_echo(t_cmd *cmd, char *s, int i)
 {
 	int		j;
+	int 	k;
 
 	if (cmd->fd_inf > 0)
 		close(cmd->fd_inf), cmd->fd_inf = -1;
 	while (s[i] && !ft_ch_for_coinc(s[i], " "))
 		i++;
 	i++, j = i;
-	while (s[i] != ' ' && s[i] == '-')
+	while (s[i] == '-' && s[i + 1] == 'n')
 	{
-		if (s[i + 1] == '-' && s[i + 2] == '-')
-			break ;
+		k = i;
 		while (s[i + 1] == 'n')
 			i++;
 		if (s[i + 1] == ' ' || !s[i + 1])
 			i += 2;
 		else
+		{
+			i = k;
 			break ;
+		}
 	}
 	if (i == j)
 		ft_putendl_fd(&s[i], 1), cmd->data->ret_val = 0;
