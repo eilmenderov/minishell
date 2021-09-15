@@ -4,7 +4,7 @@
 
 ### **You can find subject and check list [here](./docs)**
 
-### This group project was written together with [Zhenya-bz](https://github.com/Zhunya-bz)
+### This group project was written together with [Avchar](https://github.com/Avchar)
 
 ## How to use: ##
 ```
