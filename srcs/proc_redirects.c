@@ -125,6 +125,6 @@ int	ft_redir(t_data *data, char *str, int *i)
 	else if (str[*i] == '|' || str[*i] == '&' || str[*i] == ';')
 		ans = ft_pool_cmd(data, str, i);
 	else
-		ans = 1;
+		ans = 2;
 	return (ans);
 }

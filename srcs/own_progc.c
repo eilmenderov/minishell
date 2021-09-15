@@ -65,7 +65,8 @@ int	ft_env(t_cmd *cmd)
 	while (tmp)
 	{
 		if (!tmp->visible && tmp->val)
-			printf("%s=%s\n", tmp->key, tmp->val);
+			ft_putstr_fd(tmp->key, 1), ft_putchar_fd('=', 1),
+			ft_putendl_fd(tmp->val, 1);
 		tmp = tmp->next;
 	}
 	return (0);

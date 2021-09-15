@@ -14,6 +14,8 @@ to check norm:			make norm
 ```
 If you have some problems with readline, install it on you PC and change PATH with library and include way in Makefile.
 
+<h3><a href="#test">TESTER HERE</a></h3>
+
 <h3>Example:</h3>
 <img src="./example.png" alt="Example">
 
@@ -137,6 +139,40 @@ If you have some problems with readline, install it on you PC and change PATH wi
 	<li>add_history</li>
 </ul>
 
+<h1 id="test">TESTER</h1>
+
+## Requirements
+
+- You must have your prompt and any other message/banner printed on ``STDERR`` (like bash)
+
+## Usage
+
+1. Run ``bash test.sh all``
+2. Run specific test by ``bash test.sh [echo exit pipe etc..]``
+
+## What does it test ?
+
+- ``echo``
+- ``cd + pwd``
+- ``exit``
+- ``pipe |``
+- ``redirect > >> < ``
+- ``export``
+- ``env``
+- ``unset``
+- ``exit status ($?)``
+- ``syntax errors``
+- ``quote (bonus)``
+- ``oper (bonus) $$ || ()``
+- ``wildcard (bonus)``
+
+## What should you test by yourself ?
+
+Almost everything :) This tester is not perfect and is not checking ``leaks``, ``heredoc`` and ``error messages``.<br>
+Some tests'l be show another error codes.
+Also it not good for checking projects with termcaps.
+
+### For macOS
 <p>instal brew: curl -fsSL https://rawgit.com/kube/42homebrew/master/install.sh | zsh</p>
 
 <p>HOME macOS:</p>
