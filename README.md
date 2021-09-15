@@ -14,7 +14,7 @@ to check norm:			make norm
 ```
 If you have some problems with readline, install it on you PC and change PATH with library and include way in Makefile.
 
-<h3><a href="#test">TESTER HERE</a></h3>
+<h3><a href="#test">About test here</a></h3>
 
 <h3>Example:</h3>
 <img src="./example.png" alt="Example">
