@@ -2,19 +2,11 @@ SRCS	=	minishell.c minishell_utils.c parser.c proc_redirects.c pars_dollar.c	\
 			here_doc.c cmd.c builtins.c signals.c own_progc.c builtins_utils.c		\
 			cmd_utils.c cmd_multiple.c pipes_redir.c export.c free_clear.c cd.c
 
-# BONUS	=	
-
 SRCS_DIR = srcs/
-
-# SRCS_BONUS_DIR = srcs/
 
 OBJS	=	${addprefix ${SRCS_DIR}, ${SRCS:.c=.o}}
 
-# BONUS_OBJS = ${addprefix ${SRCS_BONUS_DIR}, ${BONUS:.c=.o}}
-
 NAME = minishell
-
-# B_NAME = minishell
 
 HEADER = ./srcs/head_minishell.h ./libft/srcs/libft.h
 

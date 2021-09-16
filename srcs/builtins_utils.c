@@ -14,6 +14,8 @@ int	ft_chek_env_key(char *str, int fl)
 		if (str[i] != '_' && str[i] != '=' && str[i] != '+'
 			&& !ft_isalpha(str[i]) && !ft_isdigit(str[i]))
 			return (1);
+		if (str[i] == '+' && str[i + 1] != '=')
+			return (1);
 		if (str[i] == '=' && !fl)
 			return (1);
 		else if ((str[i] == '=' || str[i] == '+') && fl)

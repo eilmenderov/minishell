@@ -90,7 +90,7 @@ int	ft_parsing(t_data *data, char *str, int i)
 	{
 		if (ft_ch_for_coinc(str[i], "><|&;"))
 		{
-			if (ft_redir(data, str, &i))
+			if (ft_redir(data, str, &i, 0))
 				return (1);
 		}
 		else if (str[i] == ' ' || str[i] == '\t')

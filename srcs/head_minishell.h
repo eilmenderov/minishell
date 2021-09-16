@@ -108,7 +108,7 @@ int		ft_cd(t_cmd *cmd, t_env *tmp);
 void	ft_multiple_cmd(t_cmd *cmd, int i);
 
 /* cmd_utils.c 5/5 */
-char	*ft_find_cmd(t_cmd *do_cmd);
+char	*ft_find_cmd(t_cmd *do_cmd, int i);
 t_cmd	*ft_pool_new_cmd(t_data *data, char *str, int *i);
 int		ft_pool_cmd(t_data *data, char *str, int *i);
 
@@ -136,6 +136,7 @@ void	ft_env_to_char(t_data *data);
 /* minishell.c 4/5 */
 void	ft_null_data(t_data *data);
 int		ft_pr_error(char *str, int error_code, char c, int fl);
+char	*ft_pars_helper(char *rez);
 
 /* own_progc.c 5/5 */
 void	ft_echo(t_cmd *cmd, char *s, int i);
@@ -161,7 +162,7 @@ int		ft_redir_helper(t_data *data);
 void	ft_close_all(t_data *data);
 
 /* proc_redirects.c 5/5 */
-int		ft_redir(t_data *data, char *str, int *i);
+int		ft_redir(t_data *data, char *str, int *i, int ans);
 
 /* signal.c 4/5 */
 void	ft_signal(void);

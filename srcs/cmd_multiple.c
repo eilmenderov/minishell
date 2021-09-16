@@ -30,7 +30,7 @@ static void	ft_first_cmd(t_cmd *cmd)
 		ft_start_own_prog(cmd, fl);
 	else
 	{
-		cmd_s = ft_find_cmd(cmd);
+		cmd_s = ft_find_cmd(cmd, 0);
 		fl = execve(cmd_s, cmd->arg, cmd->data->env), free(cmd_s);
 		ft_pr_error(NULL, 0, 0, 5), cmd->data->ret_val = 1;
 	}
@@ -58,7 +58,7 @@ static void	ft_child(t_cmd *cmd)
 		ft_start_own_prog(cmd, fl);
 	else
 	{
-		cmd_s = ft_find_cmd(cmd);
+		cmd_s = ft_find_cmd(cmd, 0);
 		fl = execve(cmd_s, cmd->arg, cmd->data->env), free(cmd_s);
 		ft_pr_error(NULL, 0, 0, 5), cmd->data->ret_val = 1;
 	}
@@ -81,7 +81,7 @@ static void	ft_last_cmd(t_cmd *cmd)
 		ft_start_own_prog(cmd, fl);
 	else
 	{
-		cmd_s = ft_find_cmd(cmd);
+		cmd_s = ft_find_cmd(cmd, 0);
 		fl = execve(cmd_s, cmd->arg, cmd->data->env), free(cmd_s);
 		ft_pr_error(NULL, 0, 0, 5), cmd->data->ret_val = 1;
 	}

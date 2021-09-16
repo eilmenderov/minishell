@@ -126,8 +126,10 @@ if [ "$1" == "pipe" ] || [ "$1" == "all" ]; then
 	# exec_test 'cd asdasdasdas ; pwd'
 	exec_test '/bin/ls'
 	exec_test 'echo test | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e'
+	exec_test 'echo test | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e'
 	exec_test 'cat /dev/random | head -c 100 | wc -c'
-	exec_test 'ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls'
+	exec_test 'ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls'
+	exec_test 'ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls'
 	head -c 2000000 /dev/zero > big_file
 	exec_test ' cat big_file | ls'
 	exec_test ' cat big_file | echo lol'
@@ -141,6 +143,8 @@ if [ "$1" == "env" ] || [ "$1" == "all" ]; then
 	exec_test 'echo test'
 	exec_test 'echo $TEST'
 	exec_test 'echo "$TEST"'
+	exec_test 'echo "$?"'
+	exec_test 'echo $?'
 	exec_test "echo '$TEST'"
 	exec_test 'echo "$TEST$TEST$TEST"'
 	exec_test 'echo "$TEST$TEST=lol$TEST"'
@@ -154,24 +158,24 @@ if [ "$1" == "env" ] || [ "$1" == "all" ]; then
 	exec_test 'echo " $TEST lol $TEST"'
 	exec_test 'echo $TEST $TEST'
 	exec_test 'echo $TEST lol $TEST'
-	# exec_test 'echo $TEST$TEST=lol$TEST""lol'
+	exec_test 'echo $TEST$TEST=lol$TEST""lol'
 fi
 
 # EXPORT
 if [ "$1" == "export" ] || [ "$1" == "all" ]; then
 	printf $BOLDMAGENTA"\n\tEXPORT TESTS\n"$RESET
-	ENV_SHOW="env | sort | grep -v SHLVL | grep -v _="
+	ENV_SHOW="env | sort | grep -v SHLVL | grep -v _= "
 	EXPORT_SHOW="export | sort | grep -v SHLVL | grep -v _= | grep -v OLDPWD"
 	exec_test 'export TES=T="" ; ' $ENV_SHOW
 	exec_test $ENV_SHOW
 	exec_test $EXPORT_SHOW
-	# exec_test 'export TEST=LOL ; echo $TEST$TEST$TEST=lol$TEST'
-	# exec_test 'export TEST=LOL ; echo $TEST ; ' $ENV_SHOW
-	# exec_test 'export TEST=LOL ; export TEST+=LOL ; echo $TEST ; ' $ENV_SHOW
-	# exec_test 'export TEST="ls -l - a" ; echo $TEST ; ' $ENV_SHOW
+	exec_test 'export TEST=LOL ; echo $TEST$TEST$TEST=lol$TEST'
+	exec_test 'export TEST=LOL ; echo $TEST ; ' $ENV_SHOW
+	exec_test 'export TEST=LOL ; export TEST+=LOL ; echo $TEST ; ' $ENV_SHOW
+	exec_test 'export TEST="ls -l - a" ; echo $TEST ; ' $ENV_SHOW
+	exec_test 'export TEST ;' $EXPORT_SHOW
 	# exec_test 'export ='
 	# exec_test 'export 1TEST= ;' $ENV_SHOW
-	# exec_test 'export TEST ;' $EXPORT_SHOW
 	# exec_test 'export ""="" ; ' $ENV_SHOW
 	# exec_test 'export TE+S=T="" ; ' $ENV_SHOW
 fi
@@ -180,10 +184,10 @@ fi
 # REDIRECTIONS
 if [ "$1" == "redirect" ] || [ "$1" == "all" ]; then
   printf $BOLDMAGENTA"\n\tREDIRECTION TESTS\n"$RESET
-#   exec_test 'echo test > ls ; cat ls'
-#   exec_test 'echo test > ls >> ls >> ls ; echo test >> ls ; cat ls'
 #   exec_test '>lol echo > test>lol>test>>lol>test mdr >lol test >test ; cat test'
-#   exec_test 'cat < ls'
+  exec_test 'echo test > ls ; cat ls'
+  exec_test 'echo test > ls >> ls >> ls ; echo test >> ls ; cat ls'
+  exec_test 'cat < ls'
   exec_test 'rm -f ls; cat > ls < ls; rm -f ls'
   exec_test 'ls > ls'
   exec_test 'cat <ls'
@@ -210,13 +214,13 @@ if [ "$1" == "syntax" ] || [ "$1" == "all" ]; then
   exec_test ''
   exec_test 'echo "||"'
   exec_test "ls'| 'wc -l"
-#   exec_test '/bin/lsa'
-#   exec_test './Makefile'
-#   exec_test '| test'
-#   exec_test 'echo > <'
-#   exec_test 'echo | |'
-#   exec_test '<'
-#   exec_test 'rm -f ls; cat < ls > ls'
+  exec_test '/bin/lsa'
+  exec_test './Makefile'
+  exec_test '| test'
+  exec_test 'echo > <'
+  exec_test 'echo | |'
+  exec_test '<'
+  exec_test 'rm -f ls; cat < ls > ls'
 #   exec_test "grep -z"
 fi
 

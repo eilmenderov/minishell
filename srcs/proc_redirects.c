@@ -17,7 +17,7 @@ static int	ft_open_app_read(t_data *data, char *f_name, int fl)
 	free(f_name), f_name = NULL;
 	if (fd == -1)
 	{
-		ft_pr_error(NULL, 0, 0, 5);
+		ft_pr_error(NULL, 0, 0, 5), data->ret_val = 1;
 		return (-1);
 	}
 	if (fl == 1 || fl == 2)
@@ -46,7 +46,7 @@ static int	ft_general_open(t_data *data, char *str, int *i, int fl)
 		f_name = ft_proc_open(data, str, i, f_name);
 	if (j == *i || !f_name)
 	{
-		ft_pr_error(ERR_SH_NEWL, 0, 0, 2), data->ret_val = 1;
+		ft_pr_error(ERR_SH_NEWL, 0, 0, 2), data->ret_val = 2;
 		return (-2);
 	}
 	while (str[*i] && str[*i] == ' ')
@@ -58,12 +58,12 @@ static int	ft_open_app_here(t_data *data, char *str, int *i)
 {
 	if (ft_ch_for_coinc(str[*i + 2], ";><"))
 	{
-		ft_pr_error(ERR_SH_TKN, 0, str[*i + 2], 1), data->ret_val = 1;
+		ft_pr_error(ERR_SH_TKN, 0, str[*i + 2], 1), data->ret_val = 2;
 		return (-1);
 	}
 	else if (ft_ch_for_coinc(str[*i + 2], "\n\0"))
 	{
-		ft_pr_error(ERR_SH_NEWL, 0, 0, 2), data->ret_val = 1;
+		ft_pr_error(ERR_SH_NEWL, 0, 0, 2), data->ret_val = 2;
 		return (-2);
 	}
 	else if (str[*i] == '>' && str[*i + 1] == '>')
@@ -75,7 +75,7 @@ static int	ft_open_app_here(t_data *data, char *str, int *i)
 		return (ft_here_doc(data, str, i, NULL));
 	else
 	{
-		ft_pr_error(ERR_SH_TKN, 0, str[*i + 2], 1), data->ret_val = 1;
+		ft_pr_error(ERR_SH_TKN, 0, str[*i + 2], 1), data->ret_val = 2;
 		return (-6);
 	}
 }
@@ -84,12 +84,12 @@ static int	ft_open_file(t_data *data, char *str, int *i)
 {
 	if (ft_ch_for_coinc(str[*i + 1], ";"))
 	{
-		ft_pr_error(ERR_SH_TKN, 0, str[*i + 2], 1), data->ret_val = 1;
+		ft_pr_error(ERR_SH_TKN, 0, str[*i + 2], 1), data->ret_val = 2;
 		return (-1);
 	}
 	if (ft_ch_for_coinc(str[*i + 1], "\0\n"))
 	{
-		ft_pr_error(ERR_SH_NEWL, 0, str[*i + 2], 1), data->ret_val = 1;
+		ft_pr_error(ERR_SH_NEWL, 0, str[*i + 2], 1), data->ret_val = 2;
 		return (-2);
 	}
 	else if (str[*i] == '>')
@@ -101,10 +101,8 @@ static int	ft_open_file(t_data *data, char *str, int *i)
 	return (ft_general_open(data, str, i, 3));
 }
 
-int	ft_redir(t_data *data, char *str, int *i)
+int	ft_redir(t_data *data, char *str, int *i, int ans)
 {
-	int	ans;
-
 	if ((str[*i] == '<' || str[*i] == '>')
 		&& (str[*i + 1] == '<' || str[*i + 1] == '>'))
 	{
@@ -122,9 +120,12 @@ int	ft_redir(t_data *data, char *str, int *i)
 		if (ans && data->rez)
 			free(data->rez), data->rez = NULL;
 	}
-	else if (str[*i] == '|' || str[*i] == '&' || str[*i] == ';')
+	else if ((str[*i] == '|' || str[*i] == '&' || str[*i] == ';') && data->rez)
 		ans = ft_pool_cmd(data, str, i);
 	else
+	{
+		data->ret_val = 2, ft_pr_error(ERR_SH_TKN, 0, 0, 2);
 		ans = 2;
+	}
 	return (ans);
 }

@@ -66,6 +66,14 @@ int	ft_pr_error(char *str, int error_code, char c, int fl)
 	return (error_code);
 }
 
+char	*ft_pars_helper(char *rez)
+{
+	if (ft_count_words(rez, ' ') == 1 && ft_strlen(rez)
+		&& rez[ft_strlen(rez) - 1] != ' ')
+		rez = ft_strjoin_m(rez, " ", 1);
+	return (rez);
+}
+
 /*
 **	@brief	minishell start here
 */

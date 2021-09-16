@@ -1,11 +1,25 @@
 #include "head_minishell.h"
 
+static void	ft_child_scmd(t_data *data, t_cmd *cmd, char *cmd_s)
+{
+	ft_redirects(cmd, 0);
+	if (execve(cmd_s, cmd->arg, data->env))
+	{
+		ft_redirects(cmd, 1);
+		if (errno != 2)
+			ft_pr_error(NULL, 0, 0, 5);
+		if (errno && errno != 2)
+			exit(errno);
+		exit(0);
+	}
+}
+
 static void	ft_single_cmd(t_data *data, t_cmd *cmd, int pid)
 {
 	char	*cmd_s;
 	int		check;
 
-	cmd_s = ft_find_cmd(cmd);
+	cmd_s = ft_find_cmd(cmd, 0);
 	if (!cmd_s)
 	{
 		ft_pr_error(cmd->arg[0], 0, 0, 3), ft_free_cmd(cmd);
@@ -16,16 +30,14 @@ static void	ft_single_cmd(t_data *data, t_cmd *cmd, int pid)
 	if (pid < 0)
 		ft_free_cmd(cmd), free(cmd_s), ft_pr_error(ERR_FORK, 0, 0, 2);
 	else if (pid == 0)
-	{
-		ft_redirects(cmd, 0);
-		if (execve(cmd_s, cmd->arg, data->env))
-			ft_redirects(cmd, 1), ft_pr_error(NULL, 0, 0, 5), exit(errno);
-	}
+		ft_child_scmd(data, cmd, cmd_s);
 	else
 	{
-		ft_free_cmd(cmd), free(cmd_s), waitpid(-1, &check, 0);
-		if (check)
-			data->ret_val = 1;
+		ft_free_cmd(cmd), free(cmd_s), waitpid(pid, &check, 0);
+		if (errno == 2 && check)
+			data->ret_val = 2;
+		else if (check)
+			data->ret_val = 126;
 	}
 }
 
