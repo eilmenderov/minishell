@@ -27,6 +27,7 @@
 # define DOB_AMPER	3
 # define POINT_ZAP	4
 # define PWD_LEN	1024
+# define ATOI_LL	9223372036854775808u
 
 # define ERR_MALC		"Error : malloc error"
 # define ERR_RDL		"Error : readline error"
@@ -141,8 +142,10 @@ int		ft_pr_error(char *str, int error_code, char c, int fl);
 void	ft_echo(t_cmd *cmd, char *s, int i);
 int		ft_pwd(t_data *data, int fl, t_cmd *cmd);
 int		ft_env(t_cmd *cmd);
-int 	ft_exit(t_cmd *cmd);
 int		ft_unset(t_cmd *cmd, int i);
+
+/* exit.c */
+int		ft_exit(t_cmd *cmd, size_t j);
 
 /* pars_dollar.c 5/5 */
 char	*ft_normal(char *str, int *i, char *rez, char *stop);
