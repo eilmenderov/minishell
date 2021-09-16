@@ -35,6 +35,8 @@ void	ft_wait_all_cmd(t_data *data)
 	int	all;
 	int	i;
 
+	if (data->fl)
+		return ;
 	all = 0;
 	check = 0;
 	waitpid(data->all_pid[data->total_cmd - 1], &check, 0);

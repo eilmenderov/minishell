@@ -94,7 +94,7 @@ void	ft_multiple_cmd(t_cmd *cmd, int i)
 	t_cmd	*tmp;
 
 	tmp = cmd->data->cmd_start, ft_create_pipes(cmd->data);
-	while (tmp)
+	while (tmp && !cmd->data->fl)
 	{
 		if (tmp->delim != PIPE && tmp->delim != 0)
 			ft_pr_error("Sorry not supported yeat", -1, 0, 0);

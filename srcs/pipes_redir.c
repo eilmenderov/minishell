@@ -4,6 +4,7 @@ void	ft_create_pipes(t_data *data)
 {
 	int	i;
 
+	data->fl = 0;
 	data->fd_pipes = malloc(sizeof(int *) * (data->total_cmd));
 	i = 0;
 	while (i < data->total_cmd - 1)
@@ -12,15 +13,19 @@ void	ft_create_pipes(t_data *data)
 		if (data->fd_pipes[i])
 		{
 			if (pipe(data->fd_pipes[i]))
-				ft_pr_error(ERR_PIPE, -1, 0, 0);
+			{
+				ft_pr_error(ERR_PIPE, 0, 0, 2), data->fl = 1;
+				free(data->fd_pipes[i]), data->fd_pipes[i] = NULL;
+				return ;
+			}
 		}
 		else
 			ft_pr_error(ERR_MALC, -1, 0, 0);
 		i++;
 	}
 	data->fd_pipes[i] = NULL;
-	i = 0;
-	data->all_pid = malloc(sizeof(int) * (data->total_cmd));
+	if (!data->fl)
+		data->all_pid = malloc(sizeof(int) * (data->total_cmd));
 }
 
 void	ft_close_pipes(t_data *data, t_cmd *cmd, int pipe_num)

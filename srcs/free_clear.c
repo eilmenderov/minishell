@@ -48,10 +48,12 @@ void	ft_free_data(t_data *data)
 	data = NULL;
 }
 
-void	ft_clean_helper(t_data *data)
+static void	ft_clean_helper(t_data *data)
 {
 	close(data->fd_in), data->fd_in = -1;
 	close(data->fd_out), data->fd_out = -1;
+	if (data->fl)
+		data->ret_val = 3;
 }
 
 void	ft_clean_all(char *str, t_cmd *start, int i, t_data *data)

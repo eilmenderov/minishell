@@ -97,7 +97,7 @@ int	ft_parsing(t_data *data, char *str, int i)
 		{
 			while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 				i++;
-			if (data->rez && !ft_ch_for_coinc(str[i], "|&;\0"))
+			if (data->rez && !ft_ch_for_coinc(str[i], "$><|&;\0"))
 				data->rez = ft_strjoin_m(data->rez, " ", 1);
 		}
 		else
