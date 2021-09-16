@@ -105,7 +105,6 @@ int	ft_exit(t_cmd *cmd)
 	else
 	{
 		ft_putendl_fd("exit", 2);
-		cmd->data->ret_val = 0;
 		ft_free_data(cmd->data), exit(cmd->data->ret_val);
 	}
 }
