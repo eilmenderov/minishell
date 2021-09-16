@@ -72,33 +72,42 @@ int	ft_env(t_cmd *cmd)
 	return (0);
 }
 
-void	ft_exit(t_cmd *cmd)
+int	ft_exit(t_cmd *cmd)
 {
-	char	*arg;
-	int		j;
-	int		i;
+	size_t 	j;
 
+	j = 0;
+	if (cmd->tot_arg >= 3)
+	{
+		ft_putendl_fd("exit", 2);
+		cmd->data->ret_val = 1;
+		ft_pr_error("too many arguments", 1,0, 6);
+		return (cmd->data->ret_val);
+	}
 	ft_redirects(cmd, 1);
-	i = ft_strlen_m(cmd->ful_cmd, ' ');
-	if (!i)
-		i = ft_strlen(cmd->ful_cmd);
-	while (cmd->ful_cmd[i] && cmd->ful_cmd[i] == ' ')
-		i++;
-	j = i;
-	while (cmd->ful_cmd[i] && cmd->ful_cmd[i] != ' ')
-		i++;
-	if (i == j)
-		ft_putendl_fd("exit", 2),
+	if (cmd->tot_arg > 1)
+	{
+		while (ft_isdigit(cmd->arg[1][j]))
+			j++;
+		if (j != ft_strlen(cmd->arg[1]))
+		{
+			cmd->data->ret_val = 255;
+			ft_putendl_fd("exit", 2);
+			ft_pr_error("numeric argument required", 1,0, 6);
+		}
+		else
+		{
+			cmd->data->ret_val = ft_atoi(cmd->arg[1]);
+			ft_putendl_fd("exit", 2);
+		}
 		ft_free_data(cmd->data), exit(cmd->data->ret_val);
-	arg = ft_strndup(&cmd->ful_cmd[j], i - j);
-	ft_putendl_fd("exit", 2), i = 0;
-	while (ft_isdigit(arg[i]))
-		i++;
-	if (!arg[i])
-		cmd->data->ret_val = ft_atoi(arg);
+	}
 	else
-		cmd->data->ret_val = 255, ft_pr_error(arg, 1, 0, 3);
-	free(arg), ft_free_data(cmd->data), exit(cmd->data->ret_val);
+	{
+		ft_putendl_fd("exit", 2);
+		cmd->data->ret_val = 0;
+		ft_free_data(cmd->data), exit(cmd->data->ret_val);
+	}
 }
 
 int	ft_unset(t_cmd *cmd, int i)

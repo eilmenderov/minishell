@@ -121,9 +121,9 @@ fi
 # PIPE TESTS
 if [ "$1" == "pipe" ] || [ "$1" == "all" ]; then
 	printf $BOLDMAGENTA"\n\tPIPE TESTS\n"$RESET
-	# exec_test 'cat asdasdasd | grep arcu | cat -e'
+	 exec_test 'cat asdasdasd | grep arcu | cat -e'
 	# exec_test 'cat asdasdasd'
-	# exec_test 'cd asdasdasdas ; pwd'
+	 exec_test 'cd asdasdasdas ; pwd'
 	exec_test '/bin/ls'
 	exec_test 'echo test | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e'
 	exec_test 'cat /dev/random | head -c 100 | wc -c'
