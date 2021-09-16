@@ -36,7 +36,7 @@ void	ft_start_own_prog(t_cmd *cmd, int fl)
 	else if (fl == 3)
 		cmd->data->ret_val = ft_env(cmd);
 	else if (fl == 4)
-		ft_exit(cmd);
+		cmd->data->ret_val = ft_exit(cmd, 0);
 	else if (fl == 5)
 		cmd->data->ret_val = ft_unset(cmd, 0);
 	else if (fl == 6)

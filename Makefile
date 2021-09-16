@@ -1,6 +1,7 @@
 SRCS	=	minishell.c minishell_utils.c parser.c proc_redirects.c pars_dollar.c	\
 			here_doc.c cmd.c builtins.c signals.c own_progc.c builtins_utils.c		\
-			cmd_utils.c cmd_multiple.c pipes_redir.c export.c free_clear.c cd.c
+			cmd_utils.c cmd_multiple.c pipes_redir.c export.c free_clear.c cd.c		\
+			exit.c
 
 SRCS_DIR = srcs/
 

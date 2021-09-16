@@ -72,35 +72,6 @@ int	ft_env(t_cmd *cmd)
 	return (0);
 }
 
-void	ft_exit(t_cmd *cmd)
-{
-	char	*arg;
-	int		j;
-	int		i;
-
-	ft_redirects(cmd, 1);
-	i = ft_strlen_m(cmd->ful_cmd, ' ');
-	if (!i)
-		i = ft_strlen(cmd->ful_cmd);
-	while (cmd->ful_cmd[i] && cmd->ful_cmd[i] == ' ')
-		i++;
-	j = i;
-	while (cmd->ful_cmd[i] && cmd->ful_cmd[i] != ' ')
-		i++;
-	if (i == j)
-		ft_putendl_fd("exit", 2),
-		ft_free_data(cmd->data), exit(cmd->data->ret_val);
-	arg = ft_strndup(&cmd->ful_cmd[j], i - j);
-	ft_putendl_fd("exit", 2), i = 0;
-	while (ft_isdigit(arg[i]))
-		i++;
-	if (!arg[i])
-		cmd->data->ret_val = ft_atoi(arg);
-	else
-		cmd->data->ret_val = 255, ft_pr_error(arg, 1, 0, 3);
-	free(arg), ft_free_data(cmd->data), exit(cmd->data->ret_val);
-}
-
 int	ft_unset(t_cmd *cmd, int i)
 {
 	t_env	*tmp;
