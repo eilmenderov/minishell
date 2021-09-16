@@ -59,6 +59,9 @@ static void	ft_pool_helper(t_cmd *cmd, char *str, int *i)
 	cmd->pid = 0;
 	cmd->dino = ft_strndup(&str[cmd->data->count], *i - cmd->data->count);
 	cmd->data->count = *i + 1;
+	cmd->tot_arg = 0;
+	while (cmd->arg && cmd->arg[cmd->tot_arg])
+		cmd->tot_arg += 1;
 }
 
 t_cmd	*ft_pool_new_cmd(t_data *data, char *str, int *i)
