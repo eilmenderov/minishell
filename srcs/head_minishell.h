@@ -141,7 +141,11 @@ int		ft_pr_error(char *str, int error_code, char c, int fl);
 void	ft_echo(t_cmd *cmd, char *s, int i);
 int		ft_pwd(t_data *data, int fl, t_cmd *cmd);
 int		ft_env(t_cmd *cmd);
+<<<<<<< HEAD
 int 	ft_exit(t_cmd *cmd);
+=======
+int		ft_exit(t_cmd *cmd);
+>>>>>>> 480a6af79ce8ff9d875293718970537b76064b10
 int		ft_unset(t_cmd *cmd, int i);
 
 /* pars_dollar.c 5/5 */
