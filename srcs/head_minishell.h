@@ -61,6 +61,7 @@ typedef struct s_cmd
 	char			*ful_cmd;
 	char			*dino;
 	int				num_start;
+	int				tot_arg;
 	int				fd_inf;
 	int				fd_outf;
 	int				tmp_fd[2];

@@ -232,13 +232,13 @@ if [ "$1" == "exit" ] || [ "$1" == "all" ]; then
   exec_test "exit -99999999999999999999999"
   exec_test "exit wrong"
   exec_test "gdagadgag"
-#   exec_test "ls -Z"
-#   exec_test "cd gdhahahad"
-#   exec_test "ls -la | wtf"
 #   exec_test "exit 42 53 68"
 #   exec_test "exit -9223372036854775808"
 #   exec_test "exit -4"
 #   exec_test "exit  2 wrong_command"
+#   exec_test "ls -Z"
+#   exec_test "cd gdhahahad"
+#   exec_test "ls -la | wtf"
 fi
 
 
