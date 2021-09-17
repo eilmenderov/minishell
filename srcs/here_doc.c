@@ -12,12 +12,25 @@ static void	ft_heredoc_helper(char *line, t_data *data, char *stoper, int fd[2])
 	data->fd_in = fd[0];
 }
 
+static void	ft_signal_cltr_c(int sig)
+{
+	(void)sig;
+	write(2, "\b\b\b\b\b\b\b\b\b\b\b", 11);
+	exit(0);
+}
+
+static void	ft_signal_hd(void)
+{
+	signal(SIGQUIT, ft_signal_pipe);
+	signal(SIGINT, ft_signal_cltr_c);
+}
+
 static void	ft_child(int fd[2], char *stop)
 {
 	char	*line;
 
 	line = NULL;
-	close(fd[0]), ft_signal_cmd();
+	close(fd[0]), ft_signal_hd();
 	while (TRUE)
 	{	
 		line = readline(">");
@@ -29,7 +42,7 @@ static void	ft_child(int fd[2], char *stop)
 		free(stop), stop = NULL;
 	if (line)
 		free(line), line = NULL;
-	close(fd[1]), ft_signal(), exit(0);
+	close(fd[1]), exit(0);
 }
 
 /*
@@ -62,6 +75,7 @@ int	ft_here_doc(t_data *data, char *str, int *i, char *stop)
 	else if (!flag)
 		ft_child(fd, stop);
 	waitpid(flag, &check, 0);
+	// printf("check = %d\n", check);
 	ft_heredoc_helper(NULL, data, stop, fd);
 	if (check)
 		return (1);

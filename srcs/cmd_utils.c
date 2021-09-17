@@ -33,7 +33,7 @@ char	*ft_find_cmd(t_cmd *do_cmd, int i)
 	{
 		try = ft_points(do_cmd);
 		if (try && stat(try, &buf))
-			return (NULL);
+			free(try), try = NULL;
 		return (try);
 	}
 	env_path = ft_proc_envp(do_cmd->data);

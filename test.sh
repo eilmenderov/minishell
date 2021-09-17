@@ -155,7 +155,7 @@ if [ "$1" == "env" ] || [ "$1" == "all" ]; then
 	exec_test 'echo " $TEST lol $TEST"'
 	exec_test 'echo $TEST$TEST=lol$TEST""lol'
 	exec_test 'echo $TEST $TEST'
-	# exec_test 'echo $TEST lol $TEST'
+	exec_test 'echo $TEST lol $TEST'
 fi
 
 # EXPORT
@@ -166,7 +166,7 @@ if [ "$1" == "export" ] || [ "$1" == "all" ]; then
 	exec_test 'export TES=T="" ; ' $ENV_SHOW
 	exec_test $ENV_SHOW
 	exec_test $EXPORT_SHOW
-	# exec_test 'export TEST=LOL ; echo $TEST$TEST$TEST=lol$TEST'
+	exec_test 'export TEST=LOL ; echo $TEST$TEST$TEST=lol$TEST'
 	exec_test 'export TEST=LOL ; echo $TEST ; ' $ENV_SHOW
 	exec_test 'export TEST=LOL ; export TEST+=LOL ; echo $TEST ; ' $ENV_SHOW
 	exec_test 'export TEST="ls -l - a" ; echo $TEST ; ' $ENV_SHOW
@@ -177,15 +177,15 @@ fi
 # REDIRECTIONS
 if [ "$1" == "redirect" ] || [ "$1" == "all" ]; then
   printf $BOLDMAGENTA"\n\tREDIRECTION TESTS\n"$RESET
-#   exec_test '>lol echo > test>lol>test>>lol>test mdr >lol test >test ; cat test'
-#   exec_test 'echo test > ls ; cat ls'
-#   exec_test 'echo test > ls >> ls >> ls ; echo test >> ls ; cat ls'
+  exec_test '>lol echo > test>lol>test>>lol>test mdr >lol test >test ; cat test'
+  exec_test 'echo test > ls ; cat ls'
+  exec_test 'echo test > ls >> ls >> ls ; echo test >> ls ; cat ls'
   exec_test 'cat < ls'
   exec_test 'rm -f ls; cat > ls < ls; rm -f ls'
   exec_test 'ls > ls'
   exec_test 'cat <ls'
   exec_test 'cat <test.sh <ls'
-#   exec_test '> lol echo test lol ; cat lol'
+  exec_test '> lol echo test lol ; cat lol'
   exec_test 'rm -f ls >ls'
 #   exec_test 'cat << stop \n1\nstop\n'
 #   exec_test 'cat << stop\n1\EOF\nstopa\nstop'
@@ -198,15 +198,15 @@ fi
 # MULTI TESTS
 if [ "$1" == "multi" ] || [ "$1" == "all" ]; then
   printf $BOLDMAGENTA"\n\tMULTI TESTS\n"$RESET
-  exec_test 'echo testing multi >lol ; echo <lol <lola ; echo "test 1  | and 2" >>lol ; cat <lol ; cat ./Makefile <lol | grep minishell'
-#   exec_test 'expr $? + $? > 1 ; expr $? + $? >> 1 ; expr $? + $? >> 1 ; cat 1'
+	exec_test 'echo testing multi >lol ; echo <lol <lola ; echo "test 1  | and 2" >>lol ; cat <lol ; cat ./Makefile <lol | grep minishell'
+	exec_test "ls -la | wtf"
+	exec_test 'expr $? + $? > 1 ; expr $? + $? >> 1 ; expr $? + $? >> 1 ; cat 1'
 	# exec_test 'cat asdasdasd'
 	# exec_test 'cd asdasdasdas ; pwd'
 	# exec_test 'cat asdasdasd | grep arcu | cat -e'
 	# exec_test "grep -z"
 	# exec_test "ls -Z"
 	# exec_test "cd gdhahahad"
-	# exec_test "ls -la | wtf"
 	# exec_test "exit 42 53 68"
 	# exec_test "exit  2 wrong_command"
 	# exec_test 'export ='

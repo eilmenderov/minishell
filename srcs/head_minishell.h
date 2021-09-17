@@ -175,6 +175,7 @@ void	ft_close_all(t_data *data);
 int		ft_redir(t_data *data, char *str, int *i, int ans);
 
 /* signal.c 4/5 */
+void	ft_signal_pipe(int sig);
 void	ft_signal(void);
 void	ft_signal_cmd(void);
 

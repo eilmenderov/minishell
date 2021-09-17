@@ -35,9 +35,11 @@ static void	ft_single_cmd(t_data *data, t_cmd *cmd, int pid)
 	{
 		ft_free_cmd(cmd), free(cmd_s), waitpid(pid, &check, 0);
 		if (errno == 2 && check)
-			data->ret_val = 2;
+			data->ret_val = 1;
 		else if (check)
 			data->ret_val = 126;
+		else
+			data->ret_val = 0;
 	}
 }
 
@@ -59,7 +61,7 @@ void	ft_wait_all_cmd(t_data *data)
 		i++;
 	}
 	if (check)
-		data->ret_val = 1;
+		data->ret_val = 127;
 	else
 		data->ret_val = 0;
 }

@@ -16,7 +16,7 @@ static void	ft_signal_cltr_c(int sig)
 /*
 **	@brief	for ctrl+C and ctrl + \ in 'ft_signal_run_cmd'
 */
-static void	ft_signal_pipe(int sig)
+void	ft_signal_pipe(int sig)
 {
 	(void)sig;
 	signal(SIGINT, SIG_IGN);

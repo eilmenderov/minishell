@@ -64,17 +64,18 @@ void	ft_predv_obrab(t_cmd *cmd)
 	rez = NULL;
 	ft_free_split(cmd->arg), cmd->cmd = NULL;
 	cmd->arg = malloc(sizeof(char *) * PWD_LEN);
-	cmd->arg[0] = ft_strdup("echo");
 	cmd->cmd = cmd->arg[0];
-	j = 1;
-	i = ft_skip_fw(cmd->dino);
+	j = 0;
+	i = 0;
 	while (cmd->dino[i])
 	{
 		rez = ft_proc_echo(cmd->data, cmd->dino, &i, rez);
-		cmd->arg[j] = rez, j++;
+		if (rez)
+			cmd->arg[j] = rez, j++;
 		rez = NULL;
 		while (cmd->dino[i] && cmd->dino[i] == ' ')
 			i++;
 	}
 	cmd->arg[j] = NULL;
+	cmd->cmd = cmd->arg[0];
 }

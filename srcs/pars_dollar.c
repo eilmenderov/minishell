@@ -10,7 +10,6 @@ static char	*ft_dol_helper(char *key, t_env *env, char *rez)
 	free(key), key = NULL;
 	if (tmp)
 	{
-		rez = ft_pars_helper(rez);
 		rez = ft_strjoin_m(rez, tmp->val, 1);
 	}
 	return (rez);

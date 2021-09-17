@@ -35,7 +35,7 @@ int	ft_skip_fw(char *str)
 	i = 0;
 	while (str[i] && str[i] == ' ')
 		i++;
-	while (str[i] && str[i] != ' ')
+	while (str[i] && str[i] != ' ' )
 		i++;
 	while (str[i] && str[i] == ' ')
 		i++;
