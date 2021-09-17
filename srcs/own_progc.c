@@ -28,6 +28,17 @@ void	ft_echo(t_cmd *cmd, int i, int check)
 		write(1, "\n", 1);
 }
 
+static void	ft_pwd_helper(t_env *beg_env, char *str)
+{
+	t_env	*tmp;
+
+	tmp = beg_env;
+	while (tmp && ft_strcmp(tmp->key, "PWD"))
+		tmp = tmp->next;
+	if (tmp)
+		printf("%s\n", tmp->val), free(str);
+}
+
 int	ft_pwd(t_data *data, int fl, t_cmd *cmd)
 {
 	char	*str;
@@ -39,13 +50,7 @@ int	ft_pwd(t_data *data, int fl, t_cmd *cmd)
 	if (!fl)
 	{
 		if (str && !str[0])
-		{
-			tmp = data->beg_env;
-			while (tmp && ft_strcmp(tmp->key, "PWD"))
-				tmp = tmp->next;
-			if (tmp)
-				printf("%s\n", tmp->val), free(str);
-		}
+			ft_pwd_helper(data->beg_env, str);
 		else
 			printf("%s\n", str), free(str);
 		return (0);

@@ -75,7 +75,6 @@ int	ft_here_doc(t_data *data, char *str, int *i, char *stop)
 	else if (!flag)
 		ft_child(fd, stop);
 	waitpid(flag, &check, 0);
-	// printf("check = %d\n", check);
 	ft_heredoc_helper(NULL, data, stop, fd);
 	if (check)
 		return (1);
