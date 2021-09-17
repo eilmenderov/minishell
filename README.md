@@ -149,6 +149,9 @@ If you have some problems with readline, install it on you PC and change PATH wi
 
 * Run: ``make test``, or for  specific test: ``bash test.sh [echo exit pipe etc..]``
 
+<h3>Example:</h3>
+<img src="./test.png" alt="Example">
+
 ## What does it test ?
 
 - ``echo``
