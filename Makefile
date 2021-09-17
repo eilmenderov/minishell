@@ -13,9 +13,9 @@ HEADER = ./srcs/head_minishell.h ./libft/srcs/libft.h
 
 LIB			=	./libft/libft.a
 
-LIBS_MAC	=	-L/usr/local/opt/readline/lib
+LIBS_MAC	=	-L/Users/${USER}/.brew/opt/readline/lib
 
-INCLUDE		=	-I/usr/local/opt/readline/include -I./srcs/ -I./libft/srcs/
+INCLUDE		=	-I/Users/${USER}/.brew/opt/readline/include -I./srcs/ -I./libft/srcs/
 
 LOGDATE		=	$(shell date)
 

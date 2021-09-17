@@ -114,11 +114,11 @@ char	*ft_find_cmd(t_cmd *do_cmd, int i);
 t_cmd	*ft_pool_new_cmd(t_data *data, char *str, int *i);
 int		ft_pool_cmd(t_data *data, char *str, int *i);
 
-/* cmd.c 3/5 */
+/* cmd.c 4/5 */
 void	ft_wait_all_cmd(t_data *data);
 void	ft_start_cmd(t_data *data);
 
-/* echo.c */
+/* echo.c 4/5 */
 int		ft_echo_arg_check(char *str);
 void	ft_predv_obrab(t_cmd *cmd);
 
@@ -129,13 +129,13 @@ int		ft_exit(t_cmd *cmd, size_t j);
 int		ft_skip_fw(char *str);
 int		ft_export(t_cmd *cmd, int i);
 
-/* free_clear.c 4/5 */
+/* free_clear.c 5/5 */
 void	ft_free_cmd(t_cmd *do_cmd);
 void	ft_free_data(t_data *data);
 void	ft_clean_all(char *str, t_cmd *start, int i, t_data *data);
 void	ft_null_env(t_data *data, char **av);
 
-/* here_doc.c 3/5 */
+/* here_doc.c 5/5 */
 int		ft_here_doc(t_data *data, char *str, int *i, char *stoper);
 
 /* minishell_utils.c 5/5 */
@@ -149,7 +149,7 @@ void	ft_null_data(t_data *data);
 int		ft_pr_error(char *str, int error_code, char c, int fl);
 char	*ft_pars_helper(char *rez);
 
-/* own_progc.c 4/5 */
+/* own_progc.c 5/5 */
 void	ft_echo(t_cmd *cmd, int i, int check);
 int		ft_pwd(t_data *data, int fl, t_cmd *cmd);
 int		ft_env(t_cmd *cmd);
