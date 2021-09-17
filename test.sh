@@ -202,18 +202,6 @@ if [ "$1" == "multi" ] || [ "$1" == "all" ]; then
 	exec_test "ls -la | wtf"
 	exec_test 'expr $? + $? > 1 ; expr $? + $? >> 1 ; expr $? + $? >> 1 ; cat 1'
 	exec_test "mkdir asd ; cd asd ; rm -rf ../asd ; pwd"
-	# exec_test 'cat asdasdasd'
-	# exec_test 'cd asdasdasdas ; pwd'
-	# exec_test 'cat asdasdasd | grep arcu | cat -e'
-	# exec_test "grep -z"
-	# exec_test "ls -Z"
-	# exec_test "cd gdhahahad"
-	# exec_test "exit 42 53 68"
-	# exec_test "exit  2 wrong_command"
-	# exec_test 'export ='
-	# exec_test 'export 1TEST= ;' $ENV_SHOW
-	# exec_test 'export ""="" ; ' $ENV_SHOW
-	# exec_test 'export TE+S=T="" ; ' $ENV_SHOW
 fi
 
 # SYNTAX 
@@ -247,15 +235,25 @@ if [ "$1" == "exit" ] || [ "$1" == "all" ]; then
   exec_test "exit -4"
 fi
 
-
+# ERRORS
+if [ "$1" == "error" ] || [ "$1" == "all" ]; then
+  printf $BOLDMAGENTA"\n\tERROR TESTS\n"$RESET
+	exec_test 'cat asdasdasd'
+	exec_test 'cd asdasdasdas ; pwd'
+	exec_test "ls -Z"
+	exec_test "cd gdhahahad"
+	exec_test "exit 42 53 68"
+	exec_test "exit  2 wrong_command"
+	exec_test 'export ='
+	exec_test 'export 1TEST= ;' $ENV_SHOW
+	exec_test 'export ""="" ; ' $ENV_SHOW
+	exec_test 'export TE+S=T="" ; ' $ENV_SHOW
+	# exec_test "grep -z"
+	# exec_test 'cat asdasdasd | grep arcu | cat -e'
+fi
 
 # BONUS QUOTES
-if [ "$1" == "bonus" ] || [ "$1" == "quote" ]; then
-  Compile and set executable rights
-  make bonus -C ../ > /dev/null
-  cp ../minishell .
-  chmod 755 minishell
-
+if [ "$1" == "bonus" ] || [ "$1" == "all" ]; then
   printf $BOLDMAGENTA"\n\tBONUS QUOTE\n"$RESET
   exec_test "echo '"$USER"'"
   exec_test "echo "'$USER'""
@@ -265,8 +263,8 @@ fi
 # BONUS WILDCARD
 if [ "$1" == "bonus" ] || [ "$1" == "wildcard" ]; then
   Compile and set executable rights
-  make bonus -C ../ > /dev/null
-  cp ../minishell .
+  make bonus -C ./ > /dev/null
+  cp ./minishell .
   chmod 755 minishell
 
   printf $BOLDMAGENTA"\n\tBONUS WILDCARD\n"$RESET
@@ -282,8 +280,8 @@ fi
 # BONUS OPERATOR && || ()
 if [ "$1" == "bonus" ] || [ "$1" == "oper" ]; then
   Compile and set executable rights
-  make bonus -C ../ > /dev/null
-  cp ../minishell .
+  make bonus -C ./ > /dev/null
+  cp ./minishell .
   chmod 755 minishell
 
   printf $BOLDMAGENTA"\n\tBONUS OPERATOR \$\$ || () \n"$RESET

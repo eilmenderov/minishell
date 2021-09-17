@@ -82,10 +82,10 @@ int	main(int ac, char **av, char **env)
 	t_data	data;
 	char	*str;
 
-	(void)av, rl_outstream = stderr;
+	rl_outstream = stderr;
 	if (ac != 1)
 		return (0);
-	ft_init_data(&data, env, NULL), ft_signal();
+	ft_init_data(&data, env, NULL, av), ft_signal();
 	while (TRUE)
 	{
 		str = readline(SHELL_FW);

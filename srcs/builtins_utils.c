@@ -29,7 +29,7 @@ static int	ft_change_env_helper(t_env *tmp, char *str, char *key, int len)
 {
 	if (tmp)
 	{
-		if (str[len] == '+')
+		if (str[len] == '+' && str[len + 1] == '=')
 			tmp->val = ft_strjoin_m(tmp->val, ft_strdup(&str[len + 2]), 3);
 		else if (tmp->val)
 			free(tmp->val), tmp->val = ft_strdup(&str[len + 1]);

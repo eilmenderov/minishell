@@ -27,12 +27,14 @@ t_env	*ft_new_env(char *key, char *val, unsigned char visible)
 **	@param	i 0		iterator(just because of the norm)
 **	@param	len	0	iterator(just because of the norm)
 */
-static void	ft_pool_env(t_data *data, int i, size_t len)
+static void	ft_pool_env(t_data *data, int i, size_t len, char **av)
 {
 	t_env	*tmp;
 	t_env	*buf;
 	char	*val;
 
+	if (!data->env)
+		ft_null_env(data, av);
 	while (data->env && data->env[i])
 	{
 		len = ft_strlen_m(data->env[i], '=');
@@ -60,11 +62,11 @@ static void	ft_pool_env(t_data *data, int i, size_t len)
 **	@param	data	struct t_data
 **	@param	env		environment
 */
-void	ft_init_data(t_data *data, char **env, t_env *tmp)
+void	ft_init_data(t_data *data, char **env, t_env *tmp, char **av)
 {
 	ft_null_data(data);
 	data->env = env;
-	ft_pool_env(data, 0, 0);
+	ft_pool_env(data, 0, 0, av);
 	tmp = data->beg_env;
 	while (tmp)
 	{

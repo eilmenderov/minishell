@@ -61,6 +61,7 @@ typedef struct s_cmd
 	char			**arg;
 	char			*ful_cmd;
 	char			*dino;
+	int				fl;
 	int				num_start;
 	int				tot_arg;
 	int				fd_inf;
@@ -132,13 +133,14 @@ int		ft_export(t_cmd *cmd, int i);
 void	ft_free_cmd(t_cmd *do_cmd);
 void	ft_free_data(t_data *data);
 void	ft_clean_all(char *str, t_cmd *start, int i, t_data *data);
+void	ft_null_env(t_data *data, char **av);
 
 /* here_doc.c 3/5 */
 int		ft_here_doc(t_data *data, char *str, int *i, char *stoper);
 
 /* minishell_utils.c 5/5 */
 t_env	*ft_new_env(char *key, char *val, unsigned char visible);
-void	ft_init_data(t_data *data, char **env, t_env *tmp);
+void	ft_init_data(t_data *data, char **env, t_env *tmp, char **av);
 char	**ft_proc_envp(t_data *data);
 void	ft_env_to_char(t_data *data);
 

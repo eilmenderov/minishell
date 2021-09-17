@@ -68,7 +68,6 @@ void	ft_wait_all_cmd(t_data *data)
 
 void	ft_start_cmd(t_data *data)
 {
-	int		fl;
 	t_cmd	*cmd;
 
 	cmd = data->cmd_start;
@@ -77,10 +76,10 @@ void	ft_start_cmd(t_data *data)
 	ft_signal_cmd();
 	if (!cmd->next)
 	{
-		fl = ft_buildin(cmd, 0);
-		if (fl)
+		cmd->fl = ft_buildin(cmd, 0);
+		if (cmd->fl)
 		{
-			ft_redirects(cmd, 0), ft_start_own_prog(cmd, fl);
+			ft_redirects(cmd, 0), ft_start_own_prog(cmd, cmd->fl);
 			ft_redirects(cmd, 1), ft_free_cmd(cmd), data->cmd_start = NULL;
 			data->count = 0;
 		}

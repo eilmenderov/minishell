@@ -13,9 +13,9 @@ HEADER = ./srcs/head_minishell.h ./libft/srcs/libft.h
 
 LIB			=	./libft/libft.a
 
-LIBS_MAC	=	-L/Users/${USER}/.brew/opt/readline/lib
+LIBS_MAC	=	-L/usr/local/opt/readline/lib
 
-INCLUDE		=	-I/Users/${USER}/.brew/opt/readline/include -I./srcs/ -I./libft/srcs/
+INCLUDE		=	-I/usr/local/opt/readline/include -I./srcs/ -I./libft/srcs/
 
 LOGDATE		=	$(shell date)
 
@@ -44,6 +44,8 @@ all:		${NAME}
 libft:		
 			@make -C ./libft/
 
+bonus:		${NAME}
+
 ${NAME}:	${OBJS} ${HEADER}
 			@make -C ./libft/
 			@${CC} ${CFLAGC} ${INCLUDE} -o ${NAME} ${OBJS} ${LIB} -lreadline ${LIBS_MAC}
@@ -63,7 +65,7 @@ norm:
 
 clean:		
 			@${RM} ${OBJS} ${BONUS_OBJS}
-#			@make clean -C ./libft/
+			@make clean -C ./libft/
 			@echo "${BLUE}clean done!${SHALLOW}"
 
 fclean:		
@@ -81,7 +83,5 @@ push:		fclean
 			@git commit -m "${LOGDATE}"
 			@git push
 			@echo "${GREEN}---Push done!---${SHALLOW}"
-
-bonus:		${NAME}
 
 re:			fclean all
