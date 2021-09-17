@@ -201,6 +201,7 @@ if [ "$1" == "multi" ] || [ "$1" == "all" ]; then
 	exec_test 'echo testing multi >lol ; echo <lol <lola ; echo "test 1  | and 2" >>lol ; cat <lol ; cat ./Makefile <lol | grep minishell'
 	exec_test "ls -la | wtf"
 	exec_test 'expr $? + $? > 1 ; expr $? + $? >> 1 ; expr $? + $? >> 1 ; cat 1'
+	exec_test "mkdir asd ; cd asd ; rm -rf ../asd ; pwd"
 	# exec_test 'cat asdasdasd'
 	# exec_test 'cd asdasdasdas ; pwd'
 	# exec_test 'cat asdasdasd | grep arcu | cat -e'

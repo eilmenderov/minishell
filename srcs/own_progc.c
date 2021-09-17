@@ -38,7 +38,16 @@ int	ft_pwd(t_data *data, int fl, t_cmd *cmd)
 	str = ft_strjoin_m(NULL, str, 2);
 	if (!fl)
 	{
-		printf("%s\n", str), free(str);
+		if (str && !str[0])
+		{
+			tmp = data->beg_env;
+			while (tmp && ft_strcmp(tmp->key, "PWD"))
+				tmp = tmp->next;
+			if (tmp)
+				printf("%s\n", tmp->val), free(str);
+		}
+		else
+			printf("%s\n", str), free(str);
 		return (0);
 	}
 	tmp = data->beg_env;
