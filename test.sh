@@ -99,7 +99,7 @@ if [ "$1" == "echo" ] || [ "$1" == "all" ]; then
   exec_test 'echo -n test tout'
   exec_test 'echo "-n" test tout'
   exec_test '"echo" -n test tout'
-  exec_test 'echo -n -n -n test tout'
+  exec_test 'echo -n -nnnnnnn -n test tout'
   exec_test 'echo -nnnnn+nnn -n test tout'
   exec_test 'echo -nnnnnnnnm -n test tout'
   exec_test 'echo '
@@ -154,7 +154,7 @@ if [ "$1" == "env" ] || [ "$1" == "all" ]; then
 	exec_test 'echo "$T1TEST"'
 	exec_test 'echo " $TEST lol $TEST"'
 	exec_test 'echo $TEST$TEST=lol$TEST""lol'
-	# exec_test 'echo $TEST $TEST'
+	exec_test 'echo $TEST $TEST'
 	# exec_test 'echo $TEST lol $TEST'
 fi
 
@@ -166,7 +166,7 @@ if [ "$1" == "export" ] || [ "$1" == "all" ]; then
 	exec_test 'export TES=T="" ; ' $ENV_SHOW
 	exec_test $ENV_SHOW
 	exec_test $EXPORT_SHOW
-	exec_test 'export TEST=LOL ; echo $TEST$TEST$TEST=lol$TEST'
+	# exec_test 'export TEST=LOL ; echo $TEST$TEST$TEST=lol$TEST'
 	exec_test 'export TEST=LOL ; echo $TEST ; ' $ENV_SHOW
 	exec_test 'export TEST=LOL ; export TEST+=LOL ; echo $TEST ; ' $ENV_SHOW
 	exec_test 'export TEST="ls -l - a" ; echo $TEST ; ' $ENV_SHOW
@@ -185,7 +185,7 @@ if [ "$1" == "redirect" ] || [ "$1" == "all" ]; then
   exec_test 'ls > ls'
   exec_test 'cat <ls'
   exec_test 'cat <test.sh <ls'
-  exec_test '> lol echo test lol ; cat lol'
+#   exec_test '> lol echo test lol ; cat lol'
   exec_test 'rm -f ls >ls'
 #   exec_test 'cat << stop \n1\nstop\n'
 #   exec_test 'cat << stop\n1\EOF\nstopa\nstop'
@@ -198,7 +198,7 @@ fi
 # MULTI TESTS
 if [ "$1" == "multi" ] || [ "$1" == "all" ]; then
   printf $BOLDMAGENTA"\n\tMULTI TESTS\n"$RESET
-#   exec_test 'echo testing multi >lol ; echo <lol <lola ; echo "test 1  | and 2" >>lol ; cat <lol ; cat ./Makefile <lol | grep minishell'
+  exec_test 'echo testing multi >lol ; echo <lol <lola ; echo "test 1  | and 2" >>lol ; cat <lol ; cat ./Makefile <lol | grep minishell'
 #   exec_test 'expr $? + $? > 1 ; expr $? + $? >> 1 ; expr $? + $? >> 1 ; cat 1'
 	# exec_test 'cat asdasdasd'
 	# exec_test 'cd asdasdasdas ; pwd'

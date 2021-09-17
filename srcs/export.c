@@ -26,7 +26,7 @@ static int	ft_print_export(t_env *env)
 	return (0);
 }
 
-static int	ft_skip_fw(char *str)
+int	ft_skip_fw(char *str)
 {
 	int	i;
 

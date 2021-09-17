@@ -117,10 +117,15 @@ int		ft_pool_cmd(t_data *data, char *str, int *i);
 void	ft_wait_all_cmd(t_data *data);
 void	ft_start_cmd(t_data *data);
 
+/* echo.c */
+int		ft_echo_arg_check(char *str);
+void	ft_predv_obrab(t_cmd *cmd);
+
 /* exit.c 3/5 */
 int		ft_exit(t_cmd *cmd, size_t j);
 
 /* export.c 5/5 */
+int		ft_skip_fw(char *str);
 int		ft_export(t_cmd *cmd, int i);
 
 /* free_clear.c 4/5 */
@@ -143,7 +148,7 @@ int		ft_pr_error(char *str, int error_code, char c, int fl);
 char	*ft_pars_helper(char *rez);
 
 /* own_progc.c 4/5 */
-void	ft_echo(t_cmd *cmd, char *s, int i);
+void	ft_echo(t_cmd *cmd, int i, int check);
 int		ft_pwd(t_data *data, int fl, t_cmd *cmd);
 int		ft_env(t_cmd *cmd);
 int		ft_unset(t_cmd *cmd, int i);
@@ -153,6 +158,8 @@ char	*ft_normal(char *str, int *i, char *rez, char *stop);
 char	*ft_dollar(t_data *data, char *str, int *i, char *rez);
 
 /* parser.c 5/5 */
+char	*ft_quotes(char *str, int *i, char *rez);
+char	*ft_double_quotes(t_data *data, char *str, int *i, char *rez);
 void	ft_hadle_str(t_data *data, char *str, int *i);
 char	*ft_proc_open(t_data *data, char *str, int *i, char *rez);
 int		ft_parsing(t_data *data, char *str, int i);

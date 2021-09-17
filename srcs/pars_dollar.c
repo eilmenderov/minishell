@@ -87,7 +87,6 @@ char	*ft_normal(char *str, int *i, char *rez, char *stop)
 {
 	int	j;
 
-	rez = ft_pars_helper(rez);
 	j = *i;
 	while (str[j] && !ft_ch_for_coinc(str[j], stop))
 		j++;

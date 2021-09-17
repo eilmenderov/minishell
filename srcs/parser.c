@@ -1,6 +1,6 @@
 #include "head_minishell.h"
 
-static char	*ft_quotes(char *str, int *i, char *rez)
+char	*ft_quotes(char *str, int *i, char *rez)
 {
 	int		j;
 	char	*sub;
@@ -15,7 +15,7 @@ static char	*ft_quotes(char *str, int *i, char *rez)
 	return (rez);
 }
 
-static char	*ft_double_quotes(t_data *data, char *str, int *i, char *rez)
+char	*ft_double_quotes(t_data *data, char *str, int *i, char *rez)
 {
 	int		j;
 

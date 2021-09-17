@@ -1,32 +1,31 @@
 #include "head_minishell.h"
 
-void	ft_echo(t_cmd *cmd, char *s, int i)
+void	ft_echo(t_cmd *cmd, int i, int check)
 {
-	int		j;
-	int		k;
+	int	fl;
 
-	if (cmd->fd_inf > 0)
-		close(cmd->fd_inf), cmd->fd_inf = -1;
-	while (s[i] && !ft_ch_for_coinc(s[i], " "))
-		i++;
-	i++, j = i;
-	while (s[i] == '-' && s[i + 1] == 'n')
+	ft_predv_obrab(cmd), fl = 0;
+	if (cmd->arg[1])
 	{
-		k = i;
-		while (s[i + 1] == 'n')
+		check = ft_echo_arg_check(cmd->arg[i]);
+		if (!check)
 			i++;
-		if (s[i + 1] == ' ' || !s[i + 1])
-			i += 2;
-		else
+		while (cmd->arg[i] && !check && !fl)
 		{
-			i = k;
-			break ;
+			fl = ft_echo_arg_check(cmd->arg[i]);
+			if (fl)
+				break ;
+			i++;
+		}
+		while (cmd->arg[i])
+		{
+			ft_putstr_fd(cmd->arg[i], 1), i++;
+			if (cmd->arg[i])
+				write(1, " ", 1);
 		}
 	}
-	if (i == j)
-		ft_putendl_fd(&s[i], 1), cmd->data->ret_val = 0;
-	else
-		ft_putstr_fd(&s[i], 1), cmd->data->ret_val = 0;
+	if (check)
+		write(1, "\n", 1);
 }
 
 int	ft_pwd(t_data *data, int fl, t_cmd *cmd)
