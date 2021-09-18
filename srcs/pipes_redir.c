@@ -58,12 +58,15 @@ void	ft_close_pipes(t_data *data, t_cmd *cmd, int pipe_num)
 
 void	ft_redirects(t_cmd *cmd, int fl)
 {
+	if (!fl)
+		ft_env_to_char(cmd->data);
+	else
+		ft_free_split(cmd->data->env);
 	if (cmd->fd_inf < 0 && cmd->fd_outf < 0
 		&& cmd->tmp_fd[1] < 0 && cmd->tmp_fd[0] < 0)
 		return ;
 	if (!fl)
 	{
-		ft_env_to_char(cmd->data);
 		cmd->tmp_fd[1] = dup(STDOUT);
 		cmd->tmp_fd[0] = dup(STDIN);
 		if (cmd->fd_inf > 0)
@@ -73,10 +76,7 @@ void	ft_redirects(t_cmd *cmd, int fl)
 	}
 	else
 	{
-		ft_free_split(cmd->data->env);
-		close(STDIN);
-		close(STDOUT);
-		dup2(cmd->tmp_fd[1], STDOUT);
+		close(STDIN), close(STDOUT), dup2(cmd->tmp_fd[1], STDOUT);
 		close(cmd->tmp_fd[1]), cmd->tmp_fd[1] = -1;
 		dup2(cmd->tmp_fd[0], STDIN);
 		close(cmd->tmp_fd[0]), cmd->tmp_fd[0] = -1;
