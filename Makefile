@@ -13,11 +13,7 @@ HEADER = ./srcs/head_minishell.h ./libft/srcs/libft.h
 
 LIB			=	./libft/libft.a
 
-<<<<<<< HEAD
 LIBS_MAC	=	-L/Users/${USER}/.brew/opt/readline/lib
-=======
-LIBS_MAC	=	-L/Users/${USER}/.brew/opt/readline/lib 
->>>>>>> d9d3282a8f7c3b1a34112b5ec4b400157ee7ad94
 
 INCLUDE		=	-I/Users/${USER}/.brew/opt/readline/include -I./srcs/ -I./libft/srcs/
 
