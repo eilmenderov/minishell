@@ -14,9 +14,13 @@ static void	ft_heredoc_helper(char *line, t_data *data, char *stoper, int fd[2])
 
 static void	ft_signal_cltr_c(int sig)
 {
+	int	i;
+
 	(void)sig;
-	write(2, "\b\b\b\b\b\b\b\b\b\b\b", 11);
-	exit(0);
+	i = 0;
+	while (i < 10)
+		write(2, "\b\b\b\b\b\b\b\b\b\b", 10), i++;
+	exit(1);
 }
 
 static void	ft_signal_hd(void)

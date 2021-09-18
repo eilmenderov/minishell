@@ -173,6 +173,8 @@ if [ "$1" == "export" ] || [ "$1" == "all" ]; then
 	exec_test 'export TEST=LOL ; export TEST+=LOL ; echo $TEST ; ' $ENV_SHOW
 	exec_test 'export TEST="ls -l - a" ; echo $TEST ; ' $ENV_SHOW
 	exec_test 'export TEST ;' $EXPORT_SHOW
+	exec_test 'asd=123 ; export asd ; ' $ENV_SHOW
+	exec_test 'asd=123 ; export asd ; unset asd ; ' $EXPORT_SHOW
 fi
 
 
