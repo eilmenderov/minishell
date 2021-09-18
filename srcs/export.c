@@ -76,7 +76,10 @@ static int	ft_chek_env_export(t_data *data, char *str)
 	while (tmp)
 	{
 		if (!ft_strcmp(str, tmp->key))
+		{
+			tmp->visible = 0;
 			return (1);
+		}
 		tmp = tmp->next;
 	}
 	return (0);
