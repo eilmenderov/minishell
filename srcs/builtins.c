@@ -71,3 +71,9 @@ int	ft_buildin(t_cmd *cmd, int fl)
 		fl = 8;
 	return (fl);
 }
+
+int	ft_quotes_error(void)
+{
+	ft_pr_error("minishell: not closed quotes", 0, 0, 2);
+	return (1);
+}

@@ -76,17 +76,37 @@ void	ft_start_cmd(t_data *data)
 	ft_signal_cmd();
 	if (!cmd->next)
 	{
+		if (ft_cmd_check(cmd))
+		{
+			ft_signal(), data->ret_val = 127, ft_pr_error(ERR_CMD, 0, 0, 2);
+			return ;
+		}
 		cmd->fl = ft_buildin(cmd, 0);
 		if (cmd->fl)
 		{
 			ft_redirects(cmd, 0), ft_start_own_prog(cmd, cmd->fl);
-			ft_redirects(cmd, 1), ft_free_cmd(cmd), data->cmd_start = NULL;
-			data->count = 0;
+			ft_redirects(cmd, 1), data->count = 0;
 		}
 		else
 			ft_single_cmd(data, cmd, -1);
 		ft_signal();
 		return ;
 	}
-	ft_multiple_cmd(data->cmd_start, 0), ft_signal();
+	ft_multiple_cmd(data->cmd_start, 0, 0), ft_signal();
+}
+
+int	ft_cmd_check(t_cmd *cmd)
+{
+	char	*rez;
+	int		i;
+
+	i = 0;
+	rez = NULL;
+	rez = ft_proc_echo(cmd->data, cmd->dino, &i, rez);
+	if (ft_how_many_char(rez, ' '))
+		i = 1;
+	else
+		i = 0;
+	free(rez), rez = NULL;
+	return (i);
 }

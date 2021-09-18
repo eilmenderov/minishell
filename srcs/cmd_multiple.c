@@ -87,9 +87,8 @@ static void	ft_last_cmd(t_cmd *cmd)
 	ft_redirects(cmd, 1), exit(cmd->data->ret_val);
 }
 
-void	ft_multiple_cmd(t_cmd *cmd, int i)
+void	ft_multiple_cmd(t_cmd *cmd, int i, int fl)
 {
-	int		fl;
 	t_cmd	*tmp;
 
 	tmp = cmd->data->cmd_start, ft_create_pipes(cmd->data);
@@ -102,13 +101,14 @@ void	ft_multiple_cmd(t_cmd *cmd, int i)
 			ft_pr_error(ERR_FORK, -1, 0, 0);
 		if (!fl)
 		{
+			if (ft_cmd_check(cmd))
+				ft_pr_error(ERR_CMD, 0, 0, 2), exit(100);
 			if (!tmp->next)
 				ft_last_cmd(tmp);
 			else if (!tmp->num_start)
 				ft_first_cmd(tmp);
 			else if (tmp->next)
 				ft_child(tmp);
-			exit(100);
 		}
 		cmd->data->all_pid[i] = fl;
 		tmp = tmp->next, i++;

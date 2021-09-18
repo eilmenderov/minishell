@@ -104,6 +104,8 @@ if [ "$1" == "echo" ] || [ "$1" == "all" ]; then
   exec_test 'echo -nnnnnnnnm -n test tout'
   exec_test 'echo '
   exec_test 'echo'
+  exec_test '"echo " test tout'
+  exec_test "'echo ' test tout"
 fi
 
 # CD TESTS
@@ -241,6 +243,7 @@ if [ "$1" == "error" ] || [ "$1" == "all" ]; then
 	exec_test 'cat asdasdasd'
 	exec_test 'cd asdasdasdas ; pwd'
 	exec_test "ls -Z"
+	exec_test "ls -l > 1 ; 'cat ' 1"
 	exec_test "cd gdhahahad"
 	exec_test "exit 42 53 68"
 	exec_test "exit  2 wrong_command"

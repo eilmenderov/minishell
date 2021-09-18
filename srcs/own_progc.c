@@ -26,6 +26,7 @@ void	ft_echo(t_cmd *cmd, int i, int check)
 	}
 	if (check)
 		write(1, "\n", 1);
+	cmd->data->ret_val = 0;
 }
 
 static void	ft_pwd_helper(t_env *beg_env, char *str)

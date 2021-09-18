@@ -1,6 +1,6 @@
 #include "head_minishell.h"
 
-char	*ft_quotes(char *str, int *i, char *rez)
+char	*ft_quotes(t_data *data, char *str, int *i, char *rez)
 {
 	int		j;
 	char	*sub;
@@ -12,6 +12,8 @@ char	*ft_quotes(char *str, int *i, char *rez)
 	sub = ft_substr(str, *i, j - *i);
 	rez = ft_strjoin_m(rez, sub, 3);
 	*i = j + 1;
+	if (str[j] != '\'')
+		data->fl = 1;
 	return (rez);
 }
 
@@ -36,6 +38,8 @@ char	*ft_double_quotes(t_data *data, char *str, int *i, char *rez)
 	}
 	if (j != *i)
 		rez = ft_strjoin_m(rez, ft_strndup(&str[j], *i - j), 3);
+	if (str[*i] != '"')
+		data->fl = 1;
 	*i = *i + 1;
 	return (rez);
 }
@@ -45,7 +49,7 @@ void	ft_hadle_str(t_data *data, char *str, int *i)
 	while (str[*i] && !ft_ch_for_coinc(str[*i], "> \t<|&;"))
 	{
 		if (str[*i] == '\'')
-			data->rez = ft_quotes(str, i, data->rez);
+			data->rez = ft_quotes(data, str, i, data->rez);
 		else if (str[*i] == '$')
 			data->rez = ft_dollar(data, str, i, data->rez);
 		else if (str[*i] == '\"')
@@ -65,7 +69,7 @@ char	*ft_proc_open(t_data *data, char *str, int *i, char *rez)
 	while (str[*i] && !ft_ch_for_coinc(str[*i], "> <|&;"))
 	{
 		if (str[*i] == '\'')
-			rez = ft_quotes(str, i, rez);
+			rez = ft_quotes(data, str, i, rez);
 		else if (str[*i] == '$')
 			rez = ft_dollar(data, str, i, rez);
 		else if (str[*i] == '\"')
@@ -86,7 +90,7 @@ int	ft_parsing(t_data *data, char *str, int i)
 	data->total_cmd = 0;
 	data->count = 0;
 	data->env = NULL;
-	while (str[i])
+	while (str[i] && !data->fl)
 	{
 		if (ft_ch_for_coinc(str[i], "><|&;"))
 		{
@@ -103,7 +107,9 @@ int	ft_parsing(t_data *data, char *str, int i)
 		else
 			ft_hadle_str(data, str, &i);
 	}
-	if (data->rez)
-		ft_pool_cmd(data, str, &i);
+	if (data->rez && !data->fl)
+		return (ft_pool_cmd(data, str, &i));
+	if (data->fl)
+		return (ft_quotes_error());
 	return (0);
 }

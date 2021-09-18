@@ -38,7 +38,7 @@
 # define PID_EXEP		"[Sorry, we're not allowed to use func getpid]"
 # define ERR_SH_NEWL	"minishell: syntax error near unexpected token newline"
 # define ERR_SH_TKN		"minishell: syntax error near unexpected token "
-# define ERR_CMD		"minishell: command not found: "
+# define ERR_CMD		"minishell: command not found "
 # define ERR_NFD		"minishell: No such file or directory"
 # define ERR_EXP		"Error: export: not a valid identifier"
 # define ERR_INFORK		"Error: unexpected error in child process"
@@ -101,24 +101,27 @@ int		ft_change_env(t_cmd *cmd, char *str, int visib, int len);
 t_env	*ft_find_key(t_env *env);
 void	ft_start_own_prog(t_cmd *cmd, int fl);
 int		ft_buildin(t_cmd *cmd, int fl);
+int		ft_quotes_error(void);
 
 /* cd.c 3/5 */
 void	ft_change_oldpwd(t_cmd *cmd, int fl);
 int		ft_cd(t_cmd *cmd, t_env *tmp);
 
 /* cmd_multiple.c 5/5 */
-void	ft_multiple_cmd(t_cmd *cmd, int i);
+void	ft_multiple_cmd(t_cmd *cmd, int i, int fl);
 
 /* cmd_utils.c 5/5 */
 char	*ft_find_cmd(t_cmd *do_cmd, int i);
 t_cmd	*ft_pool_new_cmd(t_data *data, char *str, int *i);
 int		ft_pool_cmd(t_data *data, char *str, int *i);
 
-/* cmd.c 4/5 */
+/* cmd.c 5/5 */
 void	ft_wait_all_cmd(t_data *data);
 void	ft_start_cmd(t_data *data);
+int		ft_cmd_check(t_cmd *cmd);
 
 /* echo.c 4/5 */
+char	*ft_proc_echo(t_data *data, char *str, int *i, char *rez);
 int		ft_echo_arg_check(char *str);
 void	ft_predv_obrab(t_cmd *cmd);
 
@@ -160,7 +163,7 @@ char	*ft_normal(char *str, int *i, char *rez, char *stop);
 char	*ft_dollar(t_data *data, char *str, int *i, char *rez);
 
 /* parser.c 5/5 */
-char	*ft_quotes(char *str, int *i, char *rez);
+char	*ft_quotes(t_data *data, char *str, int *i, char *rez);
 char	*ft_double_quotes(t_data *data, char *str, int *i, char *rez);
 void	ft_hadle_str(t_data *data, char *str, int *i);
 char	*ft_proc_open(t_data *data, char *str, int *i, char *rez);

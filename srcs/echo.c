@@ -12,14 +12,14 @@ static int	ft_skip_redir(char *str, int i)
 	return (i);
 }
 
-static char	*ft_proc_echo(t_data *data, char *str, int *i, char *rez)
+char	*ft_proc_echo(t_data *data, char *str, int *i, char *rez)
 {
-	while (str[*i] && str[*i] == ' ')
+	while (str && str[*i] && str[*i] == ' ')
 		*i = *i + 1;
-	while (str[*i] && str[*i] != ' ')
+	while (str && str[*i] && str[*i] != ' ')
 	{
 		if (str[*i] == '\'')
-			rez = ft_quotes(str, i, rez);
+			rez = ft_quotes(data, str, i, rez);
 		else if (str[*i] == '$')
 			rez = ft_dollar(data, str, i, rez);
 		else if (str[*i] == '\"')
