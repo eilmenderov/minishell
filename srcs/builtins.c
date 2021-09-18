@@ -30,13 +30,13 @@ t_env	*ft_find_key(t_env *env)
 void	ft_start_own_prog(t_cmd *cmd, int fl)
 {
 	if (fl == 1)
-		ft_echo(cmd, cmd->ful_cmd, 0);
+		ft_echo(cmd, 1, 1);
 	else if (fl == 2)
 		cmd->data->ret_val = ft_pwd(cmd->data, 0, cmd);
 	else if (fl == 3)
 		cmd->data->ret_val = ft_env(cmd);
 	else if (fl == 4)
-		ft_exit(cmd);
+		cmd->data->ret_val = ft_exit(cmd, 0);
 	else if (fl == 5)
 		cmd->data->ret_val = ft_unset(cmd, 0);
 	else if (fl == 6)
@@ -70,4 +70,10 @@ int	ft_buildin(t_cmd *cmd, int fl)
 	else if (ft_strlen_m(cmd->cmd, '='))
 		fl = 8;
 	return (fl);
+}
+
+int	ft_quotes_error(void)
+{
+	ft_pr_error("minishell: not closed quotes", 0, 0, 2);
+	return (1);
 }

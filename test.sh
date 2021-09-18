@@ -99,11 +99,13 @@ if [ "$1" == "echo" ] || [ "$1" == "all" ]; then
   exec_test 'echo -n test tout'
   exec_test 'echo "-n" test tout'
   exec_test '"echo" -n test tout'
-  exec_test 'echo -n -n -n test tout'
+  exec_test 'echo -n -nnnnnnn -n test tout'
   exec_test 'echo -nnnnn+nnn -n test tout'
   exec_test 'echo -nnnnnnnnm -n test tout'
   exec_test 'echo '
   exec_test 'echo'
+  exec_test '"echo " test tout'
+  exec_test "'echo ' test tout"
 fi
 
 # CD TESTS
@@ -121,13 +123,12 @@ fi
 # PIPE TESTS
 if [ "$1" == "pipe" ] || [ "$1" == "all" ]; then
 	printf $BOLDMAGENTA"\n\tPIPE TESTS\n"$RESET
-	# exec_test 'cat asdasdasd | grep arcu | cat -e'
-	# exec_test 'cat asdasdasd'
-	# exec_test 'cd asdasdasdas ; pwd'
 	exec_test '/bin/ls'
 	exec_test 'echo test | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e'
+	exec_test 'echo test | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e'
 	exec_test 'cat /dev/random | head -c 100 | wc -c'
-	exec_test 'ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls'
+	exec_test 'ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls'
+	exec_test 'ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls'
 	head -c 2000000 /dev/zero > big_file
 	exec_test ' cat big_file | ls'
 	exec_test ' cat big_file | echo lol'
@@ -141,6 +142,8 @@ if [ "$1" == "env" ] || [ "$1" == "all" ]; then
 	exec_test 'echo test'
 	exec_test 'echo $TEST'
 	exec_test 'echo "$TEST"'
+	exec_test 'echo "$?"'
+	exec_test 'echo $?'
 	exec_test "echo '$TEST'"
 	exec_test 'echo "$TEST$TEST$TEST"'
 	exec_test 'echo "$TEST$TEST=lol$TEST"'
@@ -152,38 +155,34 @@ if [ "$1" == "env" ] || [ "$1" == "all" ]; then
 	exec_test 'echo "$1TEST"'
 	exec_test 'echo "$T1TEST"'
 	exec_test 'echo " $TEST lol $TEST"'
+	exec_test 'echo $TEST$TEST=lol$TEST""lol'
 	exec_test 'echo $TEST $TEST'
 	exec_test 'echo $TEST lol $TEST'
-	# exec_test 'echo $TEST$TEST=lol$TEST""lol'
 fi
 
 # EXPORT
 if [ "$1" == "export" ] || [ "$1" == "all" ]; then
 	printf $BOLDMAGENTA"\n\tEXPORT TESTS\n"$RESET
-	ENV_SHOW="env | sort | grep -v SHLVL | grep -v _="
+	ENV_SHOW="env | sort | grep -v SHLVL | grep -v _= "
 	EXPORT_SHOW="export | sort | grep -v SHLVL | grep -v _= | grep -v OLDPWD"
 	exec_test 'export TES=T="" ; ' $ENV_SHOW
 	exec_test $ENV_SHOW
 	exec_test $EXPORT_SHOW
-	# exec_test 'export TEST=LOL ; echo $TEST$TEST$TEST=lol$TEST'
-	# exec_test 'export TEST=LOL ; echo $TEST ; ' $ENV_SHOW
-	# exec_test 'export TEST=LOL ; export TEST+=LOL ; echo $TEST ; ' $ENV_SHOW
-	# exec_test 'export TEST="ls -l - a" ; echo $TEST ; ' $ENV_SHOW
-	# exec_test 'export ='
-	# exec_test 'export 1TEST= ;' $ENV_SHOW
-	# exec_test 'export TEST ;' $EXPORT_SHOW
-	# exec_test 'export ""="" ; ' $ENV_SHOW
-	# exec_test 'export TE+S=T="" ; ' $ENV_SHOW
+	exec_test 'export TEST=LOL ; echo $TEST$TEST$TEST=lol$TEST'
+	exec_test 'export TEST=LOL ; echo $TEST ; ' $ENV_SHOW
+	exec_test 'export TEST=LOL ; export TEST+=LOL ; echo $TEST ; ' $ENV_SHOW
+	exec_test 'export TEST="ls -l - a" ; echo $TEST ; ' $ENV_SHOW
+	exec_test 'export TEST ;' $EXPORT_SHOW
 fi
 
 
 # REDIRECTIONS
 if [ "$1" == "redirect" ] || [ "$1" == "all" ]; then
   printf $BOLDMAGENTA"\n\tREDIRECTION TESTS\n"$RESET
-#   exec_test 'echo test > ls ; cat ls'
-#   exec_test 'echo test > ls >> ls >> ls ; echo test >> ls ; cat ls'
-#   exec_test '>lol echo > test>lol>test>>lol>test mdr >lol test >test ; cat test'
-#   exec_test 'cat < ls'
+  exec_test '>lol echo > test>lol>test>>lol>test mdr >lol test >test ; cat test'
+  exec_test 'echo test > ls ; cat ls'
+  exec_test 'echo test > ls >> ls >> ls ; echo test >> ls ; cat ls'
+  exec_test 'cat < ls'
   exec_test 'rm -f ls; cat > ls < ls; rm -f ls'
   exec_test 'ls > ls'
   exec_test 'cat <ls'
@@ -201,7 +200,10 @@ fi
 # MULTI TESTS
 if [ "$1" == "multi" ] || [ "$1" == "all" ]; then
   printf $BOLDMAGENTA"\n\tMULTI TESTS\n"$RESET
-  exec_test 'echo testing multi >lol ; echo <lol <lola ; echo "test 1  | and 2" >>lol ; cat <lol ; cat ./Makefile <lol | grep minishell'
+	exec_test 'echo testing multi >lol ; echo <lol <lola ; echo "test 1  | and 2" >>lol ; cat <lol ; cat ./Makefile <lol | grep minishell'
+	exec_test "ls -la | wtf"
+	exec_test 'expr $? + $? > 1 ; expr $? + $? >> 1 ; expr $? + $? >> 1 ; cat 1'
+	exec_test "mkdir asd ; cd asd ; rm -rf ../asd ; pwd"
 fi
 
 # SYNTAX 
@@ -210,14 +212,13 @@ if [ "$1" == "syntax" ] || [ "$1" == "all" ]; then
   exec_test ''
   exec_test 'echo "||"'
   exec_test "ls'| 'wc -l"
-#   exec_test '/bin/lsa'
-#   exec_test './Makefile'
-#   exec_test '| test'
-#   exec_test 'echo > <'
-#   exec_test 'echo | |'
-#   exec_test '<'
-#   exec_test 'rm -f ls; cat < ls > ls'
-#   exec_test "grep -z"
+  exec_test '/bin/lsa'
+  exec_test './Makefile'
+  exec_test '| test'
+  exec_test 'echo > <'
+  exec_test 'echo | |'
+  exec_test '<'
+  exec_test 'rm -f ls; cat < ls > ls'
 fi
 
 # EXIT
@@ -232,24 +233,30 @@ if [ "$1" == "exit" ] || [ "$1" == "all" ]; then
   exec_test "exit -99999999999999999999999"
   exec_test "exit wrong"
   exec_test "gdagadgag"
-#   exec_test "exit 42 53 68"
-#   exec_test "exit -9223372036854775808"
-#   exec_test "exit -4"
-#   exec_test "exit  2 wrong_command"
-#   exec_test "ls -Z"
-#   exec_test "cd gdhahahad"
-#   exec_test "ls -la | wtf"
+  exec_test "exit -9223372036854775808"
+  exec_test "exit -4"
 fi
 
-
+# ERRORS
+if [ "$1" == "error" ] || [ "$1" == "all" ]; then
+  printf $BOLDMAGENTA"\n\tERROR TESTS\n"$RESET
+	exec_test 'cat asdasdasd'
+	exec_test 'cd asdasdasdas ; pwd'
+	exec_test "ls -Z"
+	exec_test "ls -l > 1 ; 'cat ' 1"
+	exec_test "cd gdhahahad"
+	exec_test "exit 42 53 68"
+	exec_test "exit  2 wrong_command"
+	exec_test 'export ='
+	exec_test 'export 1TEST= ;' $ENV_SHOW
+	exec_test 'export ""="" ; ' $ENV_SHOW
+	exec_test 'export TE+S=T="" ; ' $ENV_SHOW
+	# exec_test "grep -z"
+	# exec_test 'cat asdasdasd | grep arcu | cat -e'
+fi
 
 # BONUS QUOTES
-if [ "$1" == "bonus" ] || [ "$1" == "quote" ]; then
-  Compile and set executable rights
-  make bonus -C ../ > /dev/null
-  cp ../minishell .
-  chmod 755 minishell
-
+if [ "$1" == "bonus" ] || [ "$1" == "all" ]; then
   printf $BOLDMAGENTA"\n\tBONUS QUOTE\n"$RESET
   exec_test "echo '"$USER"'"
   exec_test "echo "'$USER'""
@@ -259,8 +266,8 @@ fi
 # BONUS WILDCARD
 if [ "$1" == "bonus" ] || [ "$1" == "wildcard" ]; then
   Compile and set executable rights
-  make bonus -C ../ > /dev/null
-  cp ../minishell .
+  make bonus -C ./ > /dev/null
+  cp ./minishell .
   chmod 755 minishell
 
   printf $BOLDMAGENTA"\n\tBONUS WILDCARD\n"$RESET
@@ -276,8 +283,8 @@ fi
 # BONUS OPERATOR && || ()
 if [ "$1" == "bonus" ] || [ "$1" == "oper" ]; then
   Compile and set executable rights
-  make bonus -C ../ > /dev/null
-  cp ../minishell .
+  make bonus -C ./ > /dev/null
+  cp ./minishell .
   chmod 755 minishell
 
   printf $BOLDMAGENTA"\n\tBONUS OPERATOR \$\$ || () \n"$RESET

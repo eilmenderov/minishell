@@ -1,26 +1,23 @@
 SRCS	=	minishell.c minishell_utils.c parser.c proc_redirects.c pars_dollar.c	\
 			here_doc.c cmd.c builtins.c signals.c own_progc.c builtins_utils.c		\
-			cmd_utils.c cmd_multiple.c pipes_redir.c export.c free_clear.c cd.c
-
-# BONUS	=	
+			cmd_utils.c cmd_multiple.c pipes_redir.c export.c free_clear.c cd.c		\
+			exit.c echo.c
 
 SRCS_DIR = srcs/
 
-# SRCS_BONUS_DIR = srcs/
-
 OBJS	=	${addprefix ${SRCS_DIR}, ${SRCS:.c=.o}}
 
-# BONUS_OBJS = ${addprefix ${SRCS_BONUS_DIR}, ${BONUS:.c=.o}}
-
 NAME = minishell
-
-# B_NAME = minishell
 
 HEADER = ./srcs/head_minishell.h ./libft/srcs/libft.h
 
 LIB			=	./libft/libft.a
 
+<<<<<<< HEAD
 LIBS_MAC	=	-L/Users/${USER}/.brew/opt/readline/lib
+=======
+LIBS_MAC	=	-L/Users/${USER}/.brew/opt/readline/lib 
+>>>>>>> d9d3282a8f7c3b1a34112b5ec4b400157ee7ad94
 
 INCLUDE		=	-I/Users/${USER}/.brew/opt/readline/include -I./srcs/ -I./libft/srcs/
 
@@ -51,6 +48,8 @@ all:		${NAME}
 libft:		
 			@make -C ./libft/
 
+bonus:		${NAME}
+
 ${NAME}:	${OBJS} ${HEADER}
 			@make -C ./libft/
 			@${CC} ${CFLAGC} ${INCLUDE} -o ${NAME} ${OBJS} ${LIB} -lreadline ${LIBS_MAC}
@@ -70,7 +69,7 @@ norm:
 
 clean:		
 			@${RM} ${OBJS} ${BONUS_OBJS}
-#			@make clean -C ./libft/
+			@make clean -C ./libft/
 			@echo "${BLUE}clean done!${SHALLOW}"
 
 fclean:		
@@ -88,7 +87,5 @@ push:		fclean
 			@git commit -m "${LOGDATE}"
 			@git push
 			@echo "${GREEN}---Push done!---${SHALLOW}"
-
-bonus:		${NAME}
 
 re:			fclean all

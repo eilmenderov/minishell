@@ -26,7 +26,7 @@ static int	ft_print_export(t_env *env)
 	return (0);
 }
 
-static int	ft_skip_fw(char *str)
+int	ft_skip_fw(char *str)
 {
 	int	i;
 
@@ -35,7 +35,7 @@ static int	ft_skip_fw(char *str)
 	i = 0;
 	while (str[i] && str[i] == ' ')
 		i++;
-	while (str[i] && str[i] != ' ')
+	while (str[i] && str[i] != ' ' )
 		i++;
 	while (str[i] && str[i] == ' ')
 		i++;

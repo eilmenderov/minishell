@@ -1,32 +1,43 @@
 #include "head_minishell.h"
 
-void	ft_echo(t_cmd *cmd, char *s, int i)
+void	ft_echo(t_cmd *cmd, int i, int check)
 {
-	int		j;
-	int		k;
+	int	fl;
 
-	if (cmd->fd_inf > 0)
-		close(cmd->fd_inf), cmd->fd_inf = -1;
-	while (s[i] && !ft_ch_for_coinc(s[i], " "))
-		i++;
-	i++, j = i;
-	while (s[i] == '-' && s[i + 1] == 'n')
+	ft_predv_obrab(cmd), fl = 0;
+	if (cmd->arg[1])
 	{
-		k = i;
-		while (s[i + 1] == 'n')
+		check = ft_echo_arg_check(cmd->arg[i]);
+		if (!check)
 			i++;
-		if (s[i + 1] == ' ' || !s[i + 1])
-			i += 2;
-		else
+		while (cmd->arg[i] && !check && !fl)
 		{
-			i = k;
-			break ;
+			fl = ft_echo_arg_check(cmd->arg[i]);
+			if (fl)
+				break ;
+			i++;
+		}
+		while (cmd->arg[i])
+		{
+			ft_putstr_fd(cmd->arg[i], 1), i++;
+			if (cmd->arg[i])
+				write(1, " ", 1);
 		}
 	}
-	if (i == j)
-		ft_putendl_fd(&s[i], 1), cmd->data->ret_val = 0;
-	else
-		ft_putstr_fd(&s[i], 1), cmd->data->ret_val = 0;
+	if (check)
+		write(1, "\n", 1);
+	cmd->data->ret_val = 0;
+}
+
+static void	ft_pwd_helper(t_env *beg_env, char *str)
+{
+	t_env	*tmp;
+
+	tmp = beg_env;
+	while (tmp && ft_strcmp(tmp->key, "PWD"))
+		tmp = tmp->next;
+	if (tmp)
+		printf("%s\n", tmp->val), free(str);
 }
 
 int	ft_pwd(t_data *data, int fl, t_cmd *cmd)
@@ -39,7 +50,10 @@ int	ft_pwd(t_data *data, int fl, t_cmd *cmd)
 	str = ft_strjoin_m(NULL, str, 2);
 	if (!fl)
 	{
-		printf("%s\n", str), free(str);
+		if (str && !str[0])
+			ft_pwd_helper(data->beg_env, str);
+		else
+			printf("%s\n", str), free(str);
 		return (0);
 	}
 	tmp = data->beg_env;
@@ -70,35 +84,6 @@ int	ft_env(t_cmd *cmd)
 		tmp = tmp->next;
 	}
 	return (0);
-}
-
-void	ft_exit(t_cmd *cmd)
-{
-	char	*arg;
-	int		j;
-	int		i;
-
-	ft_redirects(cmd, 1);
-	i = ft_strlen_m(cmd->ful_cmd, ' ');
-	if (!i)
-		i = ft_strlen(cmd->ful_cmd);
-	while (cmd->ful_cmd[i] && cmd->ful_cmd[i] == ' ')
-		i++;
-	j = i;
-	while (cmd->ful_cmd[i] && cmd->ful_cmd[i] != ' ')
-		i++;
-	if (i == j)
-		ft_putendl_fd("exit", 2),
-		ft_free_data(cmd->data), exit(cmd->data->ret_val);
-	arg = ft_strndup(&cmd->ful_cmd[j], i - j);
-	ft_putendl_fd("exit", 2), i = 0;
-	while (ft_isdigit(arg[i]))
-		i++;
-	if (!arg[i])
-		cmd->data->ret_val = ft_atoi(arg);
-	else
-		cmd->data->ret_val = 255, ft_pr_error(arg, 1, 0, 3);
-	free(arg), ft_free_data(cmd->data), exit(cmd->data->ret_val);
 }
 
 int	ft_unset(t_cmd *cmd, int i)

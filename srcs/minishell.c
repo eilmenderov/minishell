@@ -44,10 +44,8 @@ int	ft_pr_error(char *str, int error_code, char c, int fl)
 		ft_putendl_fd(str, 2), exit(error_code);
 	else if (fl == 1)
 	{
-		ft_putstr_fd(str, 2);
-		ft_putchar_fd('\'', 2);
-		ft_putchar_fd(c, 2);
-		ft_putendl_fd("'", 2);
+		ft_putstr_fd(str, 2), ft_putchar_fd('\'', 2);
+		ft_putchar_fd(c, 2), ft_putendl_fd("'", 2);
 	}
 	else if (fl == 2)
 		ft_putendl_fd(str, 2);
@@ -63,7 +61,17 @@ int	ft_pr_error(char *str, int error_code, char c, int fl)
 	}
 	else if (fl == 5)
 		ft_putstr_fd("minishell: ", 2), ft_putendl_fd(strerror(errno), 2);
+	else if (fl == 6)
+		ft_putstr_fd("minishell: ", 2), ft_putendl_fd(str, 2);
 	return (error_code);
+}
+
+char	*ft_pars_helper(char *rez)
+{
+	if (ft_count_words(rez, ' ') == 1 && ft_strlen(rez)
+		&& rez[ft_strlen(rez) - 1] != ' ')
+		rez = ft_strjoin_m(rez, " ", 1);
+	return (rez);
 }
 
 /*
@@ -74,10 +82,10 @@ int	main(int ac, char **av, char **env)
 	t_data	data;
 	char	*str;
 
-	(void)av, rl_outstream = stderr;
+	rl_outstream = stderr;
 	if (ac != 1)
 		return (0);
-	ft_init_data(&data, env, NULL), ft_signal();
+	ft_init_data(&data, env, NULL, av), ft_signal();
 	while (TRUE)
 	{
 		str = readline(SHELL_FW);
@@ -93,7 +101,7 @@ int	main(int ac, char **av, char **env)
 		add_history(str);
 		if (!ft_parsing(&data, str, 0))
 			ft_start_cmd(&data);
-		ft_clean_all(str, data.cmd_start, 0, &data);
+		ft_clean_all(str, data.cmd_start, 0, &data), data.fl = 0;
 		data.cmd_start = NULL;
 	}
 }

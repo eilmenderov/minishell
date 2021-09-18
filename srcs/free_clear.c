@@ -83,3 +83,15 @@ void	ft_clean_all(char *str, t_cmd *start, int i, t_data *data)
 		tmp = start;
 	}
 }
+
+void	ft_null_env(t_data *data, char **av)
+{
+	t_env	*start;
+	char	*str;
+
+	start = ft_new_env(ft_strdup("SHLVL"), ft_strdup("1"), 1);
+	start->next = ft_new_env(ft_strdup("_"), ft_strdup(av[0]), 1);
+	str = getcwd(NULL, PWD_LEN);
+	start->next->next = ft_new_env(ft_strdup("PWD"), str, 1);
+	data->beg_env = start;
+}

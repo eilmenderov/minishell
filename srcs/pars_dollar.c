@@ -9,13 +9,26 @@ static char	*ft_dol_helper(char *key, t_env *env, char *rez)
 		tmp = tmp->next;
 	free(key), key = NULL;
 	if (tmp)
+	{
 		rez = ft_strjoin_m(rez, tmp->val, 1);
+	}
 	return (rez);
 }
 
 static char	*ft_dol_exeption(t_data *data, char *str, int *i, char *rez)
 {
-	if (str[*i + 1] == '0')
+	rez = ft_pars_helper(rez);
+	if (str[*i + 1] == '-')
+	{
+		*i = *i + 2;
+		return (ft_strjoin_m(rez, ft_strndup("_params_", 6), 3));
+	}
+	else if (str[*i + 1] == '?')
+	{
+		*i = *i + 2;
+		return (ft_strjoin_m(rez, ft_itoa(data->ret_val), 3));
+	}
+	else if (str[*i + 1] == '0')
 	{
 		*i = *i + 2;
 		rez = ft_dol_helper(ft_strdup("SHELL"), data->beg_env, rez);
@@ -56,17 +69,7 @@ char	*ft_dollar(t_data *data, char *str, int *i, char *rez)
 	int		j;
 	char	*key;
 
-	if (str[*i + 1] == '-')
-	{
-		*i = *i + 2;
-		return (ft_strjoin_m(rez, ft_strndup("_params_", 6), 3));
-	}
-	if (str[*i + 1] == '?')
-	{
-		*i = *i + 2;
-		return (ft_strjoin_m(rez, ft_itoa(data->ret_val), 3));
-	}
-	if (ft_ch_for_coinc(str[*i + 1], "#0$"))
+	if (ft_ch_for_coinc(str[*i + 1], "#0$-?"))
 		return (ft_dol_exeption(data, str, i, rez));
 	if (ft_dollar_chek(str, i, &rez))
 		return (rez);

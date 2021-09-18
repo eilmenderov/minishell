@@ -16,22 +16,21 @@ static void	ft_first_helper(t_cmd *cmd)
 
 static void	ft_first_cmd(t_cmd *cmd)
 {
-	int		fl;
 	char	*cmd_s;
 
-	ft_first_helper(cmd), fl = ft_buildin(cmd, 0);
+	ft_first_helper(cmd), cmd->fl = ft_buildin(cmd, 0);
 	if (cmd->fd_outf > 0)
 		close(cmd->data->fd_pipes[cmd->num_start][1]);
 	else
 		cmd->fd_outf = cmd->data->fd_pipes[cmd->num_start][1];
 	cmd->data->fd_pipes[cmd->num_start][1] = -1;
 	ft_redirects(cmd, 0);
-	if (fl)
-		ft_start_own_prog(cmd, fl);
+	if (cmd->fl)
+		ft_start_own_prog(cmd, cmd->fl);
 	else
 	{
-		cmd_s = ft_find_cmd(cmd);
-		fl = execve(cmd_s, cmd->arg, cmd->data->env), free(cmd_s);
+		cmd_s = ft_find_cmd(cmd, 0);
+		execve(cmd_s, cmd->arg, cmd->data->env), free(cmd_s);
 		ft_pr_error(NULL, 0, 0, 5), cmd->data->ret_val = 1;
 	}
 	ft_redirects(cmd, 1), exit(cmd->data->ret_val);
@@ -39,10 +38,10 @@ static void	ft_first_cmd(t_cmd *cmd)
 
 static void	ft_child(t_cmd *cmd)
 {
-	int		fl;
 	char	*cmd_s;
 
-	ft_close_pipes(cmd->data, cmd, cmd->num_start), fl = ft_buildin(cmd, 0);
+	ft_close_pipes(cmd->data, cmd, cmd->num_start);
+	cmd->fl = ft_buildin(cmd, 0);
 	if (cmd->fd_inf > 0)
 		close(cmd->data->fd_pipes[cmd->num_start - 1][0]);
 	else
@@ -54,12 +53,12 @@ static void	ft_child(t_cmd *cmd)
 		cmd->fd_outf = cmd->data->fd_pipes[cmd->num_start][1];
 	cmd->data->fd_pipes[cmd->num_start][1] = -1;
 	ft_redirects(cmd, 0);
-	if (fl)
-		ft_start_own_prog(cmd, fl);
+	if (cmd->fl)
+		ft_start_own_prog(cmd, cmd->fl);
 	else
 	{
-		cmd_s = ft_find_cmd(cmd);
-		fl = execve(cmd_s, cmd->arg, cmd->data->env), free(cmd_s);
+		cmd_s = ft_find_cmd(cmd, 0);
+		execve(cmd_s, cmd->arg, cmd->data->env), free(cmd_s);
 		ft_pr_error(NULL, 0, 0, 5), cmd->data->ret_val = 1;
 	}
 	ft_redirects(cmd, 1), exit(cmd->data->ret_val);
@@ -67,30 +66,29 @@ static void	ft_child(t_cmd *cmd)
 
 static void	ft_last_cmd(t_cmd *cmd)
 {
-	int		fl;
 	char	*cmd_s;
 
-	ft_close_pipes(cmd->data, cmd, cmd->num_start), fl = ft_buildin(cmd, 0);
+	ft_close_pipes(cmd->data, cmd, cmd->num_start);
+	cmd->fl = ft_buildin(cmd, 0);
 	if (cmd->fd_inf > 0)
 		close(cmd->data->fd_pipes[cmd->num_start - 1][0]);
 	else
 		cmd->fd_inf = cmd->data->fd_pipes[cmd->num_start - 1][0];
 	cmd->data->fd_pipes[cmd->num_start - 1][0] = -1;
 	ft_redirects(cmd, 0);
-	if (fl)
-		ft_start_own_prog(cmd, fl);
+	if (cmd->fl)
+		ft_start_own_prog(cmd, cmd->fl);
 	else
 	{
-		cmd_s = ft_find_cmd(cmd);
-		fl = execve(cmd_s, cmd->arg, cmd->data->env), free(cmd_s);
+		cmd_s = ft_find_cmd(cmd, 0);
+		execve(cmd_s, cmd->arg, cmd->data->env), free(cmd_s);
 		ft_pr_error(NULL, 0, 0, 5), cmd->data->ret_val = 1;
 	}
 	ft_redirects(cmd, 1), exit(cmd->data->ret_val);
 }
 
-void	ft_multiple_cmd(t_cmd *cmd, int i)
+void	ft_multiple_cmd(t_cmd *cmd, int i, int fl)
 {
-	int		fl;
 	t_cmd	*tmp;
 
 	tmp = cmd->data->cmd_start, ft_create_pipes(cmd->data);
@@ -103,13 +101,14 @@ void	ft_multiple_cmd(t_cmd *cmd, int i)
 			ft_pr_error(ERR_FORK, -1, 0, 0);
 		if (!fl)
 		{
+			if (ft_cmd_check(cmd))
+				ft_pr_error(ERR_CMD, 0, 0, 2), exit(100);
 			if (!tmp->next)
 				ft_last_cmd(tmp);
 			else if (!tmp->num_start)
 				ft_first_cmd(tmp);
 			else if (tmp->next)
 				ft_child(tmp);
-			exit(100);
 		}
 		cmd->data->all_pid[i] = fl;
 		tmp = tmp->next, i++;
