@@ -26,13 +26,22 @@ static int	ft_go_key(t_cmd *cmd, t_env *tmp, char *str_key, int fl)
 	tmp = cmd->data->beg_env;
 	while (tmp && ft_strcmp(str_key, tmp->key))
 		tmp = tmp->next;
-	if (chdir(tmp->val) == -1)
+	if (tmp)
+	{
+		if (chdir(tmp->val) == -1)
+		{
+			free(cmd->data->tmp), cmd->data->tmp = NULL;
+			ft_pr_error(cmd->arg[1], 0, 0, 4);
+			return (1);
+		}
+		ft_pwd(cmd->data, fl, cmd);
+	}
+	else
 	{
 		free(cmd->data->tmp), cmd->data->tmp = NULL;
-		ft_pr_error(cmd->arg[1], 0, 0, 4);
+		ft_pr_error(str_key, 0, 0, 4);
 		return (1);
 	}
-	ft_pwd(cmd->data, fl, cmd);
 	return (0);
 }
 
